@@ -1,6 +1,6 @@
 package edu.pdx.cs300.group6.chocan.cli;
 
-import java.io.InputStream;
+import java.util.List;
 
 /**
  *
@@ -28,8 +28,26 @@ public class Command implements CommandFunction {
     }
 
     @Override
-    public boolean execute(final String[] args, final InputStream inputStream) {
-        return this.function.execute(args, inputStream);
+    public boolean execute(final List<String> args) {
+        return this.function.execute(args);
+    }
+
+    /**
+     * Prints out information about the command.
+     * Internally used by other classes in the package.
+     * @param includeHelp Whether to print help information.
+     */
+    void print(final boolean includeHelp) {
+        System.out.print(this.name);
+        if (this.description.isEmpty()) {
+            System.out.println();
+        } else {
+            System.out.print(": ");
+            System.out.println(this.description);
+        }
+        if (includeHelp && !this.help.isEmpty()) {
+            System.out.println(this.help);
+        }
     }
 
 }

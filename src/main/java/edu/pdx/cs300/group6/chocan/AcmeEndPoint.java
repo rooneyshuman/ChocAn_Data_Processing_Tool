@@ -3,7 +3,7 @@ package edu.pdx.cs300.group6.chocan;
 /**
  *
  */
-public class AcmeApplication {
+public class AcmeEndPoint {
 
     /**
      *
