@@ -86,7 +86,14 @@ public class CommandLineInterface {
         }
         return matchedCommands;
     }
-
+    
+    /**
+     * Gets the string that is printed to indicate a command prompt.
+     */
+    public String getPrompt() {
+        return this.prompt;
+    }
+    
     /**
      * Set the string to print to indicate a command prompt.
      * @param prompt The string to print.
@@ -158,7 +165,7 @@ public class CommandLineInterface {
         this.exitCommand = CommandLineInterface.createExitCommand(name, description, help);
         this.addCommand(this.exitCommand, EXIT_COMMAND_ORDER);
     }
-
+    
     /**
      * Run the command line interface.
      * This will block as it reads from the given input stream.
