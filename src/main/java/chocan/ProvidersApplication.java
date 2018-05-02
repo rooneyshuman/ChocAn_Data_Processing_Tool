@@ -1,9 +1,8 @@
-package edu.pdx.cs300.group6.chocan;
+package chocan;
 
-import edu.pdx.cs300.group6.chocan.cli.Command;
-import edu.pdx.cs300.group6.chocan.cli.CommandLineInterface;
+import chocan.cli.Command;
+import chocan.cli.CommandLineInterface;
 
-import java.io.InputStream;
 import java.util.List;
 
 /**

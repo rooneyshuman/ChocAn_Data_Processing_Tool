@@ -64,7 +64,7 @@
                             <archive>
                                 <manifest>
                                     <addClasspath>true</addClasspath>
-                                    <mainClass>edu.pdx.cs300.group6.chocan.ProvidersApplication</mainClass>
+                                    <mainClass>chocan.ProvidersApplication</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
@@ -84,7 +84,7 @@
                             <archive>
                                 <manifest>
                                     <addClasspath>true</addClasspath>
-                                    <mainClass>edu.pdx.cs300.group6.chocan.OperatorsApplication</mainClass>
+                                    <mainClass>chocan.OperatorsApplication</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
@@ -104,7 +104,7 @@
                             <archive>
                                 <manifest>
                                     <addClasspath>true</addClasspath>
-                                    <mainClass>edu.pdx.cs300.group6.chocan.AcmeEndPoint</mainClass>
+                                    <mainClass>chocan.AcmeEndPoint</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>

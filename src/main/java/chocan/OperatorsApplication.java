@@ -1,9 +1,9 @@
-package edu.pdx.cs300.group6.chocan;
+package chocan;
 
 /**
  *
  */
-public class AcmeEndPoint {
+public class OperatorsApplication {
 
     /**
      *

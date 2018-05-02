@@ -1,4 +1,4 @@
-package edu.pdx.cs300.group6.chocan.cli;
+package chocan.cli;
 
 import java.util.*;
 
