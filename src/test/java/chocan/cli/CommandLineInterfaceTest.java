@@ -30,14 +30,14 @@ public class CommandLineInterfaceTest {
 		});
 	}
 	
-	@Test
+	@Test(timeout=2000)
 	public void testNoExit() throws IOException, InterruptedException {
 		final CommandLineInterface cli = new CommandLineInterface();
 		Assert.assertFalse("CLI quit without invoking exit command.", 
 			IOTestUtils.configurePipes(cli::run, (final OutputStream toInput, final InputStream fromOutput) -> {}, 1000));
 	}
-	
-	@Test
+
+	@Test(timeout=1000)
 	public void testCommandExecute() throws IOException, InterruptedException {
 		this.executedCommand = false;
 		final CommandLineInterface cli = new CommandLineInterface();
@@ -54,11 +54,12 @@ public class CommandLineInterfaceTest {
 			Assert.assertTrue("Failed to execute command.", this.executedCommand);
 		});
 	}
-	
-	@Test
+
+	@Test(timeout=1000)
 	public void testCommandProducedOutput() throws IOException, InterruptedException {
 		final String testString = "abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		final CommandLineInterface cli = new CommandLineInterface();
+		cli.setHelpOnStart(false);
 		cli.addCommand(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args) -> {
 			System.out.println(testString);
 			return true;
@@ -73,10 +74,11 @@ public class CommandLineInterfaceTest {
 				cli.getPrompt() + testString + System.lineSeparator() + cli.getPrompt());
 		});
 	}
-	
-	@Test
+
+	@Test(timeout=1000)
 	public void testCommandHelp() throws IOException, InterruptedException {
 		final CommandLineInterface cli = new CommandLineInterface();
+		cli.setHelpOnStart(false);
 		cli.addCommand(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args) -> true));
 		IOTestUtils.configurePipes(cli::run, (final OutputStream toInput, final InputStream fromOutput) -> {
 			final PrintStream printStream = new PrintStream(toInput);
@@ -89,10 +91,11 @@ public class CommandLineInterfaceTest {
 			Assert.assertTrue("Help command output failed to include test command help.", output.contains(TEST_HELP));
 		});
 	}
-	
-	@Test
+
+	@Test(timeout=1000)
 	public void testHelp() throws IOException, InterruptedException {
 		final CommandLineInterface cli = new CommandLineInterface();
+		cli.setHelpOnStart(false);
 		cli.addCommand(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args) -> true));
 		IOTestUtils.configurePipes(cli::run, (final OutputStream toInput, final InputStream fromOutput) -> {
 			final PrintStream printStream = new PrintStream(toInput);
@@ -104,10 +107,11 @@ public class CommandLineInterfaceTest {
 			Assert.assertTrue("Help command output failed to include test command description.", output.contains(TEST_DESCRIPTION));
 		});
 	}
-	
-	@Test
+
+	@Test(timeout=1000)
 	public void testAutoHelp() throws IOException, InterruptedException {
 		final CommandLineInterface cli = new CommandLineInterface();
+		cli.setHelpOnStart(false);
 		cli.addCommand(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args) -> true));
 		IOTestUtils.configurePipes(cli::run, (final OutputStream toInput, final InputStream fromOutput) -> {
 			final PrintStream printStream = new PrintStream(toInput);
@@ -119,10 +123,11 @@ public class CommandLineInterfaceTest {
 			Assert.assertTrue("Help command output failed to include test command description.", output.contains(TEST_DESCRIPTION));
 		});
 	}
-	
-	@Test
+
+	@Test(timeout=1000)
 	public void testNoAutoHelp() throws IOException, InterruptedException {
 		final CommandLineInterface cli = new CommandLineInterface();
+		cli.setHelpOnStart(false);
 		cli.setHelpOnEmpty(false);
 		cli.addCommand(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args) -> true));
 		IOTestUtils.configurePipes(cli::run, (final OutputStream toInput, final InputStream fromOutput) -> {

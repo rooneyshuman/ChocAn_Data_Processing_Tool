@@ -1,5 +1,8 @@
 package chocan.cli;
 
+import chocan.utils.IteratorUtils;
+import chocan.utils.ParseUtils;
+
 import java.util.*;
 
 /**
@@ -22,6 +25,11 @@ public class CommandLineInterface {
      * The string to print to indicate a command prompt.
      */
     private String prompt = "> ";
+
+    /**
+     * Whether to display the help command automatically when the command line interface is ran.
+     */
+    private boolean helpOnStart = true;
 
     /**
      * Whether to display the help command automatically if an empty line is entered.
@@ -73,14 +81,21 @@ public class CommandLineInterface {
     }
 
     /**
-     * Gets a list of commands who's names start with the given partial name.
-     * @param partialName Part of a command's name to use to filter command.
-     * @return A list of commands filtered using the given partial name.
+     * Gets a list of commands who's names start with the given partial name (or the command at the index).
+     * @param partialNameOrIndex Part of a command's name to use to filter commands (or the index of the command).
+     * @return A list of commands filtered using the given partial name (or the command at the index).
      */
-    private List<Command> getCommands(final String partialName) {
+    private List<Command> getCommands(final String partialNameOrIndex) {
+        final Integer commandIndex = ParseUtils.parseUnsignedInt(partialNameOrIndex);
+        if (commandIndex != null) {
+            final Command foundCommand = IteratorUtils.get(this.commands.iterator(), commandIndex);
+            if (foundCommand != null) {
+                return Collections.singletonList(foundCommand);
+            }
+        }
         final List<Command> matchedCommands = new ArrayList<>(this.commands.size());
         for (final Command command : this.commands) {
-            if (command.name.startsWith(partialName)) {
+            if (command.name.startsWith(partialNameOrIndex)) {
                 matchedCommands.add(command);
             }
         }
@@ -122,6 +137,14 @@ public class CommandLineInterface {
     }
 
     /**
+     * Enables or disables the help command to automatically execute when the command line interface is ran.
+     * @param enabled Whether to enable or disable this automatic functionality.
+     */
+    public void setHelpOnStart(final boolean enabled) {
+        this.helpOnStart = enabled;
+    }
+
+    /**
      * Enables or disables the help command to automatically execute if an empty line is entered.
      * @param enabled Whether to enable or disable this automatic functionality.
      */
@@ -150,8 +173,11 @@ public class CommandLineInterface {
             }
         } else {
             // Display all commands
+            int i = 1;
             for (final Command command : this.commands) {
+                System.out.print("" + i + ". ");
                 command.print(false);
+                i++;
             }
         }
         return true;
@@ -171,41 +197,53 @@ public class CommandLineInterface {
      * This will block as it reads from the given input stream.
      */
     public void run() {
+        if (this.helpOnStart) {
+            // Display help
+            this.helpCommand.execute(Collections.emptyList());
+        }
         try (final Scanner scanner = new Scanner(System.in)) {
             System.out.print(this.prompt);
             for (; scanner.hasNextLine(); System.out.print(this.prompt)) {
                 // Get next line entered by user
                 final String line = scanner.nextLine();
-                // Parse line
-                final List<String> args = CommandLineInterface.parseArguments(line);
-                if (args.size() > 0) {
-                    // Get commands that match
-                    final String partialCommandName = args.get(0);
-                    final List<Command> matchedCommands = this.getCommands(partialCommandName);
-                    switch (matchedCommands.size()) {
-                        case 0:
-                            System.out.println("Unknown command: " + partialCommandName);
-                            break;
-                        case 1:
-                            // Execute command with arguments (excluding the command name)
-                            if (!matchedCommands.get(0).execute(args.subList(1, args.size()))) {
-                                // Exit command line interface
-                                return;
-                            }
-                            break;
-                        default:
-                            // Ambiguous command (multiple possible commands)
-                            // Display all commands that matched
-                            final Iterable<String> commandNames = matchedCommands.stream().map(c -> c.name)::iterator;
-                            System.out.println("Ambiguous command selection: " + String.join(", ", commandNames));
-                            break;
-                    }
-                } else if (this.helpOnEmpty) {
-                    // Display help
-                    this.helpCommand.execute(Collections.emptyList());
+                // Process line
+                if (!processLine(line)) {
+                    break;
                 }
             }
         }
+    }
+
+    private boolean processLine(final String line) {
+        // Parse line
+        final List<String> args = CommandLineInterface.parseArguments(line);
+        if (args.size() > 0) {
+            // Get commands that match
+            final String partialCommandName = args.get(0);
+            final List<Command> matchedCommands = this.getCommands(partialCommandName);
+            switch (matchedCommands.size()) {
+                case 0:
+                    System.out.println("Unknown command: " + partialCommandName);
+                    break;
+                case 1:
+                    // Execute command with arguments (excluding the command name)
+                    if (!matchedCommands.get(0).execute(args.subList(1, args.size()))) {
+                        // Exit command line interface
+                        return false;
+                    }
+                    break;
+                default:
+                    // Ambiguous command (multiple possible commands)
+                    // Display all commands that matched
+                    final Iterable<String> commandNames = matchedCommands.stream().map(c -> c.name)::iterator;
+                    System.out.println("Ambiguous command selection: " + String.join(", ", commandNames));
+                    break;
+            }
+        } else if (this.helpOnEmpty) {
+            // Display help
+            this.helpCommand.execute(Collections.emptyList());
+        }
+        return true;
     }
 
     private static Command createExitCommand(final String name, final String description, final String help) {
