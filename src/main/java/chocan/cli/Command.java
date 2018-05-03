@@ -3,7 +3,8 @@ package chocan.cli;
 import java.util.List;
 
 /**
- *
+ * Represents an executable command.
+ * Usually an instance of this class is added to a command menu to be executed by a user.
  */
 public class Command implements CommandFunction {
 

@@ -6,9 +6,9 @@ import chocan.utils.ParseUtils;
 import java.util.*;
 
 /**
- *
+ * An interactive command line menu.
  */
-public class CommandLineInterface {
+public class CommandMenu {
 
     private static final long HELP_COMMAND_ORDER = Long.MAX_VALUE - 1;
     private static final long EXIT_COMMAND_ORDER = Long.MAX_VALUE;
@@ -17,7 +17,7 @@ public class CommandLineInterface {
     private final TreeSet<Command> commands = new TreeSet<>(Comparator.comparingLong(this.commandOrderMap::get));
 
     private final Command helpCommand = new Command("help", "Displays additional help for a command.", "", this::helpCommandHandler);
-    private Command exitCommand = CommandLineInterface.createExitCommand("exit", "Exits the application.", "");
+    private Command exitCommand = CommandMenu.createExitCommand("exit", "Exits the application.", "");
 
     private long commandOrder = Long.MIN_VALUE;
 
@@ -27,7 +27,7 @@ public class CommandLineInterface {
     private String prompt = "> ";
 
     /**
-     * Whether to display the help command automatically when the command line interface is ran.
+     * Whether to display the help command automatically when the command menu is run.
      */
     private boolean helpOnStart = true;
 
@@ -37,15 +37,15 @@ public class CommandLineInterface {
     private boolean helpOnEmpty = true;
 
     /**
-     *
+     * Creates a new command menu.
      */
-    public CommandLineInterface() {
+    public CommandMenu() {
         this.addCommand(this.helpCommand, HELP_COMMAND_ORDER);
         this.addCommand(this.exitCommand, EXIT_COMMAND_ORDER);
     }
 
     /**
-     * Determines whether this CLI contains the command.
+     * Determines whether this menu contains the command.
      * @param command The command to check.
      */
     public boolean containsCommand(final Command command) {
@@ -53,7 +53,7 @@ public class CommandLineInterface {
     }
 
     /**
-     * Adds the command to this CLI to be available for execution.
+     * Adds the command to this menu to be available for execution.
      * @param command The command to add.
      * @return Whether the command was newly added.
      */
@@ -70,7 +70,7 @@ public class CommandLineInterface {
     }
 
     /**
-     * Removes the command from this CLI.
+     * Removes the command from this menu.
      * @param command The command to remove.
      * @return Whether the command was removed.
      */
@@ -118,14 +118,14 @@ public class CommandLineInterface {
     }
 
     /**
-     * Determines whether the help command is enabled for this CLI.
+     * Determines whether the help command is enabled for this menu.
      */
     public boolean isHelpEnabled() {
         return this.containsCommand(this.helpCommand);
     }
 
     /**
-     * Enables or disables the help command for this CLI.
+     * Enables or disables the help command for this menu.
      * @param enabled Whether to enable or disable the help command.
      */
     public void setHelpEnabled(final boolean enabled) {
@@ -137,7 +137,7 @@ public class CommandLineInterface {
     }
 
     /**
-     * Enables or disables the help command to automatically execute when the command line interface is ran.
+     * Enables or disables the help command to automatically execute when the menu is run.
      * @param enabled Whether to enable or disable this automatic functionality.
      */
     public void setHelpOnStart(final boolean enabled) {
@@ -184,16 +184,19 @@ public class CommandLineInterface {
     }
 
     /**
-     *
+     * Configures the properties of the exit command.
+     * @param name The name of the exit command.
+     * @param description The description of the exit command.
+     * @param help The help text of the exit command.
      */
     public void setExitCommand(final String name, final String description, final String help) {
         this.removeCommand(this.exitCommand);
-        this.exitCommand = CommandLineInterface.createExitCommand(name, description, help);
+        this.exitCommand = CommandMenu.createExitCommand(name, description, help);
         this.addCommand(this.exitCommand, EXIT_COMMAND_ORDER);
     }
     
     /**
-     * Run the command line interface.
+     * Run the command menu.
      * This will block as it reads from the given input stream.
      */
     public void run() {
@@ -216,7 +219,7 @@ public class CommandLineInterface {
 
     private boolean processLine(final String line) {
         // Parse line
-        final List<String> args = CommandLineInterface.parseArguments(line);
+        final List<String> args = CommandMenu.parseArguments(line);
         if (args.size() > 0) {
             // Get commands that match
             final String partialCommandName = args.get(0);
@@ -246,6 +249,8 @@ public class CommandLineInterface {
         return true;
     }
 
+    // region Static methods
+
     private static Command createExitCommand(final String name, final String description, final String help) {
         return new Command(name, description, help, (final List<String> args) -> false);
     }
@@ -272,5 +277,7 @@ public class CommandLineInterface {
         // Convert to array list for fast random access.
         return new ArrayList<>(args);
     }
+
+    // endregion
 
 }
