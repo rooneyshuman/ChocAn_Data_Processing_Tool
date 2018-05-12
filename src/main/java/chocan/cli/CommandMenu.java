@@ -40,15 +40,15 @@ public class CommandMenu {
      * Creates a new command menu.
      */
     public CommandMenu() {
-        this.addCommand(this.helpCommand, HELP_COMMAND_ORDER);
-        this.addCommand(this.exitCommand, EXIT_COMMAND_ORDER);
+        this.add(this.helpCommand, HELP_COMMAND_ORDER);
+        this.add(this.exitCommand, EXIT_COMMAND_ORDER);
     }
 
     /**
      * Determines whether this menu contains the command.
      * @param command The command to check.
      */
-    public boolean containsCommand(final Command command) {
+    public boolean contains(final Command command) {
         return this.commandOrderMap.containsKey(command);
     }
 
@@ -57,11 +57,11 @@ public class CommandMenu {
      * @param command The command to add.
      * @return Whether the command was newly added.
      */
-    public boolean addCommand(final Command command) {
-        return this.addCommand(command, this.commandOrder++);
+    public boolean add(final Command command) {
+        return this.add(command, this.commandOrder++);
     }
 
-    private boolean addCommand(final Command command, final long order) {
+    private boolean add(final Command command, final long order) {
         if (this.commandOrderMap.containsKey(command)) {
             return false;
         }
@@ -74,7 +74,7 @@ public class CommandMenu {
      * @param command The command to remove.
      * @return Whether the command was removed.
      */
-    public boolean removeCommand(final Command command) {
+    public boolean remove(final Command command) {
         final boolean success = this.commands.remove(command);
         this.commandOrderMap.remove(command);
         return success;
@@ -85,7 +85,7 @@ public class CommandMenu {
      * @param partialNameOrIndex Part of a command's name to use to filter commands (or the index of the command).
      * @return A list of commands filtered using the given partial name (or the command at the index).
      */
-    private List<Command> getCommands(final String partialNameOrIndex) {
+    private List<Command> get(final String partialNameOrIndex) {
         final Integer commandIndex = ParseUtils.parseUnsignedInt(partialNameOrIndex);
         if (commandIndex != null) {
             final Command foundCommand = IteratorUtils.get(this.commands.iterator(), commandIndex);
@@ -121,7 +121,7 @@ public class CommandMenu {
      * Determines whether the help command is enabled for this menu.
      */
     public boolean isHelpEnabled() {
-        return this.containsCommand(this.helpCommand);
+        return this.contains(this.helpCommand);
     }
 
     /**
@@ -130,9 +130,9 @@ public class CommandMenu {
      */
     public void setHelpEnabled(final boolean enabled) {
         if (enabled) {
-            this.addCommand(this.helpCommand, HELP_COMMAND_ORDER);
+            this.add(this.helpCommand, HELP_COMMAND_ORDER);
         } else {
-            this.removeCommand(this.helpCommand);
+            this.remove(this.helpCommand);
         }
     }
 
@@ -155,7 +155,7 @@ public class CommandMenu {
     private boolean helpCommandHandler(final List<String> args) {
         if (args.size() > 0) {
             final String partialCommandName = args.get(0);
-            final List<Command> matchedCommands = this.getCommands(partialCommandName);
+            final List<Command> matchedCommands = this.get(partialCommandName);
             switch (matchedCommands.size()) {
                 case 0:
                     System.out.println("[Help] Unknown command: " + partialCommandName);
@@ -190,9 +190,9 @@ public class CommandMenu {
      * @param help The help text of the exit command.
      */
     public void setExitCommand(final String name, final String description, final String help) {
-        this.removeCommand(this.exitCommand);
+        this.remove(this.exitCommand);
         this.exitCommand = CommandMenu.createExitCommand(name, description, help);
-        this.addCommand(this.exitCommand, EXIT_COMMAND_ORDER);
+        this.add(this.exitCommand, EXIT_COMMAND_ORDER);
     }
     
     /**
@@ -223,7 +223,7 @@ public class CommandMenu {
         if (args.size() > 0) {
             // Get commands that match
             final String partialCommandName = args.get(0);
-            final List<Command> matchedCommands = this.getCommands(partialCommandName);
+            final List<Command> matchedCommands = this.get(partialCommandName);
             switch (matchedCommands.size()) {
                 case 0:
                     System.out.println("Unknown command: " + partialCommandName);

@@ -14,19 +14,19 @@ public class MainMenu extends CommandMenu {
      *
      */
     public MainMenu() {
-        this.addCommand(new Command("provider", "", "", (final List<String> args) -> {
+        this.add(new Command("provider", "", "", (final List<String> args) -> {
             // TODO
             return true;
         }));
-        this.addCommand(new Command("operator", "", "", (final List<String> args) -> {
+        this.add(new Command("operator", "", "", (final List<String> args) -> {
             // TODO
             return true;
         }));
-        this.addCommand(new Command("manager", "", "", (final List<String> args) -> {
+        this.add(new Command("manager", "", "", (final List<String> args) -> {
             // TODO
             return true;
         }));
-        this.addCommand(new Command("acme", "", "", (final List<String> args) -> {
+        this.add(new Command("acme", "", "", (final List<String> args) -> {
             // TODO
             return true;
         }));
