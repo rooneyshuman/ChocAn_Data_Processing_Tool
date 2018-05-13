@@ -12,8 +12,8 @@ import java.util.Locale;
 public class DateUtils {
 
     /**
-     *
-     * @return
+     * Gets two local date time objects that represent the current week.
+     * @return An array containing 2 local date time objects.
      */
     public static LocalDateTime[] getWeekRange() {
         final LocalDate now = LocalDate.now();

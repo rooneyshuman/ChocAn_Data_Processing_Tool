@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 /**
  *
+ * @param <U>
  */
 public interface IUserDatabase<U extends User> {
 

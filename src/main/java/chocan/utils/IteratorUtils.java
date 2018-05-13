@@ -12,7 +12,7 @@ public class IteratorUtils {
      * Gets the value from the iterator at the given index.
      * @param it The iterator to iterate over.
      * @param index The index of the target element.
-     * @param <E>
+     * @param <E> The generic element type.
      * @return The element (from the iterator) at the given index.
      */
     @Nullable

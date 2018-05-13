@@ -6,23 +6,23 @@ package chocan.utils;
 public class StringUtils {
 
     /**
-     *
-     * @param s
-     * @param n
-     * @return
+     * Pads the given string on the right with spaces until the string reaches the target size.
+     * @param str The original string.
+     * @param targetSize The target size of the final string.
+     * @return The padded string.
      */
-    public static String padRight(final String s, final int n) {
-        return String.format("%1$-" + n + "s", s);
+    public static String padRight(final String str, final int targetSize) {
+        return String.format("%1$-" + targetSize + "s", str);
     }
 
     /**
-     *
-     * @param s
-     * @param n
-     * @return
+     * Pads the given string on the left with spaces until the string reaches the target size.
+     * @param str The original string.
+     * @param targetSize The target size of the final string.
+     * @return The padded string.
      */
-    public static String padLeft(final String s, final int n) {
-        return String.format("%1$" + n + "s", s);
+    public static String padLeft(final String str, final int targetSize) {
+        return String.format("%1$" + targetSize + "s", str);
     }
 
 }
