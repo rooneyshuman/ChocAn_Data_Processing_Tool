@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.Buffer;
+import java.nio.ByteBuffer;
 
 /**
  * 
@@ -29,7 +30,7 @@ public abstract class UserDatabase<U extends User> {
 	 * @param input The data to parse and create the user from.
 	 * @return A newly created user.
 	 */
-	protected abstract U createUser(final Buffer input);
+	protected abstract U createUser(final ByteBuffer input);
 	
 	/**
 	 * 
