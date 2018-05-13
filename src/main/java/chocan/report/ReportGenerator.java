@@ -11,12 +11,11 @@ import chocan.utils.StringUtils;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- *
+ * A class responsible for generating various reports.
  */
 public class ReportGenerator {
 
@@ -32,10 +31,10 @@ public class ReportGenerator {
 
     /**
      * Creates a new report generator using the given databases and directories.
-     * @param memberDatabase
-     * @param providerDatabase
-     * @param providerServiceDirectory
-     * @param serviceRecordDatabase
+     * @param memberDatabase The member database.
+     * @param providerDatabase The provider database.
+     * @param providerServiceDirectory The provider service directory.
+     * @param serviceRecordDatabase The service record database.
      */
     public ReportGenerator(final IUserDatabase<Member> memberDatabase,
                            final IUserDatabase<Provider> providerDatabase,
@@ -81,7 +80,7 @@ public class ReportGenerator {
             sb.append(padding).append("` on ").append(record.serviceDate.format(DATE_FORMATTER)).append('\n');
             i++;
         }
-        // Return finished member report
+        // Return finished report
         return sb.toString();
     }
 
@@ -109,8 +108,8 @@ public class ReportGenerator {
                 .collect(Collectors.toList());
         // Print service record information
         final int idStringLength = Integer.toString(providerServiceRecords.size()).length();
-        int i = 1;
         BigDecimal totalFee = BigDecimal.ZERO;
+        int i = 1;
         for (final ServiceRecord record : providerServiceRecords) {
             final Service service = this.providerServiceDirectory.get(record.serviceCode);
             final Member member = this.memberDatabase.get(record.memberID);
@@ -134,7 +133,7 @@ public class ReportGenerator {
         // Print totals
         sb.append("Total consultations provided: ").append(providerServiceRecords.size()).append('\n');
         sb.append("Total fee for the week: $").append(totalFee).append('\n');
-        // Return finished provider report
+        // Return finished report
         return sb.toString();
     }
 
@@ -144,7 +143,46 @@ public class ReportGenerator {
      */
     public String forManager() {
         final StringBuilder sb = new StringBuilder();
-        // TODO
+        // Get current week date time range
+        final LocalDateTime[] weekRange = DateUtils.getWeekRange();
+        // Query for providers who provided services this week
+        final SortedMap<Integer, List<ServiceRecord>> providerServiceRecordMap;
+        {
+            final Map<Integer, List<ServiceRecord>> _providerServiceRecordMap = new HashMap<>();
+            this.serviceRecordDatabase.get(weekRange[0], weekRange[1]).forEach(record -> {
+                final List<ServiceRecord> records = _providerServiceRecordMap.computeIfAbsent(record.providerID, k -> new ArrayList<>());
+                records.add(record);
+            });
+            providerServiceRecordMap = new TreeMap<>(_providerServiceRecordMap);
+        }
+        // Print provider and service record information
+        final int idStringLength = Integer.toString(providerServiceRecordMap.size()).length();
+        final String padding = StringUtils.padLeft("", idStringLength);
+        int totalConsultations = 0;
+        BigDecimal overallFee = BigDecimal.ZERO;
+        int i = 1;
+        for (final Map.Entry<Integer, List<ServiceRecord>> e : providerServiceRecordMap.entrySet()) {
+            final int providerID = e.getKey();
+            final Provider provider = this.providerDatabase.get(providerID);
+            final List<ServiceRecord> records = e.getValue();
+            final BigDecimal totalFee = records.stream()
+                    .map(record -> {
+                        final Service service = this.providerServiceDirectory.get(record.serviceCode);
+                        return service != null ? service.fee : BigDecimal.ZERO;
+                    })
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            sb.append(StringUtils.padLeft(Integer.toString(i), idStringLength)).append(". ").append(provider != null ? provider.name : "Unknown provider").append('\n');
+            sb.append(padding).append("| Number of consultations: ").append(records.size()).append('\n');
+            sb.append(padding).append("` Total fee: $").append(totalFee).append('\n');
+            totalConsultations += records.size();
+            overallFee = overallFee.add(totalFee);
+            i++;
+        }
+        // Print summary information
+        sb.append("Total number of providers: ").append(providerServiceRecordMap.size()).append('\n');
+        sb.append("Total number of consultations: ").append(totalConsultations).append('\n');
+        sb.append("Overall fee: $").append(overallFee).append('\n');
+        // Return finished report
         return sb.toString();
     }
 
