@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
  * 
  * @param <U>
  */
-public abstract class UserDatabase<U extends User> {
+public abstract class UserDatabase<U extends User> implements IUserDatabase<U> {
 	
 	/**
 	 * The backing file for this database.
@@ -57,7 +57,7 @@ public abstract class UserDatabase<U extends User> {
 	 * @return
 	 */
 	@Nullable
-	public User get(final int id) {
+	public U get(final int id) {
 		// TODO
 		return null;
 	}
