@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Scanner;
 
 public class CommandMenuTest {
 	
@@ -40,7 +41,7 @@ public class CommandMenuTest {
 	public void testCommandExecute() throws IOException, InterruptedException {
 		this.executedCommand = false;
 		final CommandMenu menu = new CommandMenu();
-		menu.add(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args) -> {
+		menu.add(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args, final Scanner stdin) -> {
 			this.executedCommand = true;
 			return true;
 		}));
@@ -59,7 +60,7 @@ public class CommandMenuTest {
 		final String testString = "abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		final CommandMenu menu = new CommandMenu();
 		menu.setHelpOnStart(false);
-		menu.add(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args) -> {
+		menu.add(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args, final Scanner stdin) -> {
 			System.out.println(testString);
 			return true;
 		}));
@@ -78,7 +79,7 @@ public class CommandMenuTest {
 	public void testCommandHelp() throws IOException, InterruptedException {
 		final CommandMenu menu = new CommandMenu();
 		menu.setHelpOnStart(false);
-		menu.add(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args) -> true));
+		menu.add(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args, final Scanner stdin) -> true));
 		IOTestUtils.configurePipes(menu::run, (final OutputStream toInput, final InputStream fromOutput) -> {
 			final PrintStream printStream = new PrintStream(toInput);
 			printStream.println("help " + TEST_NAME);
@@ -95,7 +96,7 @@ public class CommandMenuTest {
 	public void testHelp() throws IOException, InterruptedException {
 		final CommandMenu menu = new CommandMenu();
 		menu.setHelpOnStart(false);
-		menu.add(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args) -> true));
+		menu.add(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args, final Scanner stdin) -> true));
 		IOTestUtils.configurePipes(menu::run, (final OutputStream toInput, final InputStream fromOutput) -> {
 			final PrintStream printStream = new PrintStream(toInput);
 			printStream.println("help");
@@ -111,7 +112,7 @@ public class CommandMenuTest {
 	public void testAutoHelp() throws IOException, InterruptedException {
 		final CommandMenu menu = new CommandMenu();
 		menu.setHelpOnStart(false);
-		menu.add(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args) -> true));
+		menu.add(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args, final Scanner stdin) -> true));
 		IOTestUtils.configurePipes(menu::run, (final OutputStream toInput, final InputStream fromOutput) -> {
 			final PrintStream printStream = new PrintStream(toInput);
 			printStream.println(); // triggers automatic help
@@ -128,7 +129,7 @@ public class CommandMenuTest {
 		final CommandMenu menu = new CommandMenu();
 		menu.setHelpOnStart(false);
 		menu.setHelpOnEmpty(false);
-		menu.add(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args) -> true));
+		menu.add(new Command(TEST_NAME, TEST_DESCRIPTION, TEST_HELP, (final List<String> args, final Scanner stdin) -> true));
 		IOTestUtils.configurePipes(menu::run, (final OutputStream toInput, final InputStream fromOutput) -> {
 			final PrintStream printStream = new PrintStream(toInput);
 			printStream.println(); // triggers automatic help

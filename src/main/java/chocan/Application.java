@@ -25,7 +25,7 @@ public class Application {
      * Runs the application.
      */
     private void run() {
-        System.out.println("[Chocoholics Anonymous] Choose a mode:");
+        System.out.println("[Chocoholics Anonymous] Welcome!");
         this.mainMenu.run();
     }
 

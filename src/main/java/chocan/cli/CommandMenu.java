@@ -16,7 +16,14 @@ public class CommandMenu {
     private final HashMap<Command, Long> commandOrderMap = new HashMap<>();
     private final TreeSet<Command> commands = new TreeSet<>(Comparator.comparingLong(this.commandOrderMap::get));
 
-    private final Command helpCommand = new Command("help", "Displays additional help for a command.", "", this::helpCommandHandler);
+    private final Command helpCommand = new Command("help", "Displays additional help for a command.", "", (final List<String> args, final Scanner stdin) -> {
+        if (args.size() > 0) {
+            this.help(args.get(0));
+        } else {
+            this.help();
+        }
+        return true;
+    });
     private Command exitCommand = CommandMenu.createExitCommand("exit", "Exits the application.", "");
 
     private long commandOrder = Long.MIN_VALUE;
@@ -25,6 +32,11 @@ public class CommandMenu {
      * The string to print to indicate a command prompt.
      */
     private String prompt = "> ";
+
+    /**
+     * The string to print as the title of the help command.
+     */
+    private String helpTitle = "";
 
     /**
      * Whether to display the help command automatically when the command menu is run.
@@ -118,6 +130,21 @@ public class CommandMenu {
     }
 
     /**
+     * Gets the string that is printed as the title of the help command.
+     */
+    public String getHelpTitle() {
+        return this.helpTitle;
+    }
+
+    /**
+     * Set the string to print as the title of the help command.
+     * @param helpTitle The string to print.
+     */
+    public void setHelpTitle(final String helpTitle) {
+        this.helpTitle = helpTitle;
+    }
+
+    /**
      * Determines whether the help command is enabled for this menu.
      */
     public boolean isHelpEnabled() {
@@ -152,35 +179,45 @@ public class CommandMenu {
         this.helpOnEmpty = enabled;
     }
 
-    private boolean helpCommandHandler(final List<String> args) {
-        if (args.size() > 0) {
-            final String partialCommandName = args.get(0);
-            final List<Command> matchedCommands = this.get(partialCommandName);
-            switch (matchedCommands.size()) {
-                case 0:
-                    System.out.println("[Help] Unknown command: " + partialCommandName);
-                    break;
-                case 1:
-                    // Display extended help for command
-                    matchedCommands.get(0).print(true);
-                    break;
-                default:
-                    // Ambiguous command (multiple possible commands)
-                    // Display all commands that matched
-                    final Iterable<String> commandNames = matchedCommands.stream().map(c -> c.name)::iterator;
-                    System.out.println("[Help] Ambiguous command selection: " + String.join(", ", commandNames));
-                    break;
-            }
-        } else {
-            // Display all commands
-            int i = 1;
-            for (final Command command : this.commands) {
-                System.out.print("" + i + ". ");
-                command.print(false);
-                i++;
-            }
+    /**
+     * Lists the name and description of the commands in this menu.
+     */
+    public void help() {
+        // Display help title
+        if (!this.helpTitle.isEmpty()) {
+            System.out.println(this.helpTitle);
         }
-        return true;
+        // Display all commands
+        int i = 1;
+        for (final Command command : this.commands) {
+            System.out.print("" + i + ". ");
+            command.print(false);
+            i++;
+        }
+    }
+
+    /**
+     * Displays the help of a command that starts with the given string.
+     * @param partialCommandName Part of a command's name to use to filter commands (or the index of the command).
+     * @return Whether the command was able to display help of some kind.
+     */
+    public boolean help(final String partialCommandName) {
+        final List<Command> matchedCommands = this.get(partialCommandName);
+        switch (matchedCommands.size()) {
+            case 0:
+                System.out.println("[Help] Unknown command: " + partialCommandName);
+                return false;
+            case 1:
+                // Display extended help for command
+                matchedCommands.get(0).print(true);
+                return true;
+            default:
+                // Ambiguous command (multiple possible commands)
+                // Display all commands that matched
+                final Iterable<String> commandNames = matchedCommands.stream().map(c -> c.name)::iterator;
+                System.out.println("[Help] Ambiguous command selection: " + String.join(", ", commandNames));
+                return false;
+        }
     }
 
     /**
@@ -197,27 +234,36 @@ public class CommandMenu {
     
     /**
      * Run the command menu.
-     * This will block as it reads from the given input stream.
+     * This will block as it reads from the standard input stream.
      */
     public void run() {
+        try (final Scanner scanner = new Scanner(System.in)) {
+            this.run(scanner);
+        }
+    }
+
+    /**
+     * Run the command menu using the given input scanner.
+     * This will block as it reads from the given scanner.
+     * @param stdin The scanner to use to read input.
+     */
+    public void run(final Scanner stdin) {
         if (this.helpOnStart) {
             // Display help
-            this.helpCommand.execute(Collections.emptyList());
+            this.help();
         }
-        try (final Scanner scanner = new Scanner(System.in)) {
-            System.out.print(this.prompt);
-            for (; scanner.hasNextLine(); System.out.print(this.prompt)) {
-                // Get next line entered by user
-                final String line = scanner.nextLine();
-                // Process line
-                if (!processLine(line)) {
-                    break;
-                }
+        System.out.print(this.prompt);
+        for (; stdin.hasNextLine(); System.out.print(this.prompt)) {
+            // Get next line entered by user
+            final String line = stdin.nextLine();
+            // Process line
+            if (!processLine(line, stdin)) {
+                break;
             }
         }
     }
 
-    private boolean processLine(final String line) {
+    private boolean processLine(final String line, final Scanner stdin) {
         // Parse line
         final List<String> args = CommandMenu.parseArguments(line);
         if (args.size() > 0) {
@@ -230,7 +276,7 @@ public class CommandMenu {
                     break;
                 case 1:
                     // Execute command with arguments (excluding the command name)
-                    if (!matchedCommands.get(0).execute(args.subList(1, args.size()))) {
+                    if (!matchedCommands.get(0).execute(args.subList(1, args.size()), stdin)) {
                         // Exit command line interface
                         return false;
                     }
@@ -244,7 +290,7 @@ public class CommandMenu {
             }
         } else if (this.helpOnEmpty) {
             // Display help
-            this.helpCommand.execute(Collections.emptyList());
+            this.help();
         }
         return true;
     }
@@ -252,7 +298,7 @@ public class CommandMenu {
     // region Static methods
 
     private static Command createExitCommand(final String name, final String description, final String help) {
-        return new Command(name, description, help, (final List<String> args) -> false);
+        return new Command(name, description, help, (final List<String> args, final Scanner stdin) -> false);
     }
 
     private static List<String> parseArguments(final String line) {

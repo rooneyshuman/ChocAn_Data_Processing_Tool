@@ -1,6 +1,7 @@
 package chocan.cli;
 
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Represents an executable command.
@@ -29,8 +30,8 @@ public class Command implements CommandFunction {
     }
 
     @Override
-    public boolean execute(final List<String> args) {
-        return this.function.execute(args);
+    public boolean execute(final List<String> args, final Scanner stdin) {
+        return this.function.execute(args, stdin);
     }
 
     /**
