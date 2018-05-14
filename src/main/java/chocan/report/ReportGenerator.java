@@ -9,6 +9,7 @@ import chocan.utils.DateUtils;
 import chocan.utils.StringUtils;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -23,6 +24,7 @@ public class ReportGenerator {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT);
     private static final String DATE_TIME_FORMAT = "MM-dd-uuuu HH:mm:ss";
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
+    private static final NumberFormat MONEY_FORMAT = NumberFormat.getCurrencyInstance();
 
     private final IUserDatabase<Member> memberDatabase;
     private final IUserDatabase<Provider> providerDatabase;
@@ -120,19 +122,20 @@ public class ReportGenerator {
             sb.append(padding).append("| Member name: ").append(member != null ? member.name : "Unknown member").append('\n');
             sb.append(padding).append("| Member number: ").append(record.memberID).append('\n');
             sb.append(padding).append("| Service code: ").append(record.serviceCode).append('\n');
-            sb.append(padding).append("` Fee: $");
+            sb.append(padding).append("` Fee: ");
             if (service != null) {
-                sb.append(service.fee);
+                sb.append(MONEY_FORMAT.format(service.fee));
                 totalFee = totalFee.add(service.fee);
             } else {
-                sb.append("0 (Unknown service)");
+                sb.append(MONEY_FORMAT.format(0));
+                sb.append(" (Unknown service)");
             }
             sb.append('\n');
             i++;
         }
         // Print totals
         sb.append("Total consultations provided: ").append(providerServiceRecords.size()).append('\n');
-        sb.append("Total fee for the week: $").append(totalFee).append('\n');
+        sb.append("Total fee for the week: ").append(MONEY_FORMAT.format(totalFee)).append('\n');
         // Return finished report
         return sb.toString();
     }
@@ -173,7 +176,7 @@ public class ReportGenerator {
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
             sb.append(StringUtils.padLeft(Integer.toString(i), idStringLength)).append(". ").append(provider != null ? provider.name : "Unknown provider").append('\n');
             sb.append(padding).append("| Number of consultations: ").append(records.size()).append('\n');
-            sb.append(padding).append("` Total fee: $").append(totalFee).append('\n');
+            sb.append(padding).append("` Total fee: ").append(MONEY_FORMAT.format(totalFee)).append('\n');
             totalConsultations += records.size();
             overallFee = overallFee.add(totalFee);
             i++;
@@ -181,7 +184,7 @@ public class ReportGenerator {
         // Print summary information
         sb.append("Total number of providers: ").append(providerServiceRecordMap.size()).append('\n');
         sb.append("Total number of consultations: ").append(totalConsultations).append('\n');
-        sb.append("Overall fee: $").append(overallFee).append('\n');
+        sb.append("Overall fee: ").append(MONEY_FORMAT.format(overallFee)).append('\n');
         // Return finished report
         return sb.toString();
     }
