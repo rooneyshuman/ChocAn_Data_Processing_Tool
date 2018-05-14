@@ -11,7 +11,7 @@ public class ProviderServiceDirectory implements IProviderServiceDirectory {
 
     @Nullable
     @Override
-    public Service get(final int id) {
+    public Service get(final int code) {
         // TODO
         return null;
     }
