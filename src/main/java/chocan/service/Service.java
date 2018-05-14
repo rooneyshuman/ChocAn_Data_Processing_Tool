@@ -1,10 +1,9 @@
 package chocan.service;
 
-import chocan.utils.BufferUtils;
-
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 /**
  * A data object for storing service information.
@@ -29,14 +28,13 @@ public class Service {
     }
 
     /**
-     * Creates a new service object from a buffer.
-     * @param buffer A buffer containing the data for this service.
+     * Creates a new service object from the input data object.
+     * @param input An input data object to read from.
      */
-    public Service(final ByteBuffer buffer) {
-        buffer.order(ByteOrder.BIG_ENDIAN);
-        this.code = buffer.getInt();
-        this.name = BufferUtils.readUTF8_1(buffer).toString();
-        this.fee = new BigDecimal(BufferUtils.readUTF8_1(buffer).toString());
+    public Service(final DataInput input) throws IOException {
+        this.code = input.readInt();
+        this.name = input.readUTF();
+        this.fee = new BigDecimal(input.readUTF());
     }
 
     /**
@@ -47,17 +45,12 @@ public class Service {
     }
 
     /**
-     * Creates a buffer containing the binary-serialized service data.
-     * @return The buffer containing the service data.
+     * Writes the binary-serialized service data to the output object.
      */
-    public ByteBuffer toBuffer() {
-        final ByteBuffer nameBuffer = BufferUtils.writeUTF8_1(this.name);
-        final ByteBuffer feeBuffer = BufferUtils.writeUTF8_1(this.fee.toString());
-        final ByteBuffer buffer = ByteBuffer.allocate(4 + nameBuffer.remaining() + feeBuffer.remaining());
-        buffer.putInt(this.code);
-        buffer.put(nameBuffer);
-        buffer.put(feeBuffer);
-        return buffer;
+    public void write(final DataOutput output) throws IOException {
+        output.writeInt(this.code);
+        output.writeUTF(this.name);
+        output.writeUTF(this.fee.toString());
     }
 
 }

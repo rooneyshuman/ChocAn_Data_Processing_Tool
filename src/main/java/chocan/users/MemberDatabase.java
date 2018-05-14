@@ -1,7 +1,8 @@
 package chocan.users;
 
+import java.io.DataInput;
 import java.io.File;
-import java.nio.ByteBuffer;
+import java.io.IOException;
 
 /**
  *
@@ -17,7 +18,7 @@ public class MemberDatabase extends UserDatabase<Member> {
     }
 
     @Override
-    protected Member createUser(final ByteBuffer input) {
+    protected Member createUser(final DataInput input) throws IOException {
         return new Member(input);
     }
 

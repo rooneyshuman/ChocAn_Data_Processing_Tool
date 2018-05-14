@@ -1,10 +1,9 @@
 package chocan.users;
 
 import javax.annotation.Nullable;
+import java.io.DataInput;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
 
 /**
  * 
@@ -24,13 +23,14 @@ public abstract class UserDatabase<U extends User> implements IUserDatabase<U> {
 	public UserDatabase(final File file) {
 		this.file = file;
 	}
-	
+
 	/**
-	 * Overridable factory function for creating a new user from raw data.
-	 * @param input The data to parse and create the user from.
+	 * Overridable factory function for creating a new user from binary data.
+	 * @param input The input data object to read from to create the user.
 	 * @return A newly created user.
+	 * @throws IOException If an error occurred while reading from the input data object.
 	 */
-	protected abstract U createUser(final ByteBuffer input);
+	protected abstract U createUser(final DataInput input) throws IOException;
 	
 	/**
 	 * 
@@ -40,15 +40,6 @@ public abstract class UserDatabase<U extends User> implements IUserDatabase<U> {
 	public boolean contains(final int id) {
 		// TODO
 		return false;
-	}
-	
-	/**
-	 * 
-	 * @param user
-	 * @return
-	 */
-	public boolean contains(final U user) {
-		return this.contains(user.id);
 	}
 	
 	/**
@@ -80,15 +71,6 @@ public abstract class UserDatabase<U extends User> implements IUserDatabase<U> {
 	public boolean remove(final int id) {
 		// TODO
 		return false;
-	}
-	
-	/**
-	 *
-	 * @param user
-	 * @return
-	 */
-	public boolean remove(final U user) {
-		return this.remove(user.id);
 	}
 	
 	/**

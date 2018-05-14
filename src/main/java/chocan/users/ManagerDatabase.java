@@ -1,7 +1,8 @@
 package chocan.users;
 
+import java.io.DataInput;
 import java.io.File;
-import java.nio.ByteBuffer;
+import java.io.IOException;
 
 /**
  *
@@ -17,7 +18,7 @@ public class ManagerDatabase extends UserDatabase<Manager> {
     }
 
     @Override
-    protected Manager createUser(final ByteBuffer input) {
+    protected Manager createUser(final DataInput input) throws IOException {
         return new Manager(input);
     }
 

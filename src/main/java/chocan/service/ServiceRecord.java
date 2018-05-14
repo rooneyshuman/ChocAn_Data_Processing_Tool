@@ -1,7 +1,11 @@
 package chocan.service;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 /**
  * A data object for storing service record information.
@@ -60,10 +64,35 @@ public class ServiceRecord {
     }
 
     /**
+     * Creates a new service record from a input data object.
+     * @param input An input data object to read from.
+     */
+    public ServiceRecord(final DataInput input) throws IOException {
+        this.dateTime = LocalDateTime.ofEpochSecond(input.readLong(), 0, ZoneOffset.UTC);
+        this.serviceDate = LocalDate.ofEpochDay(input.readLong());
+        this.providerID = input.readInt();
+        this.memberID = input.readInt();
+        this.serviceCode = input.readInt();
+        this.comments = input.readUTF();
+    }
+
+    /**
      *
      */
     public void display() {
         // TODO How do we want to format this data?
+    }
+
+    /**
+     * Writes the binary-serialized service record data to the output object.
+     */
+    public void write(final DataOutput output) throws IOException {
+        output.writeLong(this.dateTime.toEpochSecond(ZoneOffset.UTC));
+        output.writeLong(this.serviceDate.toEpochDay());
+        output.writeInt(this.providerID);
+        output.writeInt(this.memberID);
+        output.writeInt(this.serviceCode);
+        output.writeUTF(this.comments);
     }
 
 }

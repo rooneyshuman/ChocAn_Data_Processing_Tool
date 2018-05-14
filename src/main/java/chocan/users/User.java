@@ -1,9 +1,8 @@
 package chocan.users;
 
-import chocan.utils.BufferUtils;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 
 /**
  *
@@ -70,26 +69,29 @@ public class User {
 
 	/**
 	 * Creates a new user from a buffer.
-	 * @param buffer A buffer containing the data for this user.
+	 * @param input An input data object to read from.
 	 */
-	public User(final ByteBuffer buffer) {
-	    buffer.order(ByteOrder.BIG_ENDIAN);
-        this.id = buffer.getInt();
-        this.active = buffer.get() > 0;
-        this.name = BufferUtils.readUTF8_1(buffer).toString();
-        this.address = BufferUtils.readUTF8_1(buffer).toString();
-        this.city = BufferUtils.readUTF8_1(buffer).toString();
-        this.state = BufferUtils.readUTF8_1(buffer).toString();
-        this.zip = buffer.getInt();
+	public User(final DataInput input) throws IOException {
+		this.id = input.readInt();
+		this.active = input.readBoolean();
+		this.name = input.readUTF();
+		this.address = input.readUTF();
+		this.city = input.readUTF();
+		this.state = input.readUTF();
+		this.zip = input.readInt();
 	}
 
-    /**
-     *
-     * @return
-     */
-	public ByteBuffer toBuffer() {
-	    // TODO Write user data to buffer
-        return ByteBuffer.allocate(100);
-    }
+	/**
+	 * Writes the binary-serialized service data to the output object.
+	 */
+	public void write(final DataOutput output) throws IOException {
+		output.writeInt(this.id);
+		output.writeBoolean(this.active);
+		output.writeUTF(this.name);
+		output.writeUTF(this.address);
+		output.writeUTF(this.city);
+		output.writeUTF(this.state);
+		output.writeInt(this.zip);
+	}
 
 }

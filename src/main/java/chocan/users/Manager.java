@@ -1,6 +1,7 @@
 package chocan.users;
 
-import java.nio.ByteBuffer;
+import java.io.DataInput;
+import java.io.IOException;
 
 /**
  *
@@ -26,10 +27,10 @@ public class Manager extends User {
 
     /**
      *
-     * @param buffer
+     * @param input
      */
-    public Manager(final ByteBuffer buffer) {
-        super(buffer);
+    public Manager(final DataInput input) throws IOException {
+        super(input);
     }
 
 }
