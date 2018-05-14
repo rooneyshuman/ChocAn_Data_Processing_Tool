@@ -29,6 +29,11 @@ public class ServiceRecordDatabase extends SimpleDatabase<ServiceRecord> impleme
     }
 
     @Override
+    public int size() {
+        return this.serviceRecordMap.size();
+    }
+
+    @Override
     public Collection<ServiceRecord> get(final LocalDateTime from, final LocalDateTime to) {
         return this.serviceRecordMap.subMap(from, to).values();
     }
@@ -49,9 +54,9 @@ public class ServiceRecordDatabase extends SimpleDatabase<ServiceRecord> impleme
     }
 
     @Override
-    public void read() throws IOException {
+    public void load() throws IOException {
         this.serviceRecordMap.clear();
-        super.read();
+        super.load();
     }
 
     /**

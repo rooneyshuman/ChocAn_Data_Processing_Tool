@@ -22,6 +22,11 @@ public abstract class SimpleDatabase<I extends SimpleDatabaseItem> {
     }
 
     /**
+     * Gets the number of items in the database.
+     */
+    public abstract int size();
+
+    /**
      * Gets a iterable interface over the items of the database.
      */
     protected abstract Iterable<I> getItems();
@@ -35,7 +40,7 @@ public abstract class SimpleDatabase<I extends SimpleDatabaseItem> {
     protected abstract I createItem(final DataInput input) throws IOException;
 
     /**
-     * Invoked when an item is created during a read operation.
+     * Invoked when an item is created during a load operation.
      * @param item The newly created item.
      */
     protected abstract void itemCreated(final I item);
@@ -44,10 +49,12 @@ public abstract class SimpleDatabase<I extends SimpleDatabaseItem> {
      * Reads the file into the database.
      * @throws IOException If an error occurs while reading from the database file.
      */
-    public void read() throws IOException {
-        try (final DataInputStream dataInputStream = new DataInputStream(new FileInputStream(this.file))) {
-            while (dataInputStream.available() > 0) {
-                this.itemCreated(this.createItem(dataInputStream));
+    public void load() throws IOException {
+        if (this.file.exists()) {
+            try (final DataInputStream dataInputStream = new DataInputStream(new FileInputStream(this.file))) {
+                while (dataInputStream.available() > 0) {
+                    this.itemCreated(this.createItem(dataInputStream));
+                }
             }
         }
     }
@@ -56,7 +63,7 @@ public abstract class SimpleDatabase<I extends SimpleDatabaseItem> {
      * Writes the database to the file.
      * @throws IOException If an error occurs while writing to the database file.
      */
-    public void write() throws IOException {
+    public void save() throws IOException {
         try (final DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(this.file))) {
             for (final I item : this.getItems()) {
                 item.write(dataOutputStream);

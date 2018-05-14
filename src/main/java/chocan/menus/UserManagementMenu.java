@@ -2,6 +2,7 @@ package chocan.menus;
 
 import chocan.cli.Command;
 import chocan.cli.CommandMenu;
+import chocan.users.Manager;
 
 import java.util.List;
 import java.util.Scanner;
@@ -41,6 +42,26 @@ public class UserManagementMenu extends CommandMenu {
             return true;
         }));
         this.setExitCommand("back", "Go back to manager menu", "");
+    }
+
+    /**
+     * Prompts the user to enter manager information.
+     * @param id The ID of the new manager.
+     * @param stdin A standard input scanner.
+     * @return A newly created manager object.
+     */
+    public static Manager promptManager(final int id, final Scanner stdin) {
+        System.out.print("Name: ");
+        final String name = stdin.nextLine();
+        System.out.print("Street address: ");
+        final String address = stdin.nextLine();
+        System.out.print("City: ");
+        final String city = stdin.nextLine();
+        System.out.print("State: ");
+        final String state = stdin.nextLine();
+        System.out.print("Zip: ");
+        final int zip = stdin.nextInt();
+        return new Manager(id, true, name, address, city, state, zip);
     }
 
 }

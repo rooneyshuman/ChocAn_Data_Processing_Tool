@@ -10,11 +10,10 @@ import java.io.IOException;
 public class ManagerDatabase extends UserDatabase<Manager> {
 
     /**
-     * Creates a new user database handler.
-     * @param file The backing file for the database.
+     * Creates a new manager database.
      */
-    public ManagerDatabase(final File file) {
-        super(file);
+    public ManagerDatabase() {
+        super(new File("manager.db"));
     }
 
     @Override

@@ -31,6 +31,11 @@ public class ProviderServiceDirectory extends SimpleDatabase<Service> implements
         super(file);
     }
 
+    @Override
+    public int size() {
+        return this.serviceMap.size();
+    }
+
     @Nullable
     @Override
     public Service get(final int code) {
@@ -53,10 +58,10 @@ public class ProviderServiceDirectory extends SimpleDatabase<Service> implements
     }
 
     @Override
-    public void read() throws IOException {
+    public void load() throws IOException {
         this.serviceMap.clear();
         this.sortedServices.clear();
-        super.read();
+        super.load();
     }
 
     /**

@@ -28,6 +28,11 @@ public abstract class UserDatabase<U extends User> extends SimpleDatabase<U> imp
         super(file);
     }
 
+    @Override
+    public int size() {
+        return this.users.size();
+    }
+
     @Nullable
     @Override
     public U get(int id) {
@@ -58,9 +63,9 @@ public abstract class UserDatabase<U extends User> extends SimpleDatabase<U> imp
     }
 
     @Override
-    public void read() throws IOException {
+    public void load() throws IOException {
         this.users.clear();
-        super.read();
+        super.load();
     }
 
     /**

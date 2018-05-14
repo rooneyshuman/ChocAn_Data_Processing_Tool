@@ -11,10 +11,9 @@ public class MemberDatabase extends UserDatabase<Member> {
 
     /**
      * Creates a new user database handler.
-     * @param file The backing file for the database.
      */
-    public MemberDatabase(final File file) {
-        super(file);
+    public MemberDatabase() {
+        super(new File("member.db"));
     }
 
     @Override
