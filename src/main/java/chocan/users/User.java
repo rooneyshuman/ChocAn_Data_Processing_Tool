@@ -1,5 +1,7 @@
 package chocan.users;
 
+import chocan.database.SimpleDatabaseItem;
+
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
@@ -7,8 +9,8 @@ import java.io.IOException;
 /**
  *
  */
-public class User {
-	
+public class User implements SimpleDatabaseItem {
+
 	/**
 	 * A 9-digit account number of the user.
 	 */
@@ -81,17 +83,15 @@ public class User {
 		this.zip = input.readInt();
 	}
 
-	/**
-	 * Writes the binary-serialized service data to the output object.
-	 */
-	public void write(final DataOutput output) throws IOException {
-		output.writeInt(this.id);
-		output.writeBoolean(this.active);
-		output.writeUTF(this.name);
-		output.writeUTF(this.address);
-		output.writeUTF(this.city);
-		output.writeUTF(this.state);
-		output.writeInt(this.zip);
-	}
+    @Override
+    public void write(final DataOutput output) throws IOException {
+        output.writeInt(this.id);
+        output.writeBoolean(this.active);
+        output.writeUTF(this.name);
+        output.writeUTF(this.address);
+        output.writeUTF(this.city);
+        output.writeUTF(this.state);
+        output.writeInt(this.zip);
+    }
 
 }
