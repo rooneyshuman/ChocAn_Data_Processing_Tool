@@ -1,7 +1,7 @@
 package chocan.service;
 
 import java.time.LocalDateTime;
-import java.util.stream.Stream;
+import java.util.Collection;
 
 /**
  * A read-only interface for the service record database.
@@ -14,8 +14,8 @@ public interface IServiceRecordDatabase {
      * @see ServiceRecord#dateTime
      * @param from The lower bound of the date time range.
      * @param to The upper bound of the date time range.
-     * @return A stream of service records.
+     * @return A collection of service records.
      */
-    Stream<ServiceRecord> get(final LocalDateTime from, final LocalDateTime to);
+    Collection<ServiceRecord> get(final LocalDateTime from, final LocalDateTime to);
 
 }

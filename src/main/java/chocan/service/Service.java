@@ -1,5 +1,7 @@
 package chocan.service;
 
+import chocan.database.SimpleDatabaseItem;
+
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
@@ -8,11 +10,11 @@ import java.math.BigDecimal;
 /**
  * A data object for storing service information.
  */
-public class Service {
+public class Service implements SimpleDatabaseItem {
 
     public final int code;
+    public final String name;
 
-    public String name;
     public BigDecimal fee;
 
     /**
@@ -47,6 +49,7 @@ public class Service {
     /**
      * Writes the binary-serialized service data to the output object.
      */
+    @Override
     public void write(final DataOutput output) throws IOException {
         output.writeInt(this.code);
         output.writeUTF(this.name);

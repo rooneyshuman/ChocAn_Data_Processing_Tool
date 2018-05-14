@@ -1,5 +1,7 @@
 package chocan.service;
 
+import chocan.database.SimpleDatabaseItem;
+
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
@@ -10,7 +12,7 @@ import java.time.ZoneOffset;
 /**
  * A data object for storing service record information.
  */
-public class ServiceRecord {
+public class ServiceRecord implements SimpleDatabaseItem {
 
     /**
      * The date and time the record was created.
@@ -86,6 +88,7 @@ public class ServiceRecord {
     /**
      * Writes the binary-serialized service record data to the output object.
      */
+    @Override
     public void write(final DataOutput output) throws IOException {
         output.writeLong(this.dateTime.toEpochSecond(ZoneOffset.UTC));
         output.writeLong(this.serviceDate.toEpochDay());

@@ -67,6 +67,7 @@ public class ReportGenerator {
         // Query for recorded services provided
         final List<ServiceRecord> memberServiceRecords = this.serviceRecordDatabase
                 .get(weekRange[0], weekRange[1])
+                .stream()
                 .filter(record -> record.memberID == member.id)
                 .sorted(Comparator.comparing(record1 -> record1.serviceDate))
                 .collect(Collectors.toList());
@@ -105,6 +106,7 @@ public class ReportGenerator {
         // Query for recorded services provided
         final List<ServiceRecord> providerServiceRecords = this.serviceRecordDatabase
                 .get(weekRange[0], weekRange[1])
+                .stream()
                 .filter(record -> record.providerID == provider.id)
                 .sorted(Comparator.comparing(record1 -> record1.serviceDate))
                 .collect(Collectors.toList());
@@ -152,10 +154,10 @@ public class ReportGenerator {
         final SortedMap<Integer, List<ServiceRecord>> providerServiceRecordMap;
         {
             final Map<Integer, List<ServiceRecord>> _providerServiceRecordMap = new HashMap<>();
-            this.serviceRecordDatabase.get(weekRange[0], weekRange[1]).forEach(record -> {
+            for (final ServiceRecord record : this.serviceRecordDatabase.get(weekRange[0], weekRange[1])) {
                 final List<ServiceRecord> records = _providerServiceRecordMap.computeIfAbsent(record.providerID, k -> new ArrayList<>());
                 records.add(record);
-            });
+            }
             providerServiceRecordMap = new TreeMap<>(_providerServiceRecordMap);
         }
         // Print provider and service record information

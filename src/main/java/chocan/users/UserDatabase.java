@@ -15,14 +15,23 @@ import java.util.Map;
  */
 public abstract class UserDatabase<U extends User> extends SimpleDatabase<U> implements IUserDatabase<U> {
 
+    /**
+     * A hash table mapping user IDs to user objects.
+     */
     private final Map<Integer, U> users = new HashMap<>();
 
 	/**
-	 * Creates a new user database handler.
+	 * Creates a new user database.
 	 * @param file The backing file for the database.
 	 */
 	protected UserDatabase(final File file) {
 	    super(file);
+	}
+
+	@Nullable
+	@Override
+	public U get(int id) {
+		return this.users.get(id);
 	}
 
     @Override
@@ -45,13 +54,13 @@ public abstract class UserDatabase<U extends User> extends SimpleDatabase<U> imp
 
     @Override
     protected void itemCreated(final U user) {
-        this.users.put(user.id, user);
+        this.add(user);
     }
 
-    @Nullable
     @Override
-    public U get(int id) {
-        return this.users.get(id);
+    public void read() throws IOException {
+        this.users.clear();
+        super.read();
     }
 
     /**
