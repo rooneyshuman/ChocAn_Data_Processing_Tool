@@ -33,19 +33,24 @@ public class BufferUtils {
 
     /**
      * Writes a UTF-8 character sequence to the buffer with a maximum length of 2^8-1 bytes.
-     * @param buffer The buffer to write to.
      * @param sequence The character sequence to write to the buffer.
+     * @return A new buffer containing the encoded UTF-8 character sequence.
      */
-    public static void writeUTF8_1(final ByteBuffer buffer, final CharSequence sequence) {
+    public static ByteBuffer writeUTF8_1(final CharSequence sequence) {
         final ByteBuffer encodedBytes = StandardCharsets.UTF_8.encode(CharBuffer.wrap(sequence));
         final int length = encodedBytes.remaining();
         if (length > 255) {
             throw new IllegalArgumentException("Length of UTF-8 encoded character sequence cannot be greater than 255.");
         }
+        final ByteBuffer buffer = ByteBuffer.allocate(1 + encodedBytes.remaining());
         // Write number of UTF-8 encoded bytes
         buffer.put((byte) length);
         // Write UTF-8 bytes of character sequence
         buffer.put(encodedBytes);
+        // Prepare buffer
+        buffer.flip();
+        // Return buffer
+        return buffer;
     }
 
 }
