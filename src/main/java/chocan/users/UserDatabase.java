@@ -20,19 +20,19 @@ public abstract class UserDatabase<U extends User> extends SimpleDatabase<U> imp
      */
     private final Map<Integer, U> users = new HashMap<>();
 
-	/**
-	 * Creates a new user database.
-	 * @param file The backing file for the database.
-	 */
-	protected UserDatabase(final File file) {
-	    super(file);
-	}
+    /**
+     * Creates a new user database.
+     * @param file The backing file for the database.
+     */
+    protected UserDatabase(final File file) {
+        super(file);
+    }
 
-	@Nullable
-	@Override
-	public U get(int id) {
-		return this.users.get(id);
-	}
+    @Nullable
+    @Override
+    public U get(int id) {
+        return this.users.get(id);
+    }
 
     @Override
     protected Iterable<U> getItems() {
@@ -40,12 +40,12 @@ public abstract class UserDatabase<U extends User> extends SimpleDatabase<U> imp
     }
 
     /**
-	 * Overridable factory function for creating a new user from binary data.
-	 * @param input The input data object to read from to create the user.
-	 * @return A newly created user.
-	 * @throws IOException If an error occurred while reading from the input data object.
-	 */
-	protected abstract U createUser(final DataInput input) throws IOException;
+     * Overridable factory function for creating a new user from binary data.
+     * @param input The input data object to read from to create the user.
+     * @return A newly created user.
+     * @throws IOException If an error occurred while reading from the input data object.
+     */
+    protected abstract U createUser(final DataInput input) throws IOException;
 
     @Override
     protected U createItem(final DataInput input) throws IOException {
@@ -64,29 +64,29 @@ public abstract class UserDatabase<U extends User> extends SimpleDatabase<U> imp
     }
 
     /**
-	 * Determines whether the database contains the user by their ID.
-	 * @param id The ID (account number) of the user.
-	 * @return Whether the database contains the user.
-	 */
-	public boolean contains(final int id) {
-	    return this.users.containsKey(id);
-	}
+     * Determines whether the database contains the user by their ID.
+     * @param id The ID (account number) of the user.
+     * @return Whether the database contains the user.
+     */
+    public boolean contains(final int id) {
+        return this.users.containsKey(id);
+    }
 
-	/**
+    /**
      * Adds the user to the database.
-	 * @param user The user to add.
-	 * @return Whether the user was newly added.
-	 */
-	public boolean add(final U user) {
-	    return this.users.put(user.id, user) == null;
-	}
-	
-	/**
+     * @param user The user to add.
+     * @return Whether the user was newly added.
+     */
+    public boolean add(final U user) {
+        return this.users.put(user.id, user) == null;
+    }
+
+    /**
      * Removes the user from the database by ID.
-	 * @param id The ID (account number) of the user.
-	 * @return Whether the user was removed.
-	 */
-	public boolean remove(final int id) {
+     * @param id The ID (account number) of the user.
+     * @return Whether the user was removed.
+     */
+    public boolean remove(final int id) {
         return this.users.remove(id) != null;
     }
 
