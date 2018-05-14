@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 
+ * A database of users.
  * @param <U>
  */
 public abstract class UserDatabase<U extends User> extends SimpleDatabase<U> implements IUserDatabase<U> {
@@ -48,47 +48,37 @@ public abstract class UserDatabase<U extends User> extends SimpleDatabase<U> imp
         this.users.put(user.id, user);
     }
 
-    /**
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public boolean contains(final int id) {
-		// TODO
-		return false;
-	}
-	
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@Nullable
-	public U get(final int id) {
-		// TODO
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param user
-	 * @return
-	 */
-	public boolean add(final U user) {
-		// TODO
-		return false;
-	}
-	
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public boolean remove(final int id) {
-        // TODO
-        return false;
+    @Nullable
+    @Override
+    public U get(int id) {
+        return this.users.get(id);
     }
 
+    /**
+	 * Determines whether the database contains the user by their ID.
+	 * @param id The ID (account number) of the user.
+	 * @return Whether the database contains the user.
+	 */
+	public boolean contains(final int id) {
+	    return this.users.containsKey(id);
+	}
 
+	/**
+     * Adds the user to the database.
+	 * @param user The user to add.
+	 * @return Whether the user was newly added.
+	 */
+	public boolean add(final U user) {
+	    return this.users.put(user.id, user) == null;
+	}
+	
+	/**
+     * Removes the user from the database by ID.
+	 * @param id The ID (account number) of the user.
+	 * @return Whether the user was removed.
+	 */
+	public boolean remove(final int id) {
+        return this.users.remove(id) != null;
+    }
 
 }

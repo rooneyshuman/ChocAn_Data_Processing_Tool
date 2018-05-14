@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- *
+ * A database of members.
  */
 public class MemberDatabase extends UserDatabase<Member> {
 

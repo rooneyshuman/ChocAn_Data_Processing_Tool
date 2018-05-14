@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- *
+ * A database of managers.
  */
 public class ManagerDatabase extends UserDatabase<Manager> {
 

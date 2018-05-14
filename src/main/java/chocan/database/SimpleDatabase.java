@@ -22,7 +22,7 @@ public abstract class SimpleDatabase<I extends SimpleDatabaseItem> {
     }
 
     /**
-     * Gets a iterable object over the items of the database.
+     * Gets a iterable interface over the items of the database.
      */
     protected abstract Iterable<I> getItems();
 
