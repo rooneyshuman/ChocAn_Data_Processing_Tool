@@ -11,15 +11,13 @@ import java.util.Scanner;
  */
 public class MainMenu extends CommandMenu {
 
-    private final ProviderMenu providerMenu;
-    private final ManagerMenu managerMenu;
+    private final ProviderMenu providerMenu = new ProviderMenu();
+    private final ManagerMenu managerMenu = new ManagerMenu();
 
     /**
      *
      */
     public MainMenu() {
-        this.providerMenu = new ProviderMenu();
-        this.managerMenu = new ManagerMenu();
         this.setHelpTitle("[Main Menu] Select a mode:");
         this.add(new Command("provider", "Provider's terminal", "", (final List<String> args, final Scanner stdin) -> {
             // TODO Provider authentication

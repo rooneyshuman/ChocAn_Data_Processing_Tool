@@ -11,21 +11,31 @@ import java.util.Scanner;
  */
 public class ManagerMenu extends CommandMenu {
 
+    private final UserManagementMenu userManagementMenu = new UserManagementMenu();
+    private final ServiceManagementMenu serviceManagementMenu = new ServiceManagementMenu();
+    private final ReportsMenu reportsMenu = new ReportsMenu();
+
     /**
      *
      */
     public ManagerMenu() {
         this.setHelpTitle("[Manager Menu] Choose an option:");
         this.add(new Command("user", "User management", "", (final List<String> args, final Scanner stdin) -> {
-            // TODO Launch user management menu
+            this.userManagementMenu.run(stdin);
             this.help();
             return true;
         }));
         this.add(new Command("service", "Service management", "", (final List<String> args, final Scanner stdin) -> {
-            // TODO Launch service management menu
+            this.serviceManagementMenu.run(stdin);
             this.help();
             return true;
         }));
+        this.add(new Command("report", "Report Generation", "", (final List<String> args, final Scanner stdin) -> {
+            this.reportsMenu.run(stdin);
+            this.help();
+            return true;
+        }));
+        this.setExitCommand("back", "Go back to main menu", "");
     }
 
 }

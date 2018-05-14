@@ -28,6 +28,7 @@ public class ProviderMenu extends CommandMenu {
             // TODO Launch interactive service directory interface
             return true;
         }));
+        this.setExitCommand("back", "Go back to main menu", "");
     }
 
 }
