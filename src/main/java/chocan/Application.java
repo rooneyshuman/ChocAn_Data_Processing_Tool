@@ -1,5 +1,7 @@
 package chocan;
 
+import chocan.menus.MainMenu;
+
 /**
  * The main application class.
  */

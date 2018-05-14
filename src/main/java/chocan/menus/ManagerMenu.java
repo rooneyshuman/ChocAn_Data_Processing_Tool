@@ -1,4 +1,4 @@
-package chocan;
+package chocan.menus;
 
 import chocan.cli.Command;
 import chocan.cli.CommandMenu;
