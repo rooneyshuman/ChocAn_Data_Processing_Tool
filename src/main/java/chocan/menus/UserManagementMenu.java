@@ -3,6 +3,8 @@ package chocan.menus;
 import chocan.cli.Command;
 import chocan.cli.CommandMenu;
 import chocan.users.Manager;
+import chocan.utils.IOUtils;
+import chocan.utils.ParseUtils;
 
 import java.util.List;
 import java.util.Scanner;
@@ -60,7 +62,10 @@ public class UserManagementMenu extends CommandMenu {
         System.out.print("State: ");
         final String state = stdin.nextLine();
         System.out.print("Zip: ");
-        final int zip = stdin.nextInt();
+        final int zip = IOUtils.readUnsignedInt(stdin, () -> {
+            System.out.println("Unable to parse zip as an integer. Please try again...");
+            System.out.print("Zip: ");
+        });
         return new Manager(id, true, name, address, city, state, zip);
     }
 

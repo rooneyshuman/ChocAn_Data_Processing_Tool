@@ -24,7 +24,7 @@ public class ProviderMenu extends CommandMenu {
             // TODO
             return true;
         }));
-        this.add(new Command("directory", "Provider Service Directory", "", (final List<String> args, final Scanner stdin) -> {
+        this.add(new Command("directory", "Open Provider Service Directory", "", (final List<String> args, final Scanner stdin) -> {
             // TODO Launch interactive service directory interface
             return true;
         }));

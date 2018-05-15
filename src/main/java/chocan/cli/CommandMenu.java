@@ -233,16 +233,6 @@ public class CommandMenu {
     }
     
     /**
-     * Run the command menu.
-     * This will block as it reads from the standard input stream.
-     */
-    public void run() {
-        try (final Scanner scanner = new Scanner(System.in)) {
-            this.run(scanner);
-        }
-    }
-
-    /**
      * Run the command menu using the given input scanner.
      * This will block as it reads from the given scanner.
      * @param stdin The scanner to use to read input.

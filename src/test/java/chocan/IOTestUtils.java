@@ -8,6 +8,8 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
+import java.util.function.Consumer;
 
 public class IOTestUtils {
 
@@ -40,16 +42,16 @@ public class IOTestUtils {
         void write(byte[] buffer, int offset, int length);
     }
 
-    public static boolean configurePipes(final Runnable runnable, final PipesCreatedCallback callback) throws IOException, InterruptedException {
-        return configurePipes(runnable, callback, 0);
+    public static boolean configurePipes(final Consumer<Scanner> inputConsumer, final PipesCreatedCallback callback) throws IOException, InterruptedException {
+        return configurePipes(inputConsumer, callback, 0);
     }
 
     /**
      *
-     * @param runnable
+     * @param inputConsumer
      * @param callback
      */
-    public static boolean configurePipes(final Runnable runnable, final PipesCreatedCallback callback, final int timeout) throws IOException, InterruptedException {
+    public static boolean configurePipes(final Consumer<Scanner> inputConsumer, final PipesCreatedCallback callback, final int timeout) throws IOException, InterruptedException {
         final InputStream oldIn = System.in;
         final PrintStream oldOut = System.out;
         final PipedInputStream in = new PipedInputStream();
@@ -58,7 +60,9 @@ public class IOTestUtils {
             System.setIn(in);
             System.setOut(new PrintStream(out));
             final Thread thread = new Thread(() -> {
-                runnable.run();
+                try (final Scanner stdin = new Scanner(System.in)) {
+                    inputConsumer.accept(stdin);
+                }
                 try {
                     in.close();
                 } catch (IOException e) {

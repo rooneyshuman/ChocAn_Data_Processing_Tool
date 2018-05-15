@@ -1,11 +1,15 @@
 package chocan;
 
+import chocan.cli.Command;
+import chocan.cli.CommandMenu;
 import chocan.menus.MainMenu;
 import chocan.menus.UserManagementMenu;
 import chocan.users.Manager;
 import chocan.users.ManagerDatabase;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -31,30 +35,51 @@ public class Application {
      * Runs the application.
      */
     private void run() throws IOException {
-        System.out.println("[Chocoholics Anonymous] Welcome!");
         // Load the manager database
         final ManagerDatabase managerDatabase = new ManagerDatabase();
         try {
             System.out.print("Loading databases...");
             managerDatabase.load();
             System.out.println(" Done.");
-            // Check for at least one manager
-            if (managerDatabase.size() <= 0) {
-                System.out.println("No managers detected. Entering setup mode...");
-                //System.out.println("Create initial manager:");
-                //final Scanner stdin = new Scanner(System.in);
-                //final Manager initialManager = UserManagementMenu.promptManager(100000000, stdin);
-                final Manager initialManager = new Manager(100000000, true, "admin", "", "", "", 0);
-                managerDatabase.add(initialManager);
-                System.out.println("Created initial manager: " + initialManager.name + " (" + initialManager.id + ")");
+            try (final Scanner stdin = new Scanner(System.in)) {
+                // Check for at least one manager
+                if (managerDatabase.size() <= 0) {
+                    System.out.println("No managers detected.");
+                    final Manager initialManager = Application.createInitialManager(stdin, 100000000);
+                    if (initialManager == null) {
+                        return;
+                    }
+                    managerDatabase.add(initialManager);
+                    System.out.println("Created initial manager: " + initialManager.name + " (" + initialManager.id + ")");
+                }
+                // Display welcome message
+                System.out.println("[Chocoholics Anonymous] Welcome!");
+                // Start text menu
+                new MainMenu().run(stdin);
             }
-            // Start text menu
-            new MainMenu().run();
         } finally {
             System.out.print("Saving databases...");
             managerDatabase.save();
             System.out.println(" Done.");
         }
+    }
+    
+    @Nullable
+    private static Manager createInitialManager(final Scanner stdin, final int id) {
+        final Manager[] initialManager = new Manager[1];
+        final CommandMenu initialManagerMenu = new CommandMenu();
+        initialManagerMenu.setHelpTitle("How should the initial manager be created?");
+        initialManagerMenu.setHelpEnabled(false);
+        initialManagerMenu.add(new Command("provide", "I will provide the information", "", (final List<String> args, final Scanner _stdin) -> {
+            initialManager[0] = UserManagementMenu.promptManager(id, stdin);
+            return false;
+        }));
+        initialManagerMenu.add(new Command("default", "Let the application use default information", "", (final List<String> args, final Scanner _stdin) -> {
+            initialManager[0] = new Manager(id, true, "admin", "", "", "", 0);
+            return false;
+        }));
+        initialManagerMenu.run(stdin);
+        return initialManager[0];
     }
 
 }
