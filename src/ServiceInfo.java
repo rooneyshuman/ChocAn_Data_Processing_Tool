@@ -1,12 +1,11 @@
 //ServiceInfo: holds info for each service code. Contained within Provider Directory
-
 public class ServiceInfo {
     //Data fields
     private String name;
     private int code;
 
     //Default constructor
-    public ServiceInfo() {
+    protected ServiceInfo() {
         this.name = null;
         this.code = 0;
     }
