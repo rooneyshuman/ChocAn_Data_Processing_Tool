@@ -5,23 +5,27 @@ public class ServiceInfo {
     //Data fields
     private String name;
     private int code;
+    private double fee;
 
     //Default constructor
     protected ServiceInfo() {
         this.name = null;
         this.code = 0;
+        this.fee = 0;
     }
 
     //Copy constructor
     public ServiceInfo(ServiceInfo to_copy) {
         this.name = to_copy.name;
         this.code = to_copy.code;
+        this.fee = to_copy.fee;
     }
 
     //Copy constructor w/ args
     public ServiceInfo(String name, int code) {
         this.name = name;
         this.code = code;
+        this.fee = fee;
     }
 
     //Display function
@@ -29,6 +33,7 @@ public class ServiceInfo {
         System.out.println("SERVICE INFO: ");
         System.out.println("Service name: " + name);
         System.out.println("Service code: " + code);
+        System.out.println("Service fee: " + fee);
     }
 
     //Find by service code
@@ -70,11 +75,11 @@ class Node {
         this.right = right;
     }
 
-    public void display(){
+    public void Display(){
         service.Display();
     }
 
-    public boolean find(int to_find) {
+    public boolean Find(int to_find) {
         return service.Find(to_find);
     }
 }
