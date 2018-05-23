@@ -36,8 +36,44 @@ public class ServiceInfo {
             return true;
         return false;
     }
+}
 
+//Node class contains an obj of ServiceInfo, is used to build directory tree
+class Node {
+    //Data fields
+    protected Node left;
+    protected Node right;
+    protected ServiceInfo service;
 
+    //Constructor
+    public Node() {
+        this.service = new ServiceInfo();
+        this.left = null;
+        this.right = null;
+    }
 
+    //Methods
+    public Node getLeft() {
+        return left;
+    }
 
+    public Node getRight() {
+        return right;
+    }
+
+    public void setLeft(Node left) {
+        this.left = left;
+    }
+
+    public void setRight(Node right) {
+        this.right = right;
+    }
+
+    public void display(){
+        service.Display();
+    }
+
+    public boolean find(int to_find) {
+        return service.Find(to_find);
+    }
 }
