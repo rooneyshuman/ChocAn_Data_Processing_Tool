@@ -3,7 +3,7 @@
 public class ServiceInfo {
     //Data fields
     private String name;
-    private Integer code;
+    private int code;
 
     //Default constructor
     public ServiceInfo() {
@@ -18,16 +18,23 @@ public class ServiceInfo {
     }
 
     //Copy constructor w/ args
-    public ServiceInfo(String name, Integer code){
+    public ServiceInfo(String name, int code) {
         this.name = name;
         this.code = code;
     }
 
     //Display function
-    public void Display() {
+    public void Display(){
         System.out.println("SERVICE INFO: ");
         System.out.println("Service name: " + name);
         System.out.println("Service code: " + code);
+    }
+
+    //Find by service code
+    public boolean Find(int to_find) {
+        if (to_find == code)
+            return true;
+        return false;
     }
 
 
