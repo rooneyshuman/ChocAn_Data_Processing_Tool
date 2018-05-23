@@ -1,3 +1,5 @@
+package chocan;
+
 //ServiceInfo: holds info for each service code. Contained within Provider Directory
 public class ServiceInfo {
     //Data fields
@@ -76,3 +78,4 @@ class Node {
         return service.Find(to_find);
     }
 }
+
