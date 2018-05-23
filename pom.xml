@@ -66,7 +66,7 @@
                             <archive>
                                 <manifest>
                                     <addClasspath>true</addClasspath>
-                                    <mainClass>chocan.Application</mainClass>
+                                    <mainClass>chocan.Main</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
