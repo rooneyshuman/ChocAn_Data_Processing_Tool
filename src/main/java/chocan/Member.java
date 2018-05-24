@@ -118,11 +118,5 @@ public class Member {
         }
     }
 
-    public static void test() {
-        // Unit test for this class
-        Member test = new Member();
-        test.EditInfo();
-        test.UpdateActivation();
-        test.display_status();
-    }
+
 }
