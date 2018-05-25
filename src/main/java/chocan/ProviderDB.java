@@ -56,7 +56,7 @@ public class ProviderDB {
         if (direction < 0)
             root.SetLeft(Add(root.GoLeft(),id,active,name,address,city,state,zip));
         else if (direction > 0)
-            root.SetRight(Add(root.GoLeft(),id,active,name,address,city,state,zip));
+            root.SetRight(Add(root.GoRight(),id,active,name,address,city,state,zip));
 
         return root;
 
@@ -100,7 +100,42 @@ public class ProviderDB {
 
     }
 
+    // Saves the list of providers.
     public boolean Save() {
         return false;
+    }
+
+    // Displays the list of providers.
+    public void ShowProviders() {
+
+        out.println("\n-----------------------------------------");
+        out.println("Showing list of providers...");
+        out.println("-----------------------------------------");
+
+        if (this.root == null) {
+            out.println("(No providers listed.)");
+            return;
+        }
+
+        ShowProviders(this.root);
+
+    }
+
+    // Recursive display.
+    private void ShowProviders(Provider root) {
+
+        if (root == null) return;
+
+        ShowProviders(root.GoLeft());
+        root.Display();
+        ShowProviders(root.GoRight());
+
+    }
+
+    public static void main(String[] args) {
+
+        ProviderDB providerMenu = new ProviderDB();
+        providerMenu.ShowProviders();
+
     }
 }

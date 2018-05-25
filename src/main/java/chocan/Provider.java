@@ -1,5 +1,7 @@
 package chocan;
 
+import static java.lang.System.out;
+
 public class Provider extends Member {
 
     public Provider() {
@@ -53,5 +55,20 @@ public class Provider extends Member {
         // If id passed in is greater than current, return 1.
         return Integer.compare(id, this.id);
 
+    }
+
+    public void Display() {
+
+        out.println("Provider name: " + name);
+        out.println("Provider number: " + id);
+        out.println("Provider street address: " + address);
+        out.println("Provider city: " + city);
+        out.println("Provider state: " + state);
+        out.println("Provider zip code: " + zip);
+
+        if (active) out.println("Provider status: Active");
+        else out.println("Provider status: Inactive");
+
+        out.println("-----------------------------------------");
     }
 }
