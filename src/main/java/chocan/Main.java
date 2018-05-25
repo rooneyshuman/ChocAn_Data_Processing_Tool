@@ -12,6 +12,14 @@ public class Main {
         //tree.Add();
         tree.Read_txt();//Testing, this reads from the provider dir text file and builds directory tree
         tree.Display();//Test, this displays the provider directory tree alphabetically by name.
+        tree.Find_code();//Test, looks up Service Info record by service code.
+
+
+
+
+
+
+
 
 
 

@@ -106,7 +106,20 @@ public class ProviderDir {
         Insert(t_name, t_code, t_fee);
 
     }
+    //Look up service record by service code, returns false if there's no match.
+    protected boolean Find_code(Node root, int code, boolean factor){
+        if(root == null)
+            return factor;
 
+        factor = Find_code(root.getLeft(), code, factor);
+        if(root.Find(code)){
+            root.Display();
+            factor = true;
+            return factor;}
+        factor =  Find_code(root.getRight(), code, factor);
+
+        return factor;
+    }
     //Wrapper function for adding an entry into the tree.
     public void Add(){
 
@@ -126,8 +139,17 @@ public class ProviderDir {
     }
 
 
+    //Public wrapper function for looking up by service code.
+    public void Find_code(){
+        boolean factor = false;
+        System.out.println("\n");
+        System.out.println("Enter the service code to lookup");
+        int code = input.nextInt();
+        factor = Find_code(root, code, factor);
+        if(!factor)
+        System.out.println("No match");
 
-
+    }
 
 
 
