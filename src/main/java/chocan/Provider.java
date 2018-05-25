@@ -16,32 +16,34 @@ public class Provider extends Member {
 
     }
 
+    public Provider(int id, boolean active, String name, String address, String city, String state, int zip) {
+
+        super.id = id;
+        super.active = active;
+        super.name = name;
+        super.address = address;
+        super.city = city;
+        super.state = state;
+        super.zip = zip;
+        super.left = null;
+        super.right = null;
+
+    }
+
     public Provider GoLeft() {
-        return null;
+        return (Provider) super.left;
     }
 
     public Provider GoRight() {
-        return null;
+        return (Provider) super.right;
     }
 
-    public Provider SetLeft(Provider left) {
-        return null;
+    public void SetLeft(Provider left) {
+        super.left = left;
     }
 
-    public Provider SetRight(Provider right) {
-        return null;
-    }
-
-    public boolean CheckID(int id) {
-        return true;
-    }
-
-    public boolean Add() {
-        return false;
-    }
-
-    public boolean Update() {
-        return false;
+    public void SetRight(Provider right) {
+        super.right = right;
     }
 
 }
