@@ -16,7 +16,7 @@ public class Provider extends Member {
 
     }
 
-    public Provider(int id, boolean active, String name, String address, String city, String state, int zip) {
+    Provider(int id, boolean active, String name, String address, String city, String state, int zip) {
 
         super.id = id;
         super.active = active;
@@ -38,12 +38,20 @@ public class Provider extends Member {
         return (Provider) super.right;
     }
 
-    public void SetLeft(Provider left) {
+    void SetLeft(Provider left) {
         super.left = left;
     }
 
-    public void SetRight(Provider right) {
+    void SetRight(Provider right) {
         super.right = right;
     }
 
+    int CompareID(int id) {
+
+        // If id passed in is less than current, return -1.
+        // If id passed in is equal, return 0.
+        // If id passed in is greater than current, return 1.
+        return Integer.compare(id, this.id);
+
+    }
 }

@@ -13,6 +13,9 @@ public class ProviderDBTest {
 
     @Test
     public void checkID() {
+        int id = 700000;
+        ProviderDB testObj = new ProviderDB();
+        assertTrue(testObj.CheckID(id));
     }
 
     @Test
