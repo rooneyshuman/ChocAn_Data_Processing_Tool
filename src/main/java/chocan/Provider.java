@@ -59,15 +59,15 @@ public class Provider extends Member {
 
     public void Display() {
 
-        out.println("Provider name: " + name);
-        out.println("Provider number: " + id);
-        out.println("Provider street address: " + address);
-        out.println("Provider city: " + city);
-        out.println("Provider state: " + state);
-        out.println("Provider zip code: " + zip);
+        out.println("Provider Name: " + name);
+        out.println("Provider Number: " + id);
+        out.println("Provider Address: " + address);
+        out.println("Provider City: " + city);
+        out.println("Provider State: " + state);
+        out.println("Provider Zip Code: " + zip);
 
-        if (active) out.println("Provider status: Active");
-        else out.println("Provider status: Inactive");
+        if (active) out.println("Provider Status: Active");
+        else out.println("Provider Status: Inactive");
 
         out.println("-----------------------------------------");
     }

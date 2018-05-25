@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class ProviderDB {
 
     private Provider root;
+    private int providerCount = 0;
 
     ProviderDB() {
 
@@ -39,6 +40,60 @@ public class ProviderDB {
 
     }
 
+    // Add providers via public prompt.
+    public void Add() {
+
+        Scanner input = new Scanner(System.in);
+
+        out.println("\n-----------------------------------------");
+        out.println("Please enter the provider's information.");
+        out.println("-----------------------------------------");
+
+        out.print("Name: ");
+        String name = input.nextLine();
+
+        while (name.length() < 1 || name.length() > 25) {
+            out.print("Please enter 1-25 characters: ");
+            name = input.nextLine();
+        }
+
+        out.print("Address: ");
+        String address = input.nextLine();
+
+        while (address.length() < 1 || address.length() > 25) {
+            out.print("Please enter 1-25 characters: ");
+            address = input.nextLine();
+        }
+
+        out.print("City: ");
+        String city = input.nextLine();
+
+        while (city.length() < 1 || city.length() > 14) {
+            out.print("Please enter 1-14 characters: ");
+            city = input.nextLine();
+        }
+
+        out.print("State: ");
+        String state = input.nextLine();
+
+        while (state.length() != 2) {
+            out.print("Please enter 2 characters: ");
+            state = input.nextLine();
+        }
+
+        out.print("Zip Code: ");
+
+        while (!input.hasNextInt()) {
+            out.print("Please enter a valid number: ");
+            input.nextLine();
+        }
+
+        int zip = input.nextInt();
+
+        this.root = Add(this.root,(700000 + providerCount),true,name,address,city,state,zip);
+
+    }
+
     // Add providers to tree.
     private Provider Add(Provider root, int id, boolean active, String name, String address, String city, String state, int zip) {
 
@@ -46,6 +101,7 @@ public class ProviderDB {
         if (root == null) {
 
             root = new Provider(id,active,name,address,city,state,zip);
+            ++providerCount;
             return root;
 
         }
@@ -118,6 +174,7 @@ public class ProviderDB {
         }
 
         ShowProviders(this.root);
+        out.println("Total number of providers: " + (providerCount - 1));
 
     }
 
@@ -135,6 +192,10 @@ public class ProviderDB {
     public static void main(String[] args) {
 
         ProviderDB providerMenu = new ProviderDB();
+        providerMenu.ShowProviders();
+
+        providerMenu.Add();
+
         providerMenu.ShowProviders();
 
     }
