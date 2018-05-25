@@ -8,9 +8,10 @@ package chocan;
 import java.io.File;
 import java.util.Scanner;
 
-public class ProviderDir extends Util {
+public class ProviderDir {
 
     protected Node root;
+    protected Scanner input;
 
     protected Scanner read;
 
@@ -52,6 +53,7 @@ public class ProviderDir extends Util {
 
     public ProviderDir() {
         this.root = null;
+        input = new Scanner(System.in);
     }
 
     //Wrapper for function for the insert function
