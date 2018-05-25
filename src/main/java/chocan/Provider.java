@@ -32,8 +32,8 @@ public class Provider extends Member {
         return null;
     }
 
-    public int CheckID(int id) {
-        return 0;
+    public boolean CheckID(int id) {
+        return true;
     }
 
     public boolean Add() {
