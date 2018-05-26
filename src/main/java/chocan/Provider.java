@@ -57,6 +57,13 @@ public class Provider extends Member {
 
     }
 
+    // Change active status.
+    public void ChangeStatus() {
+
+        super.active = super.active ? false : true;
+
+    }
+
     public void Display() {
 
         out.println("Provider Name: " + name);

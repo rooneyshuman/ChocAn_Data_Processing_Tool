@@ -35,9 +35,7 @@ public class ProviderDB {
 
         if (root.CheckID(id)) return true;
 
-        if (CheckID(id,root.GoLeft())) return true;
-        else return CheckID(id, root.GoRight());
-
+        return CheckID(id,root.GoLeft()) ? true : CheckID(id,root.GoRight());
     }
 
     // Add providers via public prompt. (For managers.)
@@ -118,8 +116,49 @@ public class ProviderDB {
 
     }
 
-    public boolean Update() {
-        return false;
+    // Activate or deactivate provider's account.
+    public void ChangeStatus() {
+
+        Scanner input = new Scanner(System.in);
+
+        out.println("\n-----------------------------------------");
+        out.println("Changing status of a provider...");
+        out.println("-----------------------------------------");
+
+        out.print("Please enter a provider ID: ");
+
+        while (!input.hasNextInt()) {
+
+            out.print("Please enter a valid number: ");
+            input.nextLine();
+
+        }
+
+        int id = input.nextInt();
+        input.nextLine();
+
+        this.root = ChangeStatus(this.root,id);
+
+    }
+
+    // Traverse tree and change status of a provider.
+    private Provider ChangeStatus(Provider root, int id) {
+
+        // If empty, return.
+        if (root == null) return null;
+
+        // If ID matches, change status.
+        if (root.CompareID(id) == 0) {
+
+            out.println("Provider status has changed.");
+            root.ChangeStatus();
+            return root;
+
+        }
+
+        //Otherwise, traverse tree.
+        return root.CompareID(id) < 0 ? ChangeStatus(root.GoLeft(),id) : ChangeStatus(root.GoRight(),id);
+
     }
 
     // Loads the list of providers.
@@ -292,7 +331,7 @@ public class ProviderDB {
             out.println("Provider Test Interface");
             out.println("-----------------------------------------");
             out.println("1) Add Provider");
-            out.println("2) Edit Provider");
+            out.println("2) Change Status of Provider");
             out.println("3) Delete Provider");
             out.println("4) Check Provider ID");
             out.println("5) Show Provider List");
@@ -310,15 +349,19 @@ public class ProviderDB {
 
             switch (menuOption) {
 
-                case 1:
+                case 1: // Add Provider
                     providerMenu.Add();
                     break;
-                case 2:
+
+                case 2: // Change Status of Provider
+                    providerMenu.ChangeStatus();
                     break;
-                case 3:
+
+                case 3: // Delete Provider
                     providerMenu.Delete();
                     break;
-                case 4:
+
+                case 4: // Check Provider ID
                     out.print("Please enter a provider ID: ");
 
                     while (!input.hasNextInt()) {
@@ -331,12 +374,15 @@ public class ProviderDB {
                         out.println("Member ID is valid.");
 
                     break;
-                case 5:
+
+                case 5: // Show Provider List
                     providerMenu.ShowProviders();
                     break;
-                case 6:
+
+                case 6: // Save Provider List
                     break;
-                case 7:
+
+                case 7: // Load Provider List
                     providerMenu.Load();
                     break;
             }
@@ -345,7 +391,7 @@ public class ProviderDB {
 
     }
 
-    public static boolean again() {
+    private static boolean again() {
 
         Scanner input = new Scanner(System.in);
         String reply;
