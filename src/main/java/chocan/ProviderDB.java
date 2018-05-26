@@ -40,7 +40,7 @@ public class ProviderDB {
 
     }
 
-    // Add providers via public prompt.
+    // Add providers via public prompt. (For managers.)
     public void Add() {
 
         Scanner input = new Scanner(System.in);
@@ -90,6 +90,7 @@ public class ProviderDB {
         }
 
         this.root = Add(this.root,(700000 + providerCount),true,name,address,city,state,zip);
+        out.println("Provider added.");
 
     }
 
@@ -155,6 +156,98 @@ public class ProviderDB {
 
     }
 
+    // Delete a provider via public prompt. (For managers.)
+    public void Delete() {
+
+        Scanner input = new Scanner(System.in);
+
+        out.println("\n-----------------------------------------");
+        out.println("Deleting a provider...");
+        out.println("-----------------------------------------");
+
+        out.print("Please enter a provider ID: ");
+
+        while (!input.hasNextInt()) {
+            out.print("Please enter a valid number: ");
+            input.nextLine();
+        }
+
+        int id = input.nextInt();
+        input.nextLine();
+
+        this.root = Delete(this.root,id);
+
+    }
+
+    // Delete provider from tree.
+    private Provider Delete(Provider root, int id) {
+
+        // If no providers, return.
+        if (root == null) return null;
+
+        // If provider is found, get ready to delete.
+        if (root.CompareID(id) == 0) {
+
+            out.println("Provider deleted.");
+            --providerCount;
+
+            // If this is the only node, make it null and return.
+            if (root.GoLeft() == null && root.GoRight() == null)
+                return null;
+
+            // If there is only a left child, make it the new root.
+            if (root.GoLeft() != null && root.GoRight() == null)
+                return root.GoLeft();
+
+            // If there is only a right child, make it the new root.
+            if (root.GoLeft() == null && root.GoRight() != null)
+                return root.GoRight();
+
+            // If both children exist, find inorder successor on right subtree.
+            Provider temp = root.GoRight();
+            Provider previous = null;
+            while (temp.GoLeft() != null) {
+                previous = temp;
+                temp = temp.GoLeft();
+            }
+
+            // If inorder successor has a right child, that becomes the inorder successor.
+            if (temp.GoRight() != null) {
+
+                previous = temp;
+                temp = temp.GoRight();
+                if (temp != root.GoLeft())
+                    temp.SetLeft(root.GoLeft()); // Make sure it doesn't link to itself.
+                if (temp != root.GoRight())
+                    temp.SetRight(root.GoRight()); // Make sure it doesn't link to itself.
+                root = temp;
+                previous.SetRight(null);
+                return root;
+
+            }
+
+            // Otherwise, this one is the inorder successor.
+            if (temp != root.GoLeft())
+                temp.SetLeft(root.GoLeft()); // Make sure it doesn't link to itself.
+            if (temp != root.GoRight())
+                temp.SetRight(root.GoRight()); // Make sure it doesn't link to itself.
+            root = temp;
+            if (previous != null)
+                previous.SetLeft(null);
+            return root;
+
+        }
+
+        // If less than, go left.
+        if (root.CompareID(id) < 0)
+            root.SetLeft(Delete(root.GoLeft(), id));
+        else
+            root.SetRight(Delete(root.GoRight(), id));
+
+        return root;
+
+    }
+
     // Saves the list of providers.
     public boolean Save() {
         return false;
@@ -191,11 +284,76 @@ public class ProviderDB {
     public static void main(String[] args) {
 
         ProviderDB providerMenu = new ProviderDB();
-        providerMenu.ShowProviders();
+        Scanner input = new Scanner(System.in);
+        int menuOption;
 
-        providerMenu.Add();
+        do {
+            out.println("\n-----------------------------------------");
+            out.println("Provider Test Interface");
+            out.println("-----------------------------------------");
+            out.println("1) Add Provider");
+            out.println("2) Edit Provider");
+            out.println("3) Delete Provider");
+            out.println("4) Check Provider ID");
+            out.println("5) Show Provider List");
+            out.println("6) Save Provider List");
+            out.println("7) Load Provider List");
 
-        providerMenu.ShowProviders();
+            out.print("Please select an option: ");
+
+            while (!input.hasNextInt()) {
+                out.print("Please enter a valid number: ");
+                input.nextLine();
+            }
+
+            menuOption = input.nextInt();
+
+            switch (menuOption) {
+
+                case 1:
+                    providerMenu.Add();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    providerMenu.Delete();
+                    break;
+                case 4:
+                    out.print("Please enter a provider ID: ");
+
+                    while (!input.hasNextInt()) {
+                        out.print("Please enter a valid number: ");
+                        input.nextLine();
+                    }
+
+                    int id = input.nextInt();
+                    if (providerMenu.CheckID(id))
+                        out.println("Member ID is valid.");
+
+                    break;
+                case 5:
+                    providerMenu.ShowProviders();
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    providerMenu.Load();
+                    break;
+            }
+        } while (again());
+
 
     }
+
+    public static boolean again() {
+
+        Scanner input = new Scanner(System.in);
+        String reply;
+        out.print("Go back to menu? (Yes/No) ");
+        reply = input.next(); input.nextLine();
+
+        return reply.equalsIgnoreCase("yes");
+
+    }
+
 }
