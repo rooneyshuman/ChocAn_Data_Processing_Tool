@@ -10,7 +10,7 @@ public class Member {
     protected String address;
     protected String city;
     protected String state;
-    protected int zip;
+    protected String zip;
     protected Member left;
     protected Member right;
 
@@ -22,18 +22,18 @@ public class Member {
         address = null;
         city = null;
         state = null;
-        zip = 0;
+        zip = null;
         left = null;
         right = null;
     }
-    public Member(int newId,String newName, String newAddress, String newCity, String newState, int newZip ){
+    public Member(int newId,String newName, String newAddress, String newCity, String newState, String newZip ){
         id = newId;
         active = false;
         name = new String(newName);
         address = new String(newAddress);
         city =  new String(newCity);
         state = new String(newState);
-        zip =  newZip;
+        zip = newZip;
         left = null;
         right = null;
     }
@@ -80,7 +80,7 @@ public class Member {
         System.out.print("New state: ");
         String new_state = sc.nextLine();
         System.out.print("New zip: ");
-        int new_zip = sc.nextInt();
+        String new_zip = sc.nextLine();
         id = new_id;
         name = new String(new_name);
         address = new String(new_address);

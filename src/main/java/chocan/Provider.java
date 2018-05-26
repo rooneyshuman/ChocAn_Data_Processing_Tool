@@ -12,13 +12,13 @@ public class Provider extends Member {
         super.address = null;
         super.city = null;
         super.state = null;
-        super.zip = 0;
+        super.zip = null;
         super.left = null;
         super.right = null;
 
     }
 
-    Provider(int id, boolean active, String name, String address, String city, String state, int zip) {
+    Provider(int id, boolean active, String name, String address, String city, String state, String zip) {
 
         super.id = id;
         super.active = active;
