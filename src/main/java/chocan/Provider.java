@@ -1,5 +1,7 @@
 package chocan;
 
+import java.io.PrintWriter;
+
 import static java.lang.System.out;
 
 public class Provider extends Member {
@@ -77,5 +79,16 @@ public class Provider extends Member {
         else out.println("Provider Status: Inactive");
 
         out.println("-----------------------------------------");
+    }
+
+    // Save provider data.
+    public void Save(PrintWriter write) {
+
+        write.print(this.id);
+        write.print(":");
+        write.print(this.active);
+        write.print(":" + this.name + ":" + this.address + ":" + this.city);
+        write.println(":" + this.state + ":" + this.zip);
+
     }
 }

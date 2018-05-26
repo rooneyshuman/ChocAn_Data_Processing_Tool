@@ -3,6 +3,7 @@ package chocan;
 import static java.lang.System.out;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class ProviderDB {
@@ -89,6 +90,7 @@ public class ProviderDB {
 
         this.root = Add(this.root,(700000 + providerCount),true,name,address,city,state,zip);
         out.println("Provider added.");
+        Save();
 
     }
 
@@ -137,27 +139,32 @@ public class ProviderDB {
         int id = input.nextInt();
         input.nextLine();
 
-        this.root = ChangeStatus(this.root,id);
+        ChangeStatus(this.root,id);
+        Save();
 
     }
 
     // Traverse tree and change status of a provider.
-    private Provider ChangeStatus(Provider root, int id) {
+    private void ChangeStatus(Provider root, int id) {
 
         // If empty, return.
-        if (root == null) return null;
+        if (root == null) return;
 
         // If ID matches, change status.
         if (root.CompareID(id) == 0) {
 
             out.println("Provider status has changed.");
             root.ChangeStatus();
-            return root;
+            return;
 
         }
 
         //Otherwise, traverse tree.
-        return root.CompareID(id) < 0 ? ChangeStatus(root.GoLeft(),id) : ChangeStatus(root.GoRight(),id);
+        if (root.CompareID(id) < 0) {
+            ChangeStatus(root.GoLeft(), id);
+        } else {
+            ChangeStatus(root.GoRight(), id);
+        }
 
     }
 
@@ -215,6 +222,7 @@ public class ProviderDB {
         input.nextLine();
 
         this.root = Delete(this.root,id);
+        Save();
 
     }
 
@@ -288,8 +296,33 @@ public class ProviderDB {
     }
 
     // Saves the list of providers.
-    public boolean Save() {
-        return false;
+    public void Save() {
+
+        File file = new File("src/main/java/chocan/db/providers.txt");
+        file.getParentFile().mkdirs();
+        PrintWriter write = null;
+
+        try {
+            write = new PrintWriter(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Save(this.root,write);
+        out.println("Provider list has been saved.");
+        write.close();
+    }
+
+    // Traverse tree and save data.
+    private void Save(Provider root, PrintWriter write) {
+
+        // If empty, return.
+        if (root == null) return;
+
+        // Inorder traversal.
+        Save(root.GoLeft(),write);
+        root.Save(write);
+        Save(root.GoRight(),write);
     }
 
     // Displays the list of providers.
@@ -380,6 +413,7 @@ public class ProviderDB {
                     break;
 
                 case 6: // Save Provider List
+                    providerMenu.Save();
                     break;
 
                 case 7: // Load Provider List
