@@ -1,0 +1,16 @@
+700000:True:Doctor Who:123 4th St:Portland:OR:97218
+700001:True:Doogie Howser:567 8th St:Los Angeles:CA:90019
+700002:True:Eren Yeager:2009 Shingeki no Kyojin:Orlando:FL:13201
+700003:True:Mayor West:1959 Quahog St:Quahog:RI:02907
+700004:True:Glenn Quagmire:29 Spooner St:Quahog:RI:02907
+700005:True:Karla Fant:1825 SW Broadway:Portland:OR:97201
+700006:True:David Tennant:1971 Tardis Blvd:Hopewell:VA:23860
+700007:True:Jerome Kersey:1990 Bustabucket Ave:Mason City:IA:50401
+700008:True:Akira Toriyama:62 Yukon St:Neenah:WI:54956
+700009:True:Shin:475 Qin St:Oak Ridge:TN:37830
+700010:True:Bob Sagat:1987 Full House:San Francisco:CA:94603
+700011:True:Walt Disney:1313 Disneyland Dr:Anaheim:CA:92802
+700012:True:Chloe Moretz:7322 Heritage St:San Pablo:CA:94806
+700013:True:Adam Sevani:21 Mayfield Dr:Bear:DE:19701
+700014:True:Topanga Lawrence:9312 Santa Clara St:Shelton:CT:06484
+700015:True:Mary Swanson:25 Arch St:Dekalb:IL:60115
