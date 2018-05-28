@@ -40,6 +40,13 @@ public class ServiceInfo {
         System.out.println("Service fee: " + this.fee);
     }
 
+    //Returns the String of the service name
+    public String Service(){
+
+        return this.name;
+    }
+
+
 
     //Compares names to see if there is a match.
     public boolean Equals(String match){
@@ -82,7 +89,7 @@ class Node extends ServiceInfo {
         this.right = null;
     }
 
-    //Kickstarts parent's (ServiceInfo) contstructor
+    //Kickstarts parent's (ServiceInfo) constructor
     public Node(ServiceInfo copy){
         super(copy);
         this.left = null;

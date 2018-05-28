@@ -107,14 +107,13 @@ public class ProviderDir {
 
     }
     //Look up service record by service code, returns false if there's no match.
-    protected boolean Find_code(Node root, int code, boolean factor){
+    protected String Find_code(Node root, int code, String factor){
         if(root == null)
             return factor;
 
         factor = Find_code(root.getLeft(), code, factor);
         if(root.Find(code)){
-            root.Display();
-            factor = true;
+            factor = root.Service();
             return factor;}
         factor =  Find_code(root.getRight(), code, factor);
 
@@ -140,14 +139,12 @@ public class ProviderDir {
 
 
     //Public wrapper function for looking up by service code.
-    public void Find_code(){
-        boolean factor = false;
+    public String Find_code(){
+        String factor = null;
         System.out.println("\n");
         System.out.println("Enter the service code to lookup");
         int code = input.nextInt();
-        factor = Find_code(root, code, factor);
-        if(!factor)
-        System.out.println("No match");
+        return factor = Find_code(root, code, factor);
 
     }
 
