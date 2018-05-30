@@ -1,11 +1,16 @@
 package chocan;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class MemberService {
     private String date;
     private String provider;
     private String service;
     private MemberService left;
     private MemberService right;
+    String today = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+
 
     MemberService()
     {
@@ -33,6 +38,7 @@ public class MemberService {
     }
 
     public void display(){
+        System.out.println("Current date: " + today);
         System.out.println("Date: " + date);
         System.out.println("Provider: " + provider);
         System.out.println("Service: " + service);
