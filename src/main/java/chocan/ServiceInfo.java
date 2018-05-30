@@ -1,7 +1,6 @@
 package chocan;
 
 //ServiceInfo: holds info for each service code. Contained within Provider Directory
-//ServiceInfo: holds info for each service code. Contained within Provider Directory
 
 public class ServiceInfo {
     //Data fields
@@ -46,25 +45,11 @@ public class ServiceInfo {
         return this.name;
     }
 
-
-
-    //Compares names to see if there is a match.
-    public boolean Equals(String match){
-        return this.name.equals(match);
-    }
-
     //Compares the names and returns true if comparison is greater than 0.
     public boolean Less_Than(String name){
         if(this.name.compareTo(name) >0)
             return true;
         return false;
-    }
-
-    //Input function used for building a directory tree, populates the fields with the arguments in the parameters.
-    public void input(String t_name, int t_code, double t_fee){
-        this.name = t_name;
-        this.code = t_code;
-        this.fee = t_fee;
     }
 
     //Find by service code
@@ -80,7 +65,6 @@ class Node extends ServiceInfo {
     //Data fields
     protected Node left;
     protected Node right;
-    protected ServiceInfo service;
 
     //Constructor
     public Node(String name, int code, double fee) {
