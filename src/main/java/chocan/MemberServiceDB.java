@@ -10,8 +10,6 @@ public class MemberServiceDB {
 
     //will allow a service to be added to a members service record
     public boolean addServiceRecord(){
-        if(root == null){
-        }
         return false;
     }
 
