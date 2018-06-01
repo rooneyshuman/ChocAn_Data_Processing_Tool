@@ -13,7 +13,9 @@ This is Group 6's term project for CS 300 at Portland State University.
 
 ## Table of Contents
 1. Installation
-2. Menu Options
-3. Provider Interface
-4. Manager Interface
-5. Viewing Reports
+2. How to Use
+3. Menu Options
+4. Provider Interface
+5. Manager Interface
+6. Viewing Reports
+
