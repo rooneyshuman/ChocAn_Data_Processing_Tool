@@ -17,6 +17,7 @@ public class ProviderDB {
     private ProviderDir directory;
     private MemberDB memberlist;
     private int providerCount = 0;
+    private int providerID = 0;
 
     ProviderDB() {
 
@@ -24,13 +25,17 @@ public class ProviderDB {
         Load(); // Loads the list of providers.
         this.memberlist = new MemberDB();
         this.directory = new ProviderDir();
+        this.directory.Read_txt();
 
     }
 
-    // This checks the providers ID.
-    boolean CheckID(int id) {
+    // This checks the providers ID and logs them in.
+    boolean Login(int id) {
 
-        if (CheckID(id,this.root)) return true;
+        if (Login(id,this.root)) {
+            this.providerID = id;
+            return true;
+        }
         else {
             out.print("Invalid member.");
             return false;
@@ -39,13 +44,21 @@ public class ProviderDB {
     }
 
     // Traverses tree to check ID.
-    private boolean CheckID(int id, Provider root) {
+    private boolean Login(int id, Provider root) {
 
         if (root == null) return false;
 
         if (root.CheckID(id)) return true;
 
-        return CheckID(id,root.GoLeft()) ? true : CheckID(id,root.GoRight());
+        return Login(id,root.GoLeft()) ? true : Login(id,root.GoRight());
+    }
+
+    // Log out provider.
+    public void Logout() {
+
+        this.providerID = 0;
+        return;
+
     }
 
     // Add providers via public prompt. (For managers.)
@@ -364,6 +377,12 @@ public class ProviderDB {
 
     public void Bill() {
 
+        // Check for authorization.
+        if (providerID == 0) {
+            out.println("Must be logged in with a Provider ID.");
+            return;
+        }
+
         out.println("\n-----------------------------------------");
         out.println("Create Service Record");
         out.println("-----------------------------------------");
@@ -404,7 +423,6 @@ public class ProviderDB {
         }
 
         // Display provider directory.
-        directory.Read_txt();
         directory.Display();
 
         int serviceCode;
@@ -486,7 +504,7 @@ public class ProviderDB {
             out.println("1) Add Provider");
             out.println("2) Change Status of Provider");
             out.println("3) Delete Provider");
-            out.println("4) Check Provider ID");
+            out.println("4) Login");
             out.println("5) Show Provider List");
             out.println("6) Save Provider List");
             out.println("7) Load Provider List");
@@ -516,7 +534,7 @@ public class ProviderDB {
                     providerMenu.Delete();
                     break;
 
-                case 4: // Check Provider ID
+                case 4: // Login
                     out.print("Please enter a provider ID: ");
 
                     while (!input.hasNextInt()) {
@@ -525,7 +543,7 @@ public class ProviderDB {
                     }
 
                     int id = input.nextInt();
-                    if (providerMenu.CheckID(id))
+                    if (providerMenu.Login(id))
                         out.println("Member ID is valid.");
 
                     break;
@@ -547,6 +565,7 @@ public class ProviderDB {
                     break;
 
                 default:
+                    providerMenu.Logout();
                     return;
 
             }
