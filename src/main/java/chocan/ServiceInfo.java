@@ -2,17 +2,23 @@ package chocan;
 
 //ServiceInfo: holds info for each service code. Contained within Provider Directory
 
+import java.text.NumberFormat;
+
 public class ServiceInfo {
     //Data fields
     protected String name;
     protected int code;
     protected double fee;
+    protected ServiceInfo left;
+    protected ServiceInfo right;
 
     //Default constructor
     public ServiceInfo() {
         this.name = null;
         this.code = 0;
         this.fee = 0;
+        this.left = null;
+        this.right = null;
     }
 
     //Copy constructor
@@ -27,16 +33,37 @@ public class ServiceInfo {
         this.name = t_name;
         this.code = t_code;
         this.fee = t_fee;
+        this.left = null;
+        this.right = null;
     }
 
+    //Returns left pointer
+    public ServiceInfo getLeft() {
+        return left;
+    }
+
+    //Returns right pointer
+    public ServiceInfo getRight() {
+        return right;
+    }
+
+    //Set left pointer
+    public void setLeft(ServiceInfo new_left) {
+        this.left = new_left;
+    }
+
+    public void setRight(ServiceInfo new_right) {
+        this.right = new_right;
+    }
 
     //Display function
     public void Display(){
         System.out.printf("--------------------------------------------\n");
-        System.out.println("SERVICE INFO: ");
         System.out.println("Service name: " + this.name);
         System.out.println("Service code: " + this.code);
-        System.out.println("Service fee: " + this.fee);
+        System.out.print("Service fee: ");
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        System.out.println(formatter.format(this.fee));
     }
 
     //Returns the String of the service name
@@ -58,52 +85,4 @@ public class ServiceInfo {
             return true;
         return false;
     }
-}
-
-//Node class inherits ServiceInfo, is used to build directory tree
-class Node extends ServiceInfo {
-    //Data fields
-    protected Node left;
-    protected Node right;
-
-    //Constructor
-    public Node(String name, int code, double fee) {
-        super(name, code, fee);
-        this.left = null;
-        this.right = null;
-    }
-
-    //Kickstarts parent's (ServiceInfo) constructor
-    public Node(ServiceInfo copy){
-        super(copy);
-        this.left = null;
-        this.right = null;
-    }
-
-
-    //Methods
-    public Node getLeft() {
-        return this.left;
-    }
-
-    public Node getRight() {
-        return this.right;
-    }
-
-    public void setLeft(Node left) {
-        this.left = left;
-    }
-
-    public void setRight(Node right) {
-        this.right = right;
-    }
-
-   /* public void display(){
-        service.Display();
-    }
-
-    public boolean find(int to_find) {
-        return service.Find(to_find);
-    }
-    */
 }

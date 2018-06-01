@@ -9,21 +9,18 @@ import java.io.File;
 import java.util.Scanner;
 
 public class ProviderDir {
-
-    protected Node root;
+    protected ServiceInfo root;
     protected Scanner input;
 
     protected Scanner read;
 
     private void delete_root() {
-
         root = null;
     }
 
-    protected Node Insert(Node root, String name, int code, double fee) {
+    protected ServiceInfo Insert(ServiceInfo root, String name, int code, double fee) {
         if (root == null) {
-
-            return new Node(name, code, fee);
+            return new ServiceInfo(name, code, fee);
 
             //return root;
 
@@ -41,7 +38,7 @@ public class ProviderDir {
     }
 
     //Displays the entire tree by in order traversal
-    protected void Display(Node root){
+    protected void Display(ServiceInfo root){
         if (root == null){
             return;}
 
@@ -58,9 +55,7 @@ public class ProviderDir {
 
     //Wrapper for function for the insert function
     public void Insert(String name, int code, double fee){
-
         root = Insert(root, name, code, fee);
-
     }
 
     //Displays the entire tree in order, wrapper function
@@ -76,11 +71,10 @@ public class ProviderDir {
             System.out.println("Can't find file");
             e.printStackTrace();
         }
-
     }
+
     //Reads in from text file and calls the insert function to bulld the tree.
     public void Read_txt() {
-
         this.Open_txt();
         read.useDelimiter("#|\\n");
         String t_name;
@@ -91,35 +85,38 @@ public class ProviderDir {
             t_name = read.next();
             t_fee = read.nextDouble();
 
-
-
             Insert(t_name, t_code, t_fee);
         }
-
         read.close();
-
     }
 
     //Adds a user entry into the trees.
-    protected void add(String t_name, int t_code, double t_fee){
-
+    protected void Add(String t_name, int t_code, double t_fee){
         Insert(t_name, t_code, t_fee);
-
     }
+
+    //Public wrapper function for looking up by service code.
+    public String Find_code(int code){
+        String factor = null;
+        code = input.nextInt();
+        return factor = Find_code(root, code, factor);
+    }
+
     //Look up service record by service code, returns false if there's no match.
-    protected String Find_code(Node root, int code, String factor){
+    protected String Find_code(ServiceInfo root, int code, String factor){
         if(root == null)
             return factor;
 
         factor = Find_code(root.getLeft(), code, factor);
         if(root.Find(code)){
             factor = root.Service();
+            System.out.println(factor);
             return factor;}
         factor =  Find_code(root.getRight(), code, factor);
 
         return factor;
     }
-    //Wrapper function for adding an entry into the tree.
+    //Wrapper function for manually adding an entry into the tree.
     public void Add(){
 
         String t_name;
@@ -134,23 +131,7 @@ public class ProviderDir {
         t_fee = input.nextDouble();
         input.nextLine();
 
-        add(t_name, t_code, t_fee);
+        Add(t_name, t_code, t_fee);
     }
-
-
-    //Public wrapper function for looking up by service code.
-    public String Find_code(){
-        String factor = null;
-        System.out.println("\n");
-        System.out.println("Enter the service code to lookup");
-        int code = input.nextInt();
-        return factor = Find_code(root, code, factor);
-
-    }
-
-
-
-
-
 }
 
