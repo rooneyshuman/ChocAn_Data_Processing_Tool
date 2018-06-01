@@ -15,54 +15,53 @@ public class ProviderDB {
 
     private Provider root;
     private ProviderDir directory;
-    private MemberDB memberlist;
+    private MemberDB memberList;
     private int providerCount = 0;
     private int providerID = 0;
 
     ProviderDB() {
 
         this.root = null;
-        Load(); // Loads the list of providers.
-        this.memberlist = new MemberDB();
+        load(); // Loads the list of providers.
+        this.memberList = new MemberDB();
         this.directory = new ProviderDir();
         this.directory.Read_txt();
 
     }
 
     // This checks the providers ID and logs them in.
-    boolean Login(int id) {
+    public boolean login(int id) {
 
-        if (Login(id,this.root)) {
+        if (login(id,this.root)) {
             this.providerID = id;
             return true;
         }
         else {
-            out.print("Invalid member.");
+            out.print("Invalid member.\n");
             return false;
         }
 
     }
 
     // Traverses tree to check ID.
-    private boolean Login(int id, Provider root) {
+    private boolean login(int id, Provider root) {
 
         if (root == null) return false;
 
         if (root.CheckID(id)) return true;
 
-        return Login(id,root.GoLeft()) ? true : Login(id,root.GoRight());
+        return login(id, root.goLeft()) || login(id, root.goRight());
     }
 
     // Log out provider.
-    public void Logout() {
+    public void logout() {
 
         this.providerID = 0;
-        return;
 
     }
 
     // Add providers via public prompt. (For managers.)
-    public void Add() {
+    public void add() {
 
         Scanner input = new Scanner(System.in);
 
@@ -110,14 +109,14 @@ public class ProviderDB {
             zip = input.nextLine();
         }
 
-        this.root = Add(this.root,(700000 + providerCount),true,name,address,city,state,zip);
+        this.root = add(this.root,(700000 + providerCount),true,name,address,city,state,zip);
         out.println("Provider added.");
-        Save();
+        save();
 
     }
 
     // Add providers to tree.
-    private Provider Add(Provider root, int id, boolean active, String name, String address, String city, String state, String zip) {
+    private Provider add(Provider root, int id, boolean active, String name, String address, String city, String state, String zip) {
 
         // If no providers, create it.
         if (root == null) {
@@ -128,20 +127,20 @@ public class ProviderDB {
 
         }
 
-        int direction = root.CompareID(id);
+        int direction = root.compareID(id);
 
         // Traverse tree to find where to add.
         if (direction < 0)
-            root.SetLeft(Add(root.GoLeft(),id,active,name,address,city,state,zip));
+            root.setLeft(add(root.goLeft(),id,active,name,address,city,state,zip));
         else if (direction > 0)
-            root.SetRight(Add(root.GoRight(),id,active,name,address,city,state,zip));
+            root.setRight(add(root.goRight(),id,active,name,address,city,state,zip));
 
         return root;
 
     }
 
     // Activate or deactivate provider's account.
-    public void ChangeStatus() {
+    public void changeStatus() {
 
         Scanner input = new Scanner(System.in);
 
@@ -161,37 +160,37 @@ public class ProviderDB {
         int id = input.nextInt();
         input.nextLine();
 
-        ChangeStatus(this.root,id);
-        Save();
+        changeStatus(this.root,id);
+        save();
 
     }
 
     // Traverse tree and change status of a provider.
-    private void ChangeStatus(Provider root, int id) {
+    private void changeStatus(Provider root, int id) {
 
         // If empty, return.
         if (root == null) return;
 
         // If ID matches, change status.
-        if (root.CompareID(id) == 0) {
+        if (root.compareID(id) == 0) {
 
             out.println("Provider status has changed.");
-            root.ChangeStatus();
+            root.changeStatus();
             return;
 
         }
 
         //Otherwise, traverse tree.
-        if (root.CompareID(id) < 0) {
-            ChangeStatus(root.GoLeft(), id);
+        if (root.compareID(id) < 0) {
+            changeStatus(root.goLeft(), id);
         } else {
-            ChangeStatus(root.GoRight(), id);
+            changeStatus(root.goRight(), id);
         }
 
     }
 
     // Loads the list of providers.
-    private void Load() {
+    private void load() {
 
         try {
             File file = new File("src/main/java/chocan/db/providers.txt");
@@ -212,7 +211,7 @@ public class ProviderDB {
                 state = read.next();
                 zip = read.next();
 
-                this.root = Add(this.root,id,active,name,address,city,state,zip);
+                this.root = add(this.root,id,active,name,address,city,state,zip);
             }
 
             read.close();
@@ -225,7 +224,7 @@ public class ProviderDB {
     }
 
     // Delete a provider via public prompt. (For managers.)
-    public void Delete() {
+    public void delete() {
 
         Scanner input = new Scanner(System.in);
 
@@ -243,82 +242,82 @@ public class ProviderDB {
         int id = input.nextInt();
         input.nextLine();
 
-        this.root = Delete(this.root,id);
-        Save();
+        this.root = delete(this.root,id);
+        save();
 
     }
 
     // Delete provider from tree.
-    private Provider Delete(Provider root, int id) {
+    private Provider delete(Provider root, int id) {
 
         // If no providers, return.
         if (root == null) return null;
 
         // If provider is found, get ready to delete.
-        if (root.CompareID(id) == 0) {
+        if (root.compareID(id) == 0) {
 
             out.println("Provider deleted.");
             --providerCount;
 
             // If this is the only node, make it null and return.
-            if (root.GoLeft() == null && root.GoRight() == null)
+            if (root.goLeft() == null && root.goRight() == null)
                 return null;
 
             // If there is only a left child, make it the new root.
-            if (root.GoLeft() != null && root.GoRight() == null)
-                return root.GoLeft();
+            if (root.goLeft() != null && root.goRight() == null)
+                return root.goLeft();
 
             // If there is only a right child, make it the new root.
-            if (root.GoLeft() == null && root.GoRight() != null)
-                return root.GoRight();
+            if (root.goLeft() == null && root.goRight() != null)
+                return root.goRight();
 
             // If both children exist, find inorder successor on right subtree.
-            Provider temp = root.GoRight();
+            Provider temp = root.goRight();
             Provider previous = null;
-            while (temp.GoLeft() != null) {
+            while (temp.goLeft() != null) {
                 previous = temp;
-                temp = temp.GoLeft();
+                temp = temp.goLeft();
             }
 
             // If inorder successor has a right child, that becomes the inorder successor.
-            if (temp.GoRight() != null) {
+            if (temp.goRight() != null) {
 
                 previous = temp;
-                temp = temp.GoRight();
-                if (temp != root.GoLeft())
-                    temp.SetLeft(root.GoLeft()); // Make sure it doesn't link to itself.
-                if (temp != root.GoRight())
-                    temp.SetRight(root.GoRight()); // Make sure it doesn't link to itself.
+                temp = temp.goRight();
+                if (temp != root.goLeft())
+                    temp.setLeft(root.goLeft()); // Make sure it doesn't link to itself.
+                if (temp != root.goRight())
+                    temp.setRight(root.goRight()); // Make sure it doesn't link to itself.
                 root = temp;
-                previous.SetRight(null);
+                previous.setRight(null);
                 return root;
 
             }
 
             // Otherwise, this one is the inorder successor.
-            if (temp != root.GoLeft())
-                temp.SetLeft(root.GoLeft()); // Make sure it doesn't link to itself.
-            if (temp != root.GoRight())
-                temp.SetRight(root.GoRight()); // Make sure it doesn't link to itself.
+            if (temp != root.goLeft())
+                temp.setLeft(root.goLeft()); // Make sure it doesn't link to itself.
+            if (temp != root.goRight())
+                temp.setRight(root.goRight()); // Make sure it doesn't link to itself.
             root = temp;
             if (previous != null)
-                previous.SetLeft(null);
+                previous.setLeft(null);
             return root;
 
         }
 
         // If less than, go left.
-        if (root.CompareID(id) < 0)
-            root.SetLeft(Delete(root.GoLeft(), id));
+        if (root.compareID(id) < 0)
+            root.setLeft(delete(root.goLeft(), id));
         else
-            root.SetRight(Delete(root.GoRight(), id));
+            root.setRight(delete(root.goRight(), id));
 
         return root;
 
     }
 
     // Saves the list of providers.
-    public void Save() {
+    public void save() {
 
         File file = new File("src/main/java/chocan/db/providers.txt");
         file.getParentFile().mkdirs();
@@ -330,25 +329,25 @@ public class ProviderDB {
             e.printStackTrace();
         }
 
-        Save(this.root,write);
+        save(this.root,write);
         out.println("Provider list has been saved.");
         write.close();
     }
 
     // Traverse tree and save data.
-    private void Save(Provider root, PrintWriter write) {
+    private void save(Provider root, PrintWriter write) {
 
         // If empty, return.
         if (root == null) return;
 
         // Inorder traversal.
-        Save(root.GoLeft(),write);
-        root.Save(write);
-        Save(root.GoRight(),write);
+        save(root.goLeft(),write);
+        root.save(write);
+        save(root.goRight(),write);
     }
 
     // Displays the list of providers.
-    public void ShowProviders() {
+    public void showProviders() {
 
         out.println("\n-----------------------------------------");
         out.println("Showing list of providers...");
@@ -359,23 +358,23 @@ public class ProviderDB {
             return;
         }
 
-        ShowProviders(this.root);
+        showProviders(this.root);
         out.println("Total number of providers: " + (providerCount - 1));
 
     }
 
     // Recursive display.
-    private void ShowProviders(Provider root) {
+    private void showProviders(Provider root) {
 
         if (root == null) return;
 
-        ShowProviders(root.GoLeft());
-        root.Display();
-        ShowProviders(root.GoRight());
+        showProviders(root.goLeft());
+        root.display();
+        showProviders(root.goRight());
 
     }
 
-    public void Bill() {
+    public void bill() {
 
         // Check for authorization.
         if (providerID == 0) {
@@ -426,7 +425,7 @@ public class ProviderDB {
         directory.Display();
 
         int serviceCode;
-        String serviceName = null;
+        String serviceName;
 
         // Input service code.
         do {
@@ -467,7 +466,7 @@ public class ProviderDB {
         */
         out.print("Current date and time: " + currentDate + "\n");
         out.print("Date service was provided: " + serviceDate + "\n");
-        out.print("Provider number: ");
+        out.print("Provider number: " + providerID + "\n");
         out.print("Member number: " + memberID + "\n");
         out.print("Service code: " + serviceCode + "\n");
         out.print("Comments: " + serviceComments + "\n");
@@ -523,15 +522,15 @@ public class ProviderDB {
             switch (menuOption) {
 
                 case 1: // Add Provider
-                    providerMenu.Add();
+                    providerMenu.add();
                     break;
 
                 case 2: // Change Status of Provider
-                    providerMenu.ChangeStatus();
+                    providerMenu.changeStatus();
                     break;
 
                 case 3: // Delete Provider
-                    providerMenu.Delete();
+                    providerMenu.delete();
                     break;
 
                 case 4: // Login
@@ -543,29 +542,29 @@ public class ProviderDB {
                     }
 
                     int id = input.nextInt();
-                    if (providerMenu.Login(id))
-                        out.println("Member ID is valid.");
+                    if (providerMenu.login(id))
+                        out.println("Provider has been logged in.");
 
                     break;
 
                 case 5: // Show Provider List
-                    providerMenu.ShowProviders();
+                    providerMenu.showProviders();
                     break;
 
                 case 6: // Save Provider List
-                    providerMenu.Save();
+                    providerMenu.save();
                     break;
 
                 case 7: // Load Provider List
-                    providerMenu.Load();
+                    providerMenu.load();
                     break;
 
                 case 8: // Create Service Record
-                    providerMenu.Bill();
+                    providerMenu.bill();
                     break;
 
                 default:
-                    providerMenu.Logout();
+                    providerMenu.logout();
                     return;
 
             }

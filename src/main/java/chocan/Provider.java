@@ -34,23 +34,23 @@ public class Provider extends Member {
 
     }
 
-    public Provider GoLeft() {
+    Provider goLeft() {
         return (Provider) super.left;
     }
 
-    public Provider GoRight() {
+    Provider goRight() {
         return (Provider) super.right;
     }
 
-    void SetLeft(Provider left) {
+    void setLeft(Provider left) {
         super.left = left;
     }
 
-    void SetRight(Provider right) {
+    void setRight(Provider right) {
         super.right = right;
     }
 
-    int CompareID(int id) {
+    int compareID(int id) {
 
         // If id passed in is less than current, return -1.
         // If id passed in is equal, return 0.
@@ -60,13 +60,13 @@ public class Provider extends Member {
     }
 
     // Change active status.
-    public void ChangeStatus() {
+    public void changeStatus() {
 
-        super.active = super.active ? false : true;
+        super.active = !super.active;
 
     }
 
-    public void Display() {
+    public void display() {
 
         out.println("Provider Name: " + name);
         out.println("Provider Number: " + id);
@@ -82,7 +82,7 @@ public class Provider extends Member {
     }
 
     // Save provider data.
-    public void Save(PrintWriter write) {
+    public void save(PrintWriter write) {
 
         write.print(this.id);
         write.print(":");
