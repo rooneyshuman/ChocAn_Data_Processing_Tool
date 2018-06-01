@@ -98,7 +98,6 @@ public class ProviderDir {
     //Public wrapper function for looking up by service code.
     public String Find_code(int code){
         String factor = null;
-        code = input.nextInt();
         return factor = Find_code(root, code, factor);
     }
 
