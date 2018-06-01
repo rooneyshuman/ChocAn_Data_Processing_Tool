@@ -4,17 +4,26 @@ import static java.lang.System.out;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ProviderDB {
 
     private Provider root;
+    private ProviderDir directory;
+    private MemberDB memberlist;
     private int providerCount = 0;
 
     ProviderDB() {
 
         this.root = null;
         Load(); // Loads the list of providers.
+        this.memberlist = new MemberDB();
+        this.directory = new ProviderDir();
 
     }
 
@@ -353,6 +362,117 @@ public class ProviderDB {
 
     }
 
+    public void Bill() {
+
+        out.println("\n-----------------------------------------");
+        out.println("Create Service Record");
+        out.println("-----------------------------------------");
+
+        Scanner ask = new Scanner(System.in);
+
+        // Check if member ID is valid.
+        out.print("Please enter member ID: ");
+        while (!ask.hasNextInt()) {
+            System.out.print("Please enter a valid number: ");
+            ask.nextLine();
+        }
+
+        int memberID = ask.nextInt();
+        // Call MemberDB function to check ID.
+        // If invalid, return. Otherwise, continue.
+
+        // Grab current date and time.
+        DateFormat dateFormat1 = new SimpleDateFormat("MM-dd-YYYY HH:MM:ss", Locale.US);
+        Date providerDate = new Date();
+        String currentDate = dateFormat1.format(providerDate);
+
+        // Prompt provider to enter service date.
+        DateFormat dateFormat2 = new SimpleDateFormat("MM-dd-YYYY", Locale.US);
+        out.print("Please enter the service date (MM-DD-YYYY)");
+        Date memberDate = null;
+        String serviceDate = null;
+
+        while (memberDate == null) {
+
+            serviceDate = ask.next();
+
+            try {
+                memberDate = dateFormat2.parse(serviceDate);
+            } catch (ParseException error) {
+                out.print("Invalid date.\nPlease enter a date (MM-DD-YYYY): ");
+            }
+        }
+
+        // Display provider directory.
+        directory.Read_txt();
+        directory.Display();
+
+        int serviceCode;
+        String serviceName = null;
+
+        // Input service code.
+        do {
+            out.print("Please enter the service code: ");
+
+            while (!ask.hasNextInt()) {
+                out.print("Please enter a valid number: ");
+                ask.nextLine(); ask.nextLine();
+            }
+
+            serviceCode = ask.nextInt();
+            ask.nextLine();
+
+            serviceName = directory.Find_code(serviceCode);
+
+            if (serviceName == null)
+                out.println("Invalid code. Please try again.");
+            else {
+                out.print("Is this the correct service? (Y/N): ");
+                String answer = ask.nextLine();
+                if (answer.startsWith("N") || answer.startsWith("n"))
+                    serviceName = null;
+            }
+
+        } while (serviceName == null);
+
+        // Prompt user to enter any comments about the service.
+        out.print("Please enter any comments (optional): ");
+        String serviceComments = ask.nextLine();
+
+        /* Write record to disk.
+            Current date and time (MM-DD-YYYY HH:MM:SS).
+            Date service was provided (MM-DD-YYYY)
+            Provider number (9 digits).
+            Member number (9 digits).
+            Service code (6 digits).
+            Comments (100 characters). (optional)
+        */
+        out.print("Current date and time: " + currentDate + "\n");
+        out.print("Date service was provided: " + serviceDate + "\n");
+        out.print("Provider number: ");
+        out.print("Member number: " + memberID + "\n");
+        out.print("Service code: " + serviceCode + "\n");
+        out.print("Comments: " + serviceComments + "\n");
+
+        // Display fee to provider.
+
+        /* Save member service record.
+            Date of service (MM-DD-YYYY).
+            Provider name (25 characters).
+            Service name (20 characters).
+         */
+
+        /* Save provider service record.
+            Date of service (MM-DD-YYYY).
+            Date and time data were received by the computer (MM-DD-YYYY HH:MM:SS).
+            Member name (25 characters).
+            Member number (9 digits).
+            Service code (6 digits).
+            Fee to be paid (up to $999.99).
+         */
+
+    }
+
     public static void main(String[] args) {
 
         ProviderDB providerMenu = new ProviderDB();
@@ -370,6 +490,8 @@ public class ProviderDB {
             out.println("5) Show Provider List");
             out.println("6) Save Provider List");
             out.println("7) Load Provider List");
+            out.println("8) Create Service Record");
+            out.println("9) Logout");
 
             out.print("Please select an option: ");
 
@@ -419,6 +541,14 @@ public class ProviderDB {
                 case 7: // Load Provider List
                     providerMenu.Load();
                     break;
+
+                case 8: // Create Service Record
+                    providerMenu.Bill();
+                    break;
+
+                default:
+                    return;
+
             }
         } while (again());
 
