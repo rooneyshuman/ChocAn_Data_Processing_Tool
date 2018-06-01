@@ -97,22 +97,19 @@ public class ProviderDir {
 
     //Public wrapper function for looking up by service code.
     public String Find_code(int code){
-        String factor = null;
-        code = input.nextInt();
-        return factor = Find_code(root, code, factor);
+         return Find_code(root, code);
     }
 
     //Look up service record by service code, returns false if there's no match.
-    protected String Find_code(ServiceInfo root, int code, String factor){
+    protected String Find_code(ServiceInfo root, int code){
         if(root == null)
-            return factor;
+            return null;
 
-        factor = Find_code(root.getLeft(), code, factor);
+        String factor = Find_code(root.getLeft(), code);
         if(root.Find(code)){
             factor = root.Service();
-            System.out.println(factor);
             return factor;}
-        factor =  Find_code(root.getRight(), code, factor);
+        factor =  Find_code(root.getRight(), code);
 
         return factor;
     }

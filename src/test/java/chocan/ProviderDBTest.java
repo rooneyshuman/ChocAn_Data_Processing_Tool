@@ -12,10 +12,10 @@ public class ProviderDBTest {
     }
 
     @Test
-    public void checkID() {
+    public void login() {
         int id = 700000;
         ProviderDB testObj = new ProviderDB();
-        assertTrue(testObj.CheckID(id));
+        assertTrue(testObj.login(id));
     }
 
     @Test
