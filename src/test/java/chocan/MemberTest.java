@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 public class MemberTest {
 
+    Member testMem = new Member(999,true,"Man","Fargo","Portland","OR","97230");
     @Test
     public void goLeft() {
     }
@@ -24,18 +25,23 @@ public class MemberTest {
 
     @Test
     public void display() {
+        testMem.Display();
     }
 
     @Test
     public void checkID() {
+        int testID = 999;
+       assertTrue(testMem.CheckID(999));
     }
 
     @Test
     public void checkActivation() {
+        assertFalse(testMem.checkActivation());
     }
 
     @Test
     public void editInfo() {
+        testMem.EditInfo();
     }
 
     @Test

@@ -1,5 +1,6 @@
 package chocan;
 
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Member {
@@ -26,9 +27,10 @@ public class Member {
         left = null;
         right = null;
     }
-    public Member(int newId,String newName, String newAddress, String newCity, String newState, String newZip ){
+    //id,active,name,address,city,state,zip
+    public Member(int newId,boolean newActive,String newName, String newAddress, String newCity, String newState, String newZip ){
         id = newId;
-        active = false;
+        active = newActive;
         name = new String(newName);
         address = new String(newAddress);
         city =  new String(newCity);
@@ -106,6 +108,31 @@ public class Member {
         }
        return display_status();
     }
+
+    int CompareID(int id) {
+
+        // If id passed in is less than current, return -1.
+        // If id passed in is equal, return 0.
+        // If id passed in is greater than current, return 1.
+        return Integer.compare(id, this.id);
+    }
+
+    public void Save(PrintWriter write) {
+
+        write.print(this.id);
+        write.print(":");
+        write.print(this.active);
+        write.print(":" + this.name + ":" + this.address + ":" + this.city);
+        write.println(":" + this.state + ":" + this.zip);
+
+    }
+
+    public void ChangeStatus() {
+
+        active = active ? false : true;
+
+    }
+
 
     public boolean display_status(){
         if(active == true) {
