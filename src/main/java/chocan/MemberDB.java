@@ -165,6 +165,8 @@ public class MemberDB {
 
     }
 
+    
+
     // Loads the list of members.
     private void Load() {
 
@@ -350,6 +352,41 @@ public class MemberDB {
 
     }
 
+    public Member find (int toCheck){
+        //empty database -> null
+        if(root == null)
+            return null;
+        else
+        return find(toCheck, this.root);
+    }
+
+    private Member find(int toCheck, Member root){
+        if(root == null)
+            return null;
+        if(root.CompareID(toCheck) == 0)
+            return root;
+        else if (root.CompareID(toCheck) > 0)
+            return find(toCheck,root.GoRight());
+        else
+            return find(toCheck,root.GoLeft());
+    }
+
+    public boolean addService(int toCheck, String serviceDate, String providerName, String serviceName)
+    {
+        Member toFind = null;
+
+        toFind = find(toCheck);
+
+        if(toFind == null)
+            return false;
+        else{
+            toFind.addService(toFind.name,serviceDate,providerName,serviceName);
+            return true;
+        }
+    }
+
+
+
     public static void main(String[] args) {
 
         MemberDB memberMenu = new MemberDB();
@@ -367,6 +404,7 @@ public class MemberDB {
             out.println("5) Show Member List");
             out.println("6) Save Member List");
             out.println("7) Load Member List");
+            out.println("8) Add a new service record");
 
             out.print("Please select an option: ");
 
@@ -402,7 +440,6 @@ public class MemberDB {
                     int id = input.nextInt();
                     if (memberMenu.CheckID(id))
                         out.println("Member ID is valid.");
-
                     break;
 
                 case 5: // Show Member List
@@ -416,6 +453,21 @@ public class MemberDB {
                 case 7: // Load Member List
                     memberMenu.Load();
                     break;
+
+                case 8: // Add new service record
+
+                    out.print("Please enter a member ID: ");
+                    while (!input.hasNextInt()) {
+                        out.print("Please enter a valid number: ");
+                        input.nextLine();
+                    }
+
+                    int toCheck = input.nextInt();
+                    if(memberMenu.addService(toCheck,"Test", "Test", "Test") == true)
+                        out.print("Pass\n");
+                    else
+                        out.print("Fail\n");
+                    break;
             }
         } while (again());
 
@@ -428,11 +480,9 @@ public class MemberDB {
         String reply;
         out.print("Go back to menu? (Yes/No) ");
         reply = input.next(); input.nextLine();
-
         return reply.equalsIgnoreCase("yes");
 
     }
-
 
 }
 

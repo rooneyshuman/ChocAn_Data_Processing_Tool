@@ -3,6 +3,8 @@ package chocan;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import static java.lang.System.out;
+
 public class Member {
 
     protected int id;
@@ -14,6 +16,7 @@ public class Member {
     protected String zip;
     protected Member left;
     protected Member right;
+    protected MemberServiceDB serviceDB;
 
     public Member()
     {
@@ -26,6 +29,7 @@ public class Member {
         zip = null;
         left = null;
         right = null;
+        serviceDB = null;
     }
     //id,active,name,address,city,state,zip
     public Member(int newId,boolean newActive,String newName, String newAddress, String newCity, String newState, String newZip ){
@@ -38,6 +42,7 @@ public class Member {
         zip = newZip;
         left = null;
         right = null;
+        serviceDB = new MemberServiceDB();
     }
 
     public Member GoLeft(){
@@ -125,6 +130,10 @@ public class Member {
         write.print(":" + this.name + ":" + this.address + ":" + this.city);
         write.println(":" + this.state + ":" + this.zip);
 
+    }
+
+    public void addService(String memberName, String serviceDate, String providerName, String serviceName){
+        //serviceDB.add(memberName,serviceDate,providerName,serviceName);
     }
 
     public void ChangeStatus() {
