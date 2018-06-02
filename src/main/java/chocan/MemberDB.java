@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import static java.lang.System.in;
 import static java.lang.System.out;
 
 public class MemberDB {
@@ -352,6 +353,7 @@ public class MemberDB {
 
     }
 
+    //find the member object in database based on the id provided
     public Member find (int toCheck){
         //empty database -> null
         if(root == null)
@@ -360,6 +362,7 @@ public class MemberDB {
         return find(toCheck, this.root);
     }
 
+    //find the member object in database based on the id provided
     private Member find(int toCheck, Member root){
         if(root == null)
             return null;
@@ -371,6 +374,7 @@ public class MemberDB {
             return find(toCheck,root.GoLeft());
     }
 
+    //Add new service records based on the ID provided.
     public boolean addService(int toCheck, String serviceDate, String providerName, String serviceName)
     {
         Member toFind = null;
@@ -384,7 +388,32 @@ public class MemberDB {
             return true;
         }
     }
+    //write the info of the whole database
+    public void write (){
+       if(root != null)
+           write(root);
+    }
 
+    private void write (Member root){
+        if(root != null)
+            return;
+        else
+        {
+            root.write();
+            write(root.GoLeft());
+            write(root.GoRight());
+        }
+    }
+    //write the info of single object
+    public boolean write (int toFind){
+        Member temp = find(toFind);
+        if(temp != null) {
+            temp.write();
+            return true;
+        }
+        else
+            return false;
+    }
 
 
     public static void main(String[] args) {
@@ -473,6 +502,7 @@ public class MemberDB {
 
 
     }
+
 
     private static boolean again() {
 

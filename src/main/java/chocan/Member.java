@@ -136,6 +136,10 @@ public class Member {
         //serviceDB.add(memberName,serviceDate,providerName,serviceName);
     }
 
+    public void write (){
+        // writes member info to the text files
+    }
+
     public void ChangeStatus() {
 
         active = active ? false : true;
