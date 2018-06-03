@@ -4,43 +4,64 @@ import static java.lang.System.out;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ProviderDB {
 
     private Provider root;
+    private ProviderDir directory;
+    private MemberDB memberList;
     private int providerCount = 0;
+    private int providerID = 0;
 
     ProviderDB() {
 
         this.root = null;
-        Load(); // Loads the list of providers.
+        load(); // Loads the list of providers.
+        this.memberList = new MemberDB();
+        this.directory = new ProviderDir();
+        this.directory.Read_txt();
 
     }
 
-    // This checks the providers ID.
-    boolean CheckID(int id) {
+    // This checks the providers ID and logs them in.
+    public boolean login(int id) {
 
-        if (CheckID(id,this.root)) return true;
+        if (login(id,this.root)) {
+            this.providerID = id;
+            return true;
+        }
         else {
-            out.print("Invalid member.");
+            out.print("Invalid member.\n");
             return false;
         }
 
     }
 
     // Traverses tree to check ID.
-    private boolean CheckID(int id, Provider root) {
+    private boolean login(int id, Provider root) {
 
         if (root == null) return false;
 
         if (root.CheckID(id)) return true;
 
-        return CheckID(id,root.GoLeft()) ? true : CheckID(id,root.GoRight());
+        return login(id, root.goLeft()) || login(id, root.goRight());
+    }
+
+    // Log out provider.
+    public void logout() {
+
+        this.providerID = 0;
+
     }
 
     // Add providers via public prompt. (For managers.)
-    public void Add() {
+    public void add() {
 
         Scanner input = new Scanner(System.in);
 
@@ -88,14 +109,14 @@ public class ProviderDB {
             zip = input.nextLine();
         }
 
-        this.root = Add(this.root,(700000 + providerCount),true,name,address,city,state,zip);
+        this.root = add(this.root,(700000 + providerCount),true,name,address,city,state,zip);
         out.println("Provider added.");
-        Save();
+        save();
 
     }
 
     // Add providers to tree.
-    private Provider Add(Provider root, int id, boolean active, String name, String address, String city, String state, String zip) {
+    private Provider add(Provider root, int id, boolean active, String name, String address, String city, String state, String zip) {
 
         // If no providers, create it.
         if (root == null) {
@@ -106,20 +127,20 @@ public class ProviderDB {
 
         }
 
-        int direction = root.CompareID(id);
+        int direction = root.compareID(id);
 
         // Traverse tree to find where to add.
         if (direction < 0)
-            root.SetLeft(Add(root.GoLeft(),id,active,name,address,city,state,zip));
+            root.setLeft(add(root.goLeft(),id,active,name,address,city,state,zip));
         else if (direction > 0)
-            root.SetRight(Add(root.GoRight(),id,active,name,address,city,state,zip));
+            root.setRight(add(root.goRight(),id,active,name,address,city,state,zip));
 
         return root;
 
     }
 
     // Activate or deactivate provider's account.
-    public void ChangeStatus() {
+    public void changeStatus() {
 
         Scanner input = new Scanner(System.in);
 
@@ -139,37 +160,37 @@ public class ProviderDB {
         int id = input.nextInt();
         input.nextLine();
 
-        ChangeStatus(this.root,id);
-        Save();
+        changeStatus(this.root,id);
+        save();
 
     }
 
     // Traverse tree and change status of a provider.
-    private void ChangeStatus(Provider root, int id) {
+    private void changeStatus(Provider root, int id) {
 
         // If empty, return.
         if (root == null) return;
 
         // If ID matches, change status.
-        if (root.CompareID(id) == 0) {
+        if (root.compareID(id) == 0) {
 
             out.println("Provider status has changed.");
-            root.ChangeStatus();
+            root.changeStatus();
             return;
 
         }
 
         //Otherwise, traverse tree.
-        if (root.CompareID(id) < 0) {
-            ChangeStatus(root.GoLeft(), id);
+        if (root.compareID(id) < 0) {
+            changeStatus(root.goLeft(), id);
         } else {
-            ChangeStatus(root.GoRight(), id);
+            changeStatus(root.goRight(), id);
         }
 
     }
 
     // Loads the list of providers.
-    private void Load() {
+    private void load() {
 
         try {
             File file = new File("src/main/java/chocan/db/providers.txt");
@@ -190,7 +211,7 @@ public class ProviderDB {
                 state = read.next();
                 zip = read.next();
 
-                this.root = Add(this.root,id,active,name,address,city,state,zip);
+                this.root = add(this.root,id,active,name,address,city,state,zip);
             }
 
             read.close();
@@ -203,7 +224,7 @@ public class ProviderDB {
     }
 
     // Delete a provider via public prompt. (For managers.)
-    public void Delete() {
+    public void delete() {
 
         Scanner input = new Scanner(System.in);
 
@@ -221,82 +242,82 @@ public class ProviderDB {
         int id = input.nextInt();
         input.nextLine();
 
-        this.root = Delete(this.root,id);
-        Save();
+        this.root = delete(this.root,id);
+        save();
 
     }
 
     // Delete provider from tree.
-    private Provider Delete(Provider root, int id) {
+    private Provider delete(Provider root, int id) {
 
         // If no providers, return.
         if (root == null) return null;
 
         // If provider is found, get ready to delete.
-        if (root.CompareID(id) == 0) {
+        if (root.compareID(id) == 0) {
 
             out.println("Provider deleted.");
             --providerCount;
 
             // If this is the only node, make it null and return.
-            if (root.GoLeft() == null && root.GoRight() == null)
+            if (root.goLeft() == null && root.goRight() == null)
                 return null;
 
             // If there is only a left child, make it the new root.
-            if (root.GoLeft() != null && root.GoRight() == null)
-                return root.GoLeft();
+            if (root.goLeft() != null && root.goRight() == null)
+                return root.goLeft();
 
             // If there is only a right child, make it the new root.
-            if (root.GoLeft() == null && root.GoRight() != null)
-                return root.GoRight();
+            if (root.goLeft() == null && root.goRight() != null)
+                return root.goRight();
 
             // If both children exist, find inorder successor on right subtree.
-            Provider temp = root.GoRight();
+            Provider temp = root.goRight();
             Provider previous = null;
-            while (temp.GoLeft() != null) {
+            while (temp.goLeft() != null) {
                 previous = temp;
-                temp = temp.GoLeft();
+                temp = temp.goLeft();
             }
 
             // If inorder successor has a right child, that becomes the inorder successor.
-            if (temp.GoRight() != null) {
+            if (temp.goRight() != null) {
 
                 previous = temp;
-                temp = temp.GoRight();
-                if (temp != root.GoLeft())
-                    temp.SetLeft(root.GoLeft()); // Make sure it doesn't link to itself.
-                if (temp != root.GoRight())
-                    temp.SetRight(root.GoRight()); // Make sure it doesn't link to itself.
+                temp = temp.goRight();
+                if (temp != root.goLeft())
+                    temp.setLeft(root.goLeft()); // Make sure it doesn't link to itself.
+                if (temp != root.goRight())
+                    temp.setRight(root.goRight()); // Make sure it doesn't link to itself.
                 root = temp;
-                previous.SetRight(null);
+                previous.setRight(null);
                 return root;
 
             }
 
             // Otherwise, this one is the inorder successor.
-            if (temp != root.GoLeft())
-                temp.SetLeft(root.GoLeft()); // Make sure it doesn't link to itself.
-            if (temp != root.GoRight())
-                temp.SetRight(root.GoRight()); // Make sure it doesn't link to itself.
+            if (temp != root.goLeft())
+                temp.setLeft(root.goLeft()); // Make sure it doesn't link to itself.
+            if (temp != root.goRight())
+                temp.setRight(root.goRight()); // Make sure it doesn't link to itself.
             root = temp;
             if (previous != null)
-                previous.SetLeft(null);
+                previous.setLeft(null);
             return root;
 
         }
 
         // If less than, go left.
-        if (root.CompareID(id) < 0)
-            root.SetLeft(Delete(root.GoLeft(), id));
+        if (root.compareID(id) < 0)
+            root.setLeft(delete(root.goLeft(), id));
         else
-            root.SetRight(Delete(root.GoRight(), id));
+            root.setRight(delete(root.goRight(), id));
 
         return root;
 
     }
 
     // Saves the list of providers.
-    public void Save() {
+    public void save() {
 
         File file = new File("src/main/java/chocan/db/providers.txt");
         file.getParentFile().mkdirs();
@@ -308,25 +329,25 @@ public class ProviderDB {
             e.printStackTrace();
         }
 
-        Save(this.root,write);
+        save(this.root,write);
         out.println("Provider list has been saved.");
         write.close();
     }
 
     // Traverse tree and save data.
-    private void Save(Provider root, PrintWriter write) {
+    private void save(Provider root, PrintWriter write) {
 
         // If empty, return.
         if (root == null) return;
 
         // Inorder traversal.
-        Save(root.GoLeft(),write);
-        root.Save(write);
-        Save(root.GoRight(),write);
+        save(root.goLeft(),write);
+        root.save(write);
+        save(root.goRight(),write);
     }
 
     // Displays the list of providers.
-    public void ShowProviders() {
+    public void showProviders() {
 
         out.println("\n-----------------------------------------");
         out.println("Showing list of providers...");
@@ -337,19 +358,135 @@ public class ProviderDB {
             return;
         }
 
-        ShowProviders(this.root);
+        showProviders(this.root);
         out.println("Total number of providers: " + (providerCount - 1));
 
     }
 
     // Recursive display.
-    private void ShowProviders(Provider root) {
+    private void showProviders(Provider root) {
 
         if (root == null) return;
 
-        ShowProviders(root.GoLeft());
-        root.Display();
-        ShowProviders(root.GoRight());
+        showProviders(root.goLeft());
+        root.display();
+        showProviders(root.goRight());
+
+    }
+
+    public void bill() {
+
+        // Check for authorization.
+        if (providerID == 0) {
+            out.println("Must be logged in with a Provider ID.");
+            return;
+        }
+
+        out.println("\n-----------------------------------------");
+        out.println("Create Service Record");
+        out.println("-----------------------------------------");
+
+        Scanner ask = new Scanner(System.in);
+
+        // Check if member ID is valid.
+        out.print("Please enter member ID: ");
+        while (!ask.hasNextInt()) {
+            System.out.print("Please enter a valid number: ");
+            ask.nextLine();
+        }
+
+        int memberID = ask.nextInt();
+        // Call MemberDB function to check ID.
+        // If invalid, return. Otherwise, continue.
+
+        // Grab current date and time.
+        DateFormat dateFormat1 = new SimpleDateFormat("MM-dd-YYYY HH:MM:ss", Locale.US);
+        Date providerDate = new Date();
+        String currentDate = dateFormat1.format(providerDate);
+
+        // Prompt provider to enter service date.
+        DateFormat dateFormat2 = new SimpleDateFormat("MM-dd-YYYY", Locale.US);
+        out.print("Please enter the service date (MM-DD-YYYY)");
+        Date memberDate = null;
+        String serviceDate = null;
+
+        while (memberDate == null) {
+
+            serviceDate = ask.next();
+
+            try {
+                memberDate = dateFormat2.parse(serviceDate);
+            } catch (ParseException error) {
+                out.print("Invalid date.\nPlease enter a date (MM-DD-YYYY): ");
+            }
+        }
+
+        // Display provider directory.
+        directory.Display();
+
+        int serviceCode;
+        String serviceName;
+
+        // Input service code.
+        do {
+            out.print("Please enter the service code: ");
+
+            while (!ask.hasNextInt()) {
+                out.print("Please enter a valid number: ");
+                ask.nextLine(); ask.nextLine();
+            }
+
+            serviceCode = ask.nextInt();
+            ask.nextLine();
+
+            serviceName = directory.Find_code(serviceCode);
+
+            if (serviceName == null)
+                out.println("Invalid code. Please try again.");
+            else {
+                out.print("Is this the correct service? (Y/N): ");
+                String answer = ask.nextLine();
+                if (answer.startsWith("N") || answer.startsWith("n"))
+                    serviceName = null;
+            }
+
+        } while (serviceName == null);
+
+        // Prompt user to enter any comments about the service.
+        out.print("Please enter any comments (optional): ");
+        String serviceComments = ask.nextLine();
+
+        /* Write record to disk.
+            Current date and time (MM-DD-YYYY HH:MM:SS).
+            Date service was provided (MM-DD-YYYY)
+            Provider number (9 digits).
+            Member number (9 digits).
+            Service code (6 digits).
+            Comments (100 characters). (optional)
+        */
+        out.print("Current date and time: " + currentDate + "\n");
+        out.print("Date service was provided: " + serviceDate + "\n");
+        out.print("Provider number: " + providerID + "\n");
+        out.print("Member number: " + memberID + "\n");
+        out.print("Service code: " + serviceCode + "\n");
+        out.print("Comments: " + serviceComments + "\n");
+
+        // Display fee to provider.
+
+        /* Save member service record.
+            Date of service (MM-DD-YYYY).
+            Provider name (25 characters).
+            Service name (20 characters).
+         */
+
+        /* Save provider service record.
+            Date of service (MM-DD-YYYY).
+            Date and time data were received by the computer (MM-DD-YYYY HH:MM:SS).
+            Member name (25 characters).
+            Member number (9 digits).
+            Service code (6 digits).
+            Fee to be paid (up to $999.99).
+         */
 
     }
 
@@ -366,10 +503,12 @@ public class ProviderDB {
             out.println("1) Add Provider");
             out.println("2) Change Status of Provider");
             out.println("3) Delete Provider");
-            out.println("4) Check Provider ID");
+            out.println("4) Login");
             out.println("5) Show Provider List");
             out.println("6) Save Provider List");
             out.println("7) Load Provider List");
+            out.println("8) Create Service Record");
+            out.println("9) Logout");
 
             out.print("Please select an option: ");
 
@@ -383,18 +522,18 @@ public class ProviderDB {
             switch (menuOption) {
 
                 case 1: // Add Provider
-                    providerMenu.Add();
+                    providerMenu.add();
                     break;
 
                 case 2: // Change Status of Provider
-                    providerMenu.ChangeStatus();
+                    providerMenu.changeStatus();
                     break;
 
                 case 3: // Delete Provider
-                    providerMenu.Delete();
+                    providerMenu.delete();
                     break;
 
-                case 4: // Check Provider ID
+                case 4: // Login
                     out.print("Please enter a provider ID: ");
 
                     while (!input.hasNextInt()) {
@@ -403,22 +542,31 @@ public class ProviderDB {
                     }
 
                     int id = input.nextInt();
-                    if (providerMenu.CheckID(id))
-                        out.println("Member ID is valid.");
+                    if (providerMenu.login(id))
+                        out.println("Provider has been logged in.");
 
                     break;
 
                 case 5: // Show Provider List
-                    providerMenu.ShowProviders();
+                    providerMenu.showProviders();
                     break;
 
                 case 6: // Save Provider List
-                    providerMenu.Save();
+                    providerMenu.save();
                     break;
 
                 case 7: // Load Provider List
-                    providerMenu.Load();
+                    providerMenu.load();
                     break;
+
+                case 8: // Create Service Record
+                    providerMenu.bill();
+                    break;
+
+                default:
+                    providerMenu.logout();
+                    return;
+
             }
         } while (again());
 
