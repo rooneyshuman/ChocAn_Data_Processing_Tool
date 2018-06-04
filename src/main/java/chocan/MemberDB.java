@@ -5,10 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import static java.lang.System.in;
 import static java.lang.System.out;
 
 public class MemberDB {
+
     private Member root;
     private int memberCount;
 
@@ -16,6 +16,7 @@ public class MemberDB {
         root = null;
         load();
     }
+
     // This checks the members ID.
     boolean checkID(int id) {
 
@@ -34,7 +35,7 @@ public class MemberDB {
 
         if (root.checkID(id)) return true;
 
-        return checkID(id,root.goLeft()) ? true : checkID(id,root.goRight());
+        return checkID(id, root.goLeft()) || checkID(id, root.goRight());
     }
 
     // Add members via public prompt. (For managers.)
@@ -353,30 +354,25 @@ public class MemberDB {
 
     //find the member object in database based on the id provided
     public Member find(int toCheck) {
-        //empty database -> null
-        if(root == null)
-            return null;
-        else
-        return find(toCheck, this.root);
+
+        return root == null ? null : find(toCheck, this.root);
+
     }
 
     //find the member object in database based on the id provided
     private Member find(int toCheck, Member root) {
         if(root == null)
             return null;
+
         if(root.compareID(toCheck) == 0)
             return root;
-        else if (root.compareID(toCheck) > 0)
-            return find(toCheck,root.goRight());
-        else
-            return find(toCheck,root.goLeft());
+
+        return (root.compareID(toCheck) > 0) ? find(toCheck, root.goRight()) : find(toCheck, root.goLeft());
     }
 
     //Add new service records based on the ID provided.
     public boolean addService(int toCheck, String serviceDate, String providerName, String serviceName) {
-        Member toFind = null;
-
-        toFind = find(toCheck);
+        Member toFind = find(toCheck);
 
         if(toFind == null)
             return false;
@@ -395,23 +391,22 @@ public class MemberDB {
     private void write(Member root) {
         if(root != null)
             return;
-        else
-        {
-            root.write();
-            write(root.goLeft());
-            write(root.goRight());
-        }
+
+        root.write();
+        write(root.goLeft());
+        write(root.goRight());
     }
 
     //write the info of single object
     public boolean write(int toFind) {
         Member temp = find(toFind);
+
         if(temp != null) {
             temp.write();
             return true;
         }
-        else
-            return false;
+
+        return false;
     }
 
     public static void main(String[] args) {
@@ -490,7 +485,7 @@ public class MemberDB {
                     }
 
                     int toCheck = input.nextInt();
-                    if(memberMenu.addService(toCheck,"Test", "Test", "Test") == true)
+                    if(memberMenu.addService(toCheck, "Test", "Test", "Test"))
                         out.print("Pass\n");
                     else
                         out.print("Fail\n");

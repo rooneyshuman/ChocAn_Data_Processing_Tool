@@ -8,17 +8,17 @@ import static java.lang.System.out;
 public class Member {
 
     protected int id;
-    protected boolean active;
+    boolean active;
     protected String name;
-    protected String address;
-    protected String city;
-    protected String state;
-    protected String zip;
-    protected Member left;
-    protected Member right;
-    protected MemberServiceDB serviceDB;
+    String address;
+    String city;
+    String state;
+    String zip;
+    Member left;
+    Member right;
+    private MemberServiceDB serviceDB;
 
-    public Member()
+    Member()
     {
         id = 0;
         active = false;
@@ -33,13 +33,13 @@ public class Member {
     }
 
     //id,active,name,address,city,state,zip
-    public Member(int newId,boolean newActive,String newName, String newAddress, String newCity, String newState, String newZip) {
+    Member(int newId, boolean newActive, String newName, String newAddress, String newCity, String newState, String newZip) {
         id = newId;
         active = newActive;
-        name = new String(newName);
-        address = new String(newAddress);
-        city =  new String(newCity);
-        state = new String(newState);
+        name = newName;
+        address = newAddress;
+        city = newCity;
+        state = newState;
         zip = newZip;
         left = null;
         right = null;
@@ -54,72 +54,80 @@ public class Member {
         return right;
     }
 
-    public void setLeft(Member NewLeft){
+    void setLeft(Member NewLeft){
         left = NewLeft;
     }
 
-    public void setRight(Member NewRight) {
+    void setRight(Member NewRight) {
         right = NewRight;
     }
 
     public void display() {
-        System.out.println("Member name: " + name);
-        System.out.println("Member number: " + id);
-        System.out.println("Member street address: " + address);
-        System.out.println("Member city: " + city);
-        System.out.println("Member state: " + state);
-        System.out.println("Member zip code: " + zip);
+        out.println("Member name: " + name);
+        out.println("Member number: " + id);
+        out.println("Member street address: " + address);
+        out.println("Member city: " + city);
+        out.println("Member state: " + state);
+        out.println("Member zip code: " + zip);
     }
 
-    public boolean checkID(int ID) {
-        if(ID == id)            //check if the ID exists
-            return true;
-        else
-            return false;
+    boolean checkID(int ID) {
+        //check if the ID exists
+        return ID == id;
     }
 
-    public boolean checkActivation(){
+    boolean checkActivation(){
         return active;
     }
 
-    public boolean editInfo() {
+    boolean editInfo() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("New ID: ");
+
+        out.print("New ID: ");
         int new_id = sc.nextInt();
-        System.out.print("New name: ");
+
+        out.print("New name: ");
         String new_name = sc.nextLine();
-        System.out.print("New address: ");
+
+        out.print("New address: ");
         String new_address = sc.nextLine();
-        System.out.print("New city: ");
+
+        out.print("New city: ");
         String new_city = sc.nextLine();
-        System.out.print("New state: ");
+
+        out.print("New state: ");
         String new_state = sc.nextLine();
-        System.out.print("New zip: ");
+
+        out.print("New zip: ");
         String new_zip = sc.nextLine();
+
         id = new_id;
-        name = new String(new_name);
-        address = new String(new_address);
-        city = new String(new_city);
-        state = new String(new_state);
+        name = new_name;
+        address = new_address;
+        city = new_city;
+        state = new_state;
         zip = new_zip;
+
         return true;
     }
 
     public boolean updateActivation() {
         Scanner sc = new Scanner(System.in);
-        String reply = new String();
-        if (displayStatus() == true) {
-            System.out.print("Change the status to be suspended(Y/N): ");
+        String reply;
+
+        if (displayStatus()) {
+            out.print("Change the status to be suspended(Y/N): ");
             reply = sc.nextLine();
             if(reply.equalsIgnoreCase("Y"))
                 active = false;
         }
         else {
-            System.out.print("Change the status to be active(Y/N): ");
+            out.print("Change the status to be active(Y/N): ");
             reply = sc.nextLine();
             if(reply.equalsIgnoreCase("Y"))
                 active = true;
         }
+
        return displayStatus();
     }
 
@@ -141,28 +149,28 @@ public class Member {
 
     }
 
-    public void addService(String memberName, String serviceDate, String providerName, String serviceName) {
+    void addService(String memberName, String serviceDate, String providerName, String serviceName) {
         //serviceDB.add(memberName,serviceDate,providerName,serviceName);
     }
 
-    public void write () {
+    void write() {
         // writes member info to the text files
     }
 
     public void changeStatus() {
 
-        active = active ? false : true;
+        active = !active;
 
     }
 
 
-    public boolean displayStatus() {
-        if(active == true) {
-            System.out.println("The current status is active.");
+    private boolean displayStatus() {
+        if(active) {
+            out.println("The current status is active.");
             return true;
         }
         else {
-            System.out.println("The current status is suspended.");
+            out.println("The current status is suspended.");
             return false;
         }
     }
