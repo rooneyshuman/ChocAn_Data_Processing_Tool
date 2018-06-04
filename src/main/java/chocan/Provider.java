@@ -34,11 +34,11 @@ public class Provider extends Member {
 
     }
 
-    Provider goLeft() {
+    public Provider goLeft() {
         return (Provider) super.left;
     }
 
-    Provider goRight() {
+    public Provider goRight() {
         return (Provider) super.right;
     }
 

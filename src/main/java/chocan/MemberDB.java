@@ -14,12 +14,12 @@ public class MemberDB {
 
     MemberDB() {
         root = null;
-        Load();
+        load();
     }
     // This checks the members ID.
-    boolean CheckID(int id) {
+    boolean checkID(int id) {
 
-        if (CheckID(id,root)) return true;
+        if (checkID(id,root)) return true;
         else {
             out.print("Invalid member.");
             return false;
@@ -28,17 +28,17 @@ public class MemberDB {
     }
 
     // Traverses tree to check ID.
-    private boolean CheckID(int id, Member root) {
+    private boolean checkID(int id, Member root) {
 
         if (root == null) return false;
 
-        if (root.CheckID(id)) return true;
+        if (root.checkID(id)) return true;
 
-        return CheckID(id,root.GoLeft()) ? true : CheckID(id,root.GoRight());
+        return checkID(id,root.goLeft()) ? true : checkID(id,root.goRight());
     }
 
     // Add members via public prompt. (For managers.)
-    public void Add() {
+    public void add() {
 
         Scanner input = new Scanner(System.in);
 
@@ -86,14 +86,14 @@ public class MemberDB {
             zip = input.nextLine();
         }
 
-        this.root = Add(this.root,(700000 + memberCount),true,name,address,city,state,zip);
+        this.root = add(this.root,(700000 + memberCount),true,name,address,city,state,zip);
         out.println("Member added.");
-        Save();
+        save();
 
     }
 
     // Add members to tree.
-    private Member Add(Member root, int id, boolean active, String name, String address, String city, String state, String zip) {
+    private Member add(Member root, int id, boolean active, String name, String address, String city, String state, String zip) {
 
         // If no members, create it.
         if (root == null) {
@@ -104,20 +104,20 @@ public class MemberDB {
 
         }
 
-        int direction = root.CompareID(id);
+        int direction = root.compareID(id);
 
         // Traverse tree to find where to add.
         if (direction < 0)
-            root.SetLeft(Add(root.GoLeft(),id,active,name,address,city,state,zip));
+            root.setLeft(add(root.goLeft(),id,active,name,address,city,state,zip));
         else if (direction > 0)
-            root.SetRight(Add(root.GoRight(),id,active,name,address,city,state,zip));
+            root.setRight(add(root.goRight(),id,active,name,address,city,state,zip));
 
         return root;
 
     }
 
     // Activate or deactivate member's account.
-    public void ChangeStatus() {
+    public void changeStatus() {
 
         Scanner input = new Scanner(System.in);
 
@@ -137,39 +137,37 @@ public class MemberDB {
         int id = input.nextInt();
         input.nextLine();
 
-        ChangeStatus(this.root,id);
-        Save();
+        changeStatus(this.root,id);
+        save();
 
     }
 
     // Traverse tree and change status of a member.
-    private void ChangeStatus(Member root, int id) {
+    private void changeStatus(Member root, int id) {
 
         // If empty, return.
         if (root == null) return;
 
         // If ID matches, change status.
-        if (root.CompareID(id) == 0) {
+        if (root.compareID(id) == 0) {
 
             out.println("Member status has changed.");
-            root.ChangeStatus();
+            root.changeStatus();
             return;
 
         }
 
         //Otherwise, traverse tree.
-        if (root.CompareID(id) < 0) {
-            ChangeStatus(root.GoLeft(), id);
+        if (root.compareID(id) < 0) {
+            changeStatus(root.goLeft(), id);
         } else {
-            ChangeStatus(root.GoRight(), id);
+            changeStatus(root.goRight(), id);
         }
 
     }
 
-    
-
     // Loads the list of members.
-    private void Load() {
+    private void load() {
 
         try {
             File file = new File("src/main/java/chocan/db/members.txt");
@@ -190,7 +188,7 @@ public class MemberDB {
                 state = read.next();
                 zip = read.next();
 
-                this.root = Add(this.root,id,active,name,address,city,state,zip);
+                this.root = add(this.root,id,active,name,address,city,state,zip);
             }
 
             read.close();
@@ -203,7 +201,7 @@ public class MemberDB {
     }
 
     // Delete a member via public prompt. (For managers.)
-    public void Delete() {
+    public void delete() {
 
         Scanner input = new Scanner(System.in);
 
@@ -221,82 +219,82 @@ public class MemberDB {
         int id = input.nextInt();
         input.nextLine();
 
-        this.root = Delete(this.root,id);
-        Save();
+        this.root = delete(this.root,id);
+        save();
 
     }
 
     // Delete member from tree.
-    private Member Delete(Member root, int id) {
+    private Member delete(Member root, int id) {
 
         // If no members, return.
         if (root == null) return null;
 
         // If member is found, get ready to delete.
-        if (root.CompareID(id) == 0) {
+        if (root.compareID(id) == 0) {
 
             out.println("Member deleted.");
             --memberCount;
 
             // If this is the only node, make it null and return.
-            if (root.GoLeft() == null && root.GoRight() == null)
+            if (root.goLeft() == null && root.goRight() == null)
                 return null;
 
             // If there is only a left child, make it the new root.
-            if (root.GoLeft() != null && root.GoRight() == null)
-                return root.GoLeft();
+            if (root.goLeft() != null && root.goRight() == null)
+                return root.goLeft();
 
             // If there is only a right child, make it the new root.
-            if (root.GoLeft() == null && root.GoRight() != null)
-                return root.GoRight();
+            if (root.goLeft() == null && root.goRight() != null)
+                return root.goRight();
 
             // If both children exist, find inorder successor on right subtree.
-            Member temp = root.GoRight();
+            Member temp = root.goRight();
             Member previous = null;
-            while (temp.GoLeft() != null) {
+            while (temp.goLeft() != null) {
                 previous = temp;
-                temp = temp.GoLeft();
+                temp = temp.goLeft();
             }
 
             // If inorder successor has a right child, that becomes the inorder successor.
-            if (temp.GoRight() != null) {
+            if (temp.goRight() != null) {
 
                 previous = temp;
-                temp = temp.GoRight();
-                if (temp != root.GoLeft())
-                    temp.SetLeft(root.GoLeft()); // Make sure it doesn't link to itself.
-                if (temp != root.GoRight())
-                    temp.SetRight(root.GoRight()); // Make sure it doesn't link to itself.
+                temp = temp.goRight();
+                if (temp != root.goLeft())
+                    temp.setLeft(root.goLeft()); // Make sure it doesn't link to itself.
+                if (temp != root.goRight())
+                    temp.setRight(root.goRight()); // Make sure it doesn't link to itself.
                 root = temp;
-                previous.SetRight(null);
+                previous.setRight(null);
                 return root;
 
             }
 
             // Otherwise, this one is the inorder successor.
-            if (temp != root.GoLeft())
-                temp.SetLeft(root.GoLeft()); // Make sure it doesn't link to itself.
-            if (temp != root.GoRight())
-                temp.SetRight(root.GoRight()); // Make sure it doesn't link to itself.
+            if (temp != root.goLeft())
+                temp.setLeft(root.goLeft()); // Make sure it doesn't link to itself.
+            if (temp != root.goRight())
+                temp.setRight(root.goRight()); // Make sure it doesn't link to itself.
             root = temp;
             if (previous != null)
-                previous.SetLeft(null);
+                previous.setLeft(null);
             return root;
 
         }
 
         // If less than, go left.
-        if (root.CompareID(id) < 0)
-            root.SetLeft(Delete(root.GoLeft(), id));
+        if (root.compareID(id) < 0)
+            root.setLeft(delete(root.goLeft(), id));
         else
-            root.SetRight(Delete(root.GoRight(), id));
+            root.setRight(delete(root.goRight(), id));
 
         return root;
 
     }
 
     // Saves the list of members.
-    public void Save() {
+    public void save() {
 
         File file = new File("src/main/java/chocan/db/members.txt");
         file.getParentFile().mkdirs();
@@ -308,25 +306,25 @@ public class MemberDB {
             e.printStackTrace();
         }
 
-        Save(this.root,write);
+        save(this.root,write);
         out.println("Member list has been saved.");
         write.close();
     }
 
     // Traverse tree and save data.
-    private void Save(Member root, PrintWriter write) {
+    private void save(Member root, PrintWriter write) {
 
         // If empty, return.
         if (root == null) return;
 
         // Inorder traversal.
-        Save(root.GoLeft(),write);
-        root.Save(write);
-        Save(root.GoRight(),write);
+        save(root.goLeft(),write);
+        root.save(write);
+        save(root.goRight(),write);
     }
 
     // Displays the list of members.
-    public void ShowMembers() {
+    public void showMembers() {
 
         out.println("\n-----------------------------------------");
         out.println("Showing list of members...");
@@ -337,24 +335,24 @@ public class MemberDB {
             return;
         }
 
-        ShowMembers(this.root);
+        showMembers(this.root);
         out.println("Total number of members: " + (memberCount - 1));
 
     }
 
     // Recursive display.
-    private void ShowMembers(Member root) {
+    private void showMembers(Member root) {
 
         if (root == null) return;
 
-        ShowMembers(root.GoLeft());
-        root.Display();
-        ShowMembers(root.GoRight());
+        showMembers(root.goLeft());
+        root.display();
+        showMembers(root.goRight());
 
     }
 
     //find the member object in database based on the id provided
-    public Member find (int toCheck){
+    public Member find(int toCheck) {
         //empty database -> null
         if(root == null)
             return null;
@@ -363,20 +361,19 @@ public class MemberDB {
     }
 
     //find the member object in database based on the id provided
-    private Member find(int toCheck, Member root){
+    private Member find(int toCheck, Member root) {
         if(root == null)
             return null;
-        if(root.CompareID(toCheck) == 0)
+        if(root.compareID(toCheck) == 0)
             return root;
-        else if (root.CompareID(toCheck) > 0)
-            return find(toCheck,root.GoRight());
+        else if (root.compareID(toCheck) > 0)
+            return find(toCheck,root.goRight());
         else
-            return find(toCheck,root.GoLeft());
+            return find(toCheck,root.goLeft());
     }
 
     //Add new service records based on the ID provided.
-    public boolean addService(int toCheck, String serviceDate, String providerName, String serviceName)
-    {
+    public boolean addService(int toCheck, String serviceDate, String providerName, String serviceName) {
         Member toFind = null;
 
         toFind = find(toCheck);
@@ -388,24 +385,26 @@ public class MemberDB {
             return true;
         }
     }
+
     //write the info of the whole database
-    public void write (){
+    public void write () {
        if(root != null)
            write(root);
     }
 
-    private void write (Member root){
+    private void write(Member root) {
         if(root != null)
             return;
         else
         {
             root.write();
-            write(root.GoLeft());
-            write(root.GoRight());
+            write(root.goLeft());
+            write(root.goRight());
         }
     }
+
     //write the info of single object
-    public boolean write (int toFind){
+    public boolean write(int toFind) {
         Member temp = find(toFind);
         if(temp != null) {
             temp.write();
@@ -414,7 +413,6 @@ public class MemberDB {
         else
             return false;
     }
-
 
     public static void main(String[] args) {
 
@@ -447,15 +445,15 @@ public class MemberDB {
             switch (menuOption) {
 
                 case 1: // Add Member
-                    memberMenu.Add();
+                    memberMenu.add();
                     break;
 
                 case 2: // Change Status of Member
-                    memberMenu.ChangeStatus();
+                    memberMenu.changeStatus();
                     break;
 
                 case 3: // Delete Member
-                    memberMenu.Delete();
+                    memberMenu.delete();
                     break;
 
                 case 4: // Check Member ID
@@ -467,20 +465,20 @@ public class MemberDB {
                     }
 
                     int id = input.nextInt();
-                    if (memberMenu.CheckID(id))
+                    if (memberMenu.checkID(id))
                         out.println("Member ID is valid.");
                     break;
 
                 case 5: // Show Member List
-                    memberMenu.ShowMembers();
+                    memberMenu.showMembers();
                     break;
 
                 case 6: // Save Member List
-                    memberMenu.Save();
+                    memberMenu.save();
                     break;
 
                 case 7: // Load Member List
-                    memberMenu.Load();
+                    memberMenu.load();
                     break;
 
                 case 8: // Add new service record
@@ -500,9 +498,7 @@ public class MemberDB {
             }
         } while (again());
 
-
     }
-
 
     private static boolean again() {
 

@@ -31,8 +31,9 @@ public class Member {
         right = null;
         serviceDB = null;
     }
+
     //id,active,name,address,city,state,zip
-    public Member(int newId,boolean newActive,String newName, String newAddress, String newCity, String newState, String newZip ){
+    public Member(int newId,boolean newActive,String newName, String newAddress, String newCity, String newState, String newZip) {
         id = newId;
         active = newActive;
         name = new String(newName);
@@ -45,19 +46,23 @@ public class Member {
         serviceDB = new MemberServiceDB();
     }
 
-    public Member GoLeft(){
+    public Member goLeft(){
         return left;
     }
-    public Member GoRight(){
+
+    public Member goRight(){
         return right;
     }
-    public void SetLeft(Member NewLeft){
+
+    public void setLeft(Member NewLeft){
         left = NewLeft;
     }
-    public void SetRight(Member NewRight) {
+
+    public void setRight(Member NewRight) {
         right = NewRight;
     }
-    public void Display(){
+
+    public void display() {
         System.out.println("Member name: " + name);
         System.out.println("Member number: " + id);
         System.out.println("Member street address: " + address);
@@ -65,16 +70,19 @@ public class Member {
         System.out.println("Member state: " + state);
         System.out.println("Member zip code: " + zip);
     }
-    public boolean CheckID(int ID){
+
+    public boolean checkID(int ID) {
         if(ID == id)            //check if the ID exists
             return true;
         else
             return false;
     }
+
     public boolean checkActivation(){
         return active;
     }
-    public boolean EditInfo(){
+
+    public boolean editInfo() {
         Scanner sc = new Scanner(System.in);
         System.out.print("New ID: ");
         int new_id = sc.nextInt();
@@ -96,10 +104,11 @@ public class Member {
         zip = new_zip;
         return true;
     }
-    public boolean UpdateActivation() {
+
+    public boolean updateActivation() {
         Scanner sc = new Scanner(System.in);
         String reply = new String();
-        if (display_status() == true) {
+        if (displayStatus() == true) {
             System.out.print("Change the status to be suspended(Y/N): ");
             reply = sc.nextLine();
             if(reply.equalsIgnoreCase("Y"))
@@ -111,10 +120,10 @@ public class Member {
             if(reply.equalsIgnoreCase("Y"))
                 active = true;
         }
-       return display_status();
+       return displayStatus();
     }
 
-    int CompareID(int id) {
+    int compareID(int id) {
 
         // If id passed in is less than current, return -1.
         // If id passed in is equal, return 0.
@@ -122,7 +131,7 @@ public class Member {
         return Integer.compare(id, this.id);
     }
 
-    public void Save(PrintWriter write) {
+    public void save(PrintWriter write) {
 
         write.print(this.id);
         write.print(":");
@@ -132,22 +141,22 @@ public class Member {
 
     }
 
-    public void addService(String memberName, String serviceDate, String providerName, String serviceName){
+    public void addService(String memberName, String serviceDate, String providerName, String serviceName) {
         //serviceDB.add(memberName,serviceDate,providerName,serviceName);
     }
 
-    public void write (){
+    public void write () {
         // writes member info to the text files
     }
 
-    public void ChangeStatus() {
+    public void changeStatus() {
 
         active = active ? false : true;
 
     }
 
 
-    public boolean display_status(){
+    public boolean displayStatus() {
         if(active == true) {
             System.out.println("The current status is active.");
             return true;
@@ -157,6 +166,5 @@ public class Member {
             return false;
         }
     }
-
 
 }

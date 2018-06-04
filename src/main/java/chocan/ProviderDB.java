@@ -48,7 +48,7 @@ public class ProviderDB {
 
         if (root == null) return false;
 
-        if (root.CheckID(id)) return true;
+        if (root.checkID(id)) return true;
 
         return login(id, root.goLeft()) || login(id, root.goRight());
     }

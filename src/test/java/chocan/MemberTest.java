@@ -25,13 +25,13 @@ public class MemberTest {
 
     @Test
     public void display() {
-        testMem.Display();
+        testMem.display();
     }
 
     @Test
     public void checkID() {
         int testID = 999;
-       assertTrue(testMem.CheckID(999));
+       assertTrue(testMem.checkID(999));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class MemberTest {
 
     @Test
     public void editInfo() {
-        testMem.EditInfo();
+        testMem.editInfo();
     }
 
     @Test
