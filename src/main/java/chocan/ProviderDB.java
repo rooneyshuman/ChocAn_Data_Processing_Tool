@@ -529,7 +529,9 @@ public class ProviderDB {
 
         // Display fee to provider.
         NumberFormat nf = NumberFormat.getCurrencyInstance();
-        out.println("Service Fee: " + nf.format(directory.getFee(serviceCode)));
+        double serviceFee = directory.getFee(serviceCode);
+
+        out.println("Service Fee: " + nf.format(serviceFee));
 
         /* Save member service record.
             Date of service (MM-DD-YYYY).
@@ -547,6 +549,7 @@ public class ProviderDB {
          */
 
         String providerName = getName(providerID);
+        String memberName = memberList.getName(memberID);
 
         // Write provider service record to disk.
         try {
@@ -565,12 +568,12 @@ public class ProviderDB {
             // If new file, create first line with provider info.
             if (!fileExists) saveProviderService(this.root, providerID, write);
 
-            write.print(currentDate + "|");
             write.print(serviceDate + "|");
-            write.print(providerID + "|");
+            write.print(currentDate + "|");
+            write.print(memberName + "|");
             write.print(memberID + "|");
             write.print(serviceCode + "|");
-            write.println(serviceComments);
+            write.println(serviceFee);
             write.close();
 
         } catch (IOException e) {
