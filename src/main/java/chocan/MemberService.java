@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MemberService {
-    private String memberName;
     private String providerName;
     private String service;
     private String ServiceDate;
@@ -12,7 +11,6 @@ public class MemberService {
 
     MemberService()
     {
-        memberName = null;
         providerName = null;
         service = null;
         next = null;
@@ -20,7 +18,6 @@ public class MemberService {
     }
 
     public void delete(){
-        memberName =null;
         providerName = null;
         service = null;
         next = null;
@@ -35,15 +32,22 @@ public class MemberService {
         this.next = next;
     }
 
-    public int addService(String servName, String provName){
+    //used when Loading from a file fro mthe first time
+    MemberService(String date, String ProvName, String servName){
+        ServiceDate = date;
+        providerName = ProvName;
+        service = servName;
+    }
+
+    //this add is used when a user is manually entering a service record. date is done for them
+    public void addService(String servName, String provName){
         service = servName;
         providerName = provName;
         ServiceDate = getDate();
-        return 1;
     }
 
+    //used to display when the members name needs to be displayed
     public void display(){
-        System.out.println("Member Name: " + memberName);
         System.out.println("Service Received: " + service);
         System.out.println("Date of service: " + ServiceDate);
         System.out.println("Provider name: " + providerName);

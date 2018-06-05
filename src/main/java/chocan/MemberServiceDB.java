@@ -17,17 +17,44 @@ public class MemberServiceDB {
 
     //will load a members service record to create a BST pf services provided to that member
     //will load this information from a text file
+    //To load a specific file enter the files name when you are prompted. the file I used was named RyanCampbell, in this instance the file
+    //names are the names of the members of chocan. To access a specific chocan members service records just enter their name however it is spelt for the file name
+    //for RyanCampbell.txt I would enter RyanCampbell and then hit enter and the file will load.
     public void Load(){
        try {
+           if(head != null)
+               head = null;
 
            Scanner input = new Scanner(System.in);
            out.println("Enter Member number to access service records: ");
            String fileName = input.nextLine();
            File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
            Scanner read = new Scanner(file);
+           read.useDelimiter("[:\\n]"); //ignore colon and new line
+
+           String date, providerName, service;
+
+           while(read.hasNext()) {
+               date = read.next();
+               providerName = read.next();
+               service = read.next();
+               this.head = addFromFile(this.head, date, providerName, service);
+           }
        }
        catch (FileNotFoundException error){
            error.printStackTrace();
+       }
+    }
+
+    //used to add information from a file
+    public MemberService addFromFile(MemberService current,String date, String provName, String servName){
+       if(current == null){
+           current = new MemberService(date, provName, servName);
+           return current;
+       }
+       else{
+           current.setNext(addFromFile(current.goNext(), date, provName, servName));
+           return current;
        }
     }
 
