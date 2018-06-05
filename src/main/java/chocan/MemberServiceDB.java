@@ -125,13 +125,43 @@ public class MemberServiceDB {
            head.display();
            out.println("Is this the service you would like to remove(y/n): ");
            String answer = read.nextLine();
-           boolean check1 = answer.equals('y');
-           boolean check2 = answer.equals('Y');
+           boolean check1 = answer.equals("y");
+           boolean check2 = answer.equals("Y");
            if(check1 || check2){
                MemberService temp = head.goNext();
-
+               head.delete();
+               head = temp;
+           }
+           else{
+               head.setNext(remove(head.goNext(), date));
            }
        }
+       else
+           head.setNext(remove(head.goNext(), date));
+   }
+
+   private MemberService remove(MemberService current, String date){
+       if(current == null)
+           return current;
+       boolean test = current.compareDate(date);
+       if(test){
+           current.display();
+           out.println("Is this the service you would like to remove(y/n): ");
+           Scanner read = new Scanner(System.in);
+           String answer = read.nextLine();
+           boolean check1 = answer.equals("y");
+           boolean check2 = answer.equals("Y");
+           if(check1 || check2){
+               MemberService temp = current.goNext();
+               current.delete();
+               return temp;
+           }
+           else {
+               return remove(current.goNext(), date);
+           }
+       }
+       else
+           return remove(current.goNext(), date);
    }
 
     //used to test the classes
@@ -140,10 +170,11 @@ public class MemberServiceDB {
         MemberServiceDB serviceList = new MemberServiceDB();
         serviceList.addServiceRecord();
         serviceList.addServiceRecord();
+        serviceList.addServiceRecord();
 
         serviceList.display();
 
-        serviceList.find();
+        serviceList.remove();
 
         serviceList.display();
     }
