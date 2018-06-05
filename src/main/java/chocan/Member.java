@@ -133,6 +133,11 @@ public class Member {
        return displayStatus();
     }
 
+    // Get name of member.
+    public String getName() {
+        return this.name;
+    }
+
     int compareID(int id) {
 
         // If id passed in is less than current, return -1.

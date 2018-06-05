@@ -57,6 +57,22 @@ public class MemberDB {
         }
     }
 
+    public String getName(int id) {
+        return getName(this.root,id);
+    }
+
+    private String getName(Member root, int id) {
+
+        if (root == null) return null;
+
+        if (root.compareID(id) == 0) return root.getName();
+
+        String result = getName(root.goLeft(),id);
+
+        return (result != null) ? result : getName(root.goRight(),id);
+
+    }
+
     // Add members via public prompt. (For managers.)
     public void add() {
 
