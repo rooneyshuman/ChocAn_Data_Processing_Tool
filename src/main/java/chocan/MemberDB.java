@@ -1,8 +1,6 @@
 package chocan;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 import static java.lang.System.out;
@@ -406,15 +404,51 @@ public class MemberDB {
     }
 
     //Add new service records based on the ID provided.
-    public boolean addService(int toCheck, String serviceDate, String providerName, String serviceName) {
-        Member toFind = find(toCheck);
+    public void addService(int id, String serviceDate, String providerName, String serviceName) {
 
-        if(toFind == null)
-            return false;
-        else{
-            toFind.addService(toFind.name,serviceDate,providerName,serviceName);
-            return true;
+        String memberName = getName(id);
+
+        try {
+            File file = new File("src/main/java/chocan/db/Members/" + memberName + ".txt");
+            file.getParentFile().mkdirs();
+            boolean fileExists = file.exists();
+
+            if (!fileExists) {
+                file.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(file,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter write = new PrintWriter(bw);
+
+            // If new file, create first line with member info.
+            if (!fileExists) saveMemberService(this.root, id, write);
+
+            write.print(serviceDate + "|");
+            write.print(providerName + "|");
+            write.println(serviceName);
+            write.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
+
+    // Traverse tree and save provider service info.
+    private void saveMemberService(Member root, int id, PrintWriter write) {
+
+        // If empty, return.
+        if (root == null) return;
+
+        // If match, then write data.
+        if (root.compareID(id) == 0) {
+            root.saveServiceRecord(write);
+            return;
+        }
+
+        // Inorder traversal.
+        saveMemberService(root.goLeft(),id,write);
+        saveMemberService(root.goRight(),id,write);
     }
 
     //write the info of the whole database
@@ -512,7 +546,7 @@ public class MemberDB {
                     break;
 
                 case 8: // Add new service record
-
+/*
                     out.print("Please enter a member ID: ");
                     while (!input.hasNextInt()) {
                         out.print("Please enter a valid number: ");
@@ -523,7 +557,7 @@ public class MemberDB {
                     if(memberMenu.addService(toCheck, "Test", "Test", "Test"))
                         out.print("Pass\n");
                     else
-                        out.print("Fail\n");
+                        out.print("Fail\n");*/
                     break;
             }
         } while (again());

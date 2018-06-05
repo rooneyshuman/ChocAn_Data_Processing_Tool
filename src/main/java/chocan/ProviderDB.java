@@ -533,23 +533,10 @@ public class ProviderDB {
 
         out.println("Service Fee: " + nf.format(serviceFee));
 
-        /* Save member service record.
-            Date of service (MM-DD-YYYY).
-            Provider name (25 characters).
-            Service name (20 characters).
-         */
-
-        /* Save provider service record.
-            Date of service (MM-DD-YYYY).
-            Date and time data were received by the computer (MM-DD-YYYY HH:MM:SS).
-            Member name (25 characters).
-            Member number (9 digits).
-            Service code (6 digits).
-            Fee to be paid (up to $999.99).
-         */
-
         String providerName = getName(providerID);
         String memberName = memberList.getName(memberID);
+
+        memberList.addService(memberID,serviceDate,providerName,serviceName);
 
         // Write provider service record to disk.
         try {

@@ -138,6 +138,18 @@ public class Member {
         return this.name;
     }
 
+    // Save member data for service record.
+    public void saveServiceRecord(PrintWriter write) {
+
+        write.print(this.name + "|");
+        write.print(this.id + "|");
+        write.print(this.address + "|");
+        write.print(this.city + "|");
+        write.print(this.state + "|");
+        write.println(this.zip);
+
+    }
+
     int compareID(int id) {
 
         // If id passed in is less than current, return -1.
