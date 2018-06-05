@@ -48,7 +48,7 @@ public class ProviderDB {
 
         if (root == null) return false;
 
-        if (root.checkID(id)) return true;
+        if (root.checkID(id) == 0) return true;
 
         return login(id, root.goLeft()) || login(id, root.goRight());
     }
@@ -391,13 +391,21 @@ public class ProviderDB {
         // Check if member ID is valid.
         out.print("Please enter member ID: ");
         while (!ask.hasNextInt()) {
-            System.out.print("Please enter a valid number: ");
+            out.print("Please enter a valid number: ");
             ask.nextLine();
         }
 
         int memberID = ask.nextInt();
-        // Call MemberDB function to check ID.
-        // If invalid, return. Otherwise, continue.
+        if (!memberList.checkID(memberID)) {
+            out.println("Invalid number.");
+            return;
+        }
+
+        // Check member status.
+        if (!memberList.checkStatus(memberID)) {
+            out.println("Member suspended.");
+            return;
+        }
 
         // Grab current date and time.
         DateFormat dateFormat1 = new SimpleDateFormat("MM-dd-YYYY HH:MM:ss", Locale.US);
@@ -456,14 +464,25 @@ public class ProviderDB {
         out.print("Please enter any comments (optional): ");
         String serviceComments = ask.nextLine();
 
-        /* Write record to disk.
-            Current date and time (MM-DD-YYYY HH:MM:SS).
-            Date service was provided (MM-DD-YYYY)
-            Provider number (9 digits).
-            Member number (9 digits).
-            Service code (6 digits).
-            Comments (100 characters). (optional)
-        */
+        // Write service record to disk.
+        File file = new File("src/main/java/chocan/db/services.txt");
+        file.getParentFile().mkdirs();
+        PrintWriter write;
+
+        try {
+            write = new PrintWriter(file);
+            write.append(currentDate).append("|");
+            write.append(serviceDate).append("|");
+            write.append((char) providerID).append("|");
+            write.append((char) memberID).append("|");
+            write.append((char) serviceCode).append("|");
+            write.append(serviceComments).append("\n");
+            write.flush();
+            write.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         out.print("Current date and time: " + currentDate + "\n");
         out.print("Date service was provided: " + serviceDate + "\n");
         out.print("Provider number: " + providerID + "\n");
