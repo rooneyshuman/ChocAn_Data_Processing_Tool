@@ -164,6 +164,11 @@ public class MemberServiceDB {
            return remove(current.goNext(), date);
    }
 
+   //used to empty head to be used again for another member service record access.
+   public void reset(){
+       head.delete();
+   }
+
     //used to test the classes
     public static void main(String[] args)
     {
