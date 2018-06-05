@@ -1,56 +1,58 @@
 package chocan;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
 
 public class MemberService {
-    private String date;
-    private String provider;
+    private String memberName;
+    private String providerName;
     private String service;
-    private MemberService left;
-    private MemberService right;
-    String today = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+    private String ServiceDate;
+    private MemberService next;
+    //String today = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
 
 
     MemberService()
     {
-        date = null;
-        provider = null;
+        memberName = null;
+        providerName = null;
         service = null;
-        left = null;
-        right = null;
+        next = null;
+        ServiceDate = null;
     }
 
-    public MemberService goLeft() {
-        return left;
+    public MemberService goNext(){
+        return next;
     }
 
-    public MemberService goRight() {
-        return right;
+    public void setNext(MemberService next){
+        this.next = next;
     }
 
-    public void setLeft(MemberService left) {
-        this.left = left;
-    }
-
-    public void setRight(MemberService right) {
-        this.right = right;
+    public int addService(String servName, String provName){
+        service = servName;
+        providerName = provName;
+        ServiceDate = getDate();
+        return 1;
     }
 
     public void display(){
-        System.out.println("Current date: " + today);
-        System.out.println("Date: " + date);
-        System.out.println("Provider: " + provider);
-        System.out.println("Service: " + service);
+        System.out.println("Member Name: " + memberName);
+        System.out.println("Service Received: " + service);
+        System.out.println("Date of service: " + ServiceDate);
+        System.out.println("Provider name: " + providerName);
     }
 
-    public int compareDate(String newDate){
-        //returns 99 if there is no date.
-        if(date == null)
-            return 99;
-        //compareTo is a String class method that compares the string against each other.
-        int check = 0;
-        //returns 0 if same, return negative number if newDate is before date, returns pos number if newDate is after date.
-        return check = newDate.compareTo(date);
+    public boolean compareDate(String toCompare){
+        return ServiceDate.equals(toCompare);
     }
+
+    private String getDate(){
+        String date = null;
+        String pattern = "MM-dd-yyyy";
+        SimpleDateFormat formatDate = new SimpleDateFormat(pattern);
+        Date currentDate = new Date();
+        return date = formatDate.format(currentDate);
+    }
+
 }
