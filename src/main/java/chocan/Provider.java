@@ -91,4 +91,21 @@ public class Provider extends Member {
         write.println(":" + this.state + ":" + this.zip);
 
     }
+
+    // Save provider data for service record.
+    public void saveServiceRecord(PrintWriter write) {
+
+        write.print(this.name + "|");
+        write.print(this.id + "|");
+        write.print(this.address + "|");
+        write.print(this.city + "|");
+        write.print(this.state + "|");
+        write.println(this.zip);
+
+    }
+
+    // Get name of provider.
+    public String getName() {
+        return this.name;
+    }
 }

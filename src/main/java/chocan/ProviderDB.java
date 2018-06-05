@@ -346,6 +346,23 @@ public class ProviderDB {
         save(root.goRight(),write);
     }
 
+    // Traverse tree and save provider service info.
+    private void saveProviderService(Provider root, int id, PrintWriter write) {
+
+        // If empty, return.
+        if (root == null) return;
+
+        // If match, then write data.
+        if (root.compareID(id) == 0) {
+            root.saveServiceRecord(write);
+            return;
+        }
+
+        // Inorder traversal.
+        saveProviderService(root.goLeft(),id,write);
+        saveProviderService(root.goRight(),id,write);
+    }
+
     // Displays the list of providers.
     public void showProviders() {
 
@@ -360,6 +377,22 @@ public class ProviderDB {
 
         showProviders(this.root);
         out.println("Total number of providers: " + providerCount);
+
+    }
+
+    private String getName(int id) {
+        return getName(this.root,id);
+    }
+
+    private String getName(Provider root, int id) {
+
+        if (root == null) return null;
+
+        if (root.compareID(id) == 0) return root.getName();
+
+        String result = getName(root.goLeft(),id);
+
+        return (result != null) ? result : getName(root.goRight(),id);
 
     }
 
@@ -512,6 +545,37 @@ public class ProviderDB {
             Service code (6 digits).
             Fee to be paid (up to $999.99).
          */
+
+        String providerName = getName(providerID);
+
+        // Write provider service record to disk.
+        try {
+            File file = new File("src/main/java/chocan/db/providers/" + providerName + ".txt");
+            file.getParentFile().mkdirs();
+            boolean fileExists = file.exists();
+
+            if (!fileExists) {
+                file.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(file,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter write = new PrintWriter(bw);
+
+            // If new file, create first line with provider info.
+            if (!fileExists) saveProviderService(this.root, providerID, write);
+
+            write.print(currentDate + "|");
+            write.print(serviceDate + "|");
+            write.print(providerID + "|");
+            write.print(memberID + "|");
+            write.print(serviceCode + "|");
+            write.println(serviceComments);
+            write.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
