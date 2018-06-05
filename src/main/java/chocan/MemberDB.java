@@ -337,7 +337,7 @@ public class MemberDB {
         }
 
         showMembers(this.root);
-        out.println("Total number of members: " + (memberCount - 1));
+        out.println("Total number of members: " + memberCount);
 
     }
 

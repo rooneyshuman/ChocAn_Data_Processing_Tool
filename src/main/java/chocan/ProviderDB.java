@@ -359,7 +359,7 @@ public class ProviderDB {
         }
 
         showProviders(this.root);
-        out.println("Total number of providers: " + (providerCount - 1));
+        out.println("Total number of providers: " + providerCount);
 
     }
 
