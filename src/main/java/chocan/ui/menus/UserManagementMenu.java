@@ -3,7 +3,11 @@ package chocan.ui.menus;
 import chocan.ui.IOUtils;
 import chocan.ui.ParseUtils;
 import chocan.ui.cli.Command;
-import chocan.users.*;
+import chocan.users.IUser;
+import chocan.users.IUserDatabase;
+import chocan.users.MemberUser;
+import chocan.users.User;
+import chocan.users.UserDatabase;
 import chocan.ui.StringUtils;
 
 import java.io.IOException;
@@ -216,8 +220,8 @@ public class UserManagementMenu extends CustomMenu {
      * @param <U> The generic user type.
      */
     private static <U extends User> void removeUser(final List<String> args, final Scanner stdin,
-                                                        final String userType,
-                                                        final Supplier<? extends UserDatabase<? extends U>> userDatabaseFunction) {
+                                                    final String userType,
+                                                    final Supplier<? extends UserDatabase<? extends U>> userDatabaseFunction) {
         try {
             final String lowerUserType = userType.toLowerCase();
             final CharSequence titleUserType = StringUtils.toTitleCase(userType);
@@ -263,31 +267,7 @@ public class UserManagementMenu extends CustomMenu {
             System.out.println();
         }
     }
-
-    /**
-     * Prompts for new user information.
-     * @param id The ID of the new user.
-     * @param userDatabase The user database to use to create a new user.
-     * @param stdin A standard input scanner.
-     * @return A newly created user object.
-     */
-    private static <U extends User> U promptForUser(final int id, final IUserDatabase<U> userDatabase, final Scanner stdin) {
-        System.out.print("Name: ");
-        final String name = stdin.nextLine();
-        System.out.print("Street address: ");
-        final String address = stdin.nextLine();
-        System.out.print("City: ");
-        final String city = stdin.nextLine();
-        System.out.print("State: ");
-        final String state = stdin.nextLine();
-        System.out.print("Zip: ");
-        final int zip = IOUtils.readUnsignedInt(stdin, () -> {
-            System.out.println("Unable to parse zip as an integer. Please try again...");
-            System.out.print("Zip: ");
-        });
-        return userDatabase.createUser(id, name, address, city, state, zip);
-    }
-
+    
     /**
      * Prompts, creates, and confirms a new user.
      * @param id The ID of the new user.
@@ -302,7 +282,13 @@ public class UserManagementMenu extends CustomMenu {
                                              final Scanner stdin, final boolean defaultOption,
                                              final String userType) {
         System.out.println("ID: " + id);
-        final U newUser = promptForUser(id, userDatabase, stdin);
+        final String name = IOUtils.promptMax(stdin, "Name: ", "Name of " + userType, IUser.MAX_NAME_LENGTH);
+        final String address = IOUtils.promptMax(stdin, "Street address: ", "Address of " + userType, IUser.MAX_ADDRESS_LENGTH);
+        final String city = IOUtils.promptMax(stdin, "City: ", "City of " + userType, IUser.MAX_CITY_LENGTH);
+        final String state = IOUtils.promptMax(stdin, "State: ", "State of " + userType, IUser.MAX_STATE_LENGTH);
+        final int zip = IOUtils.promptUnsignedInt(stdin, "Zip: ", "Zip of " + userType, IUser.ZIP_LENGTH, 
+            "Unable to parse zip as an integer. Please try again...");
+        final U newUser = userDatabase.createUser(id, name, address, city, state, zip);
         System.out.println();
         displayUserWithHeader(newUser, "--- New " + StringUtils.toTitleCase(userType) + " Information ---");
         if (IOUtils.confirm(stdin, "Is this " + userType.toLowerCase() + " information correct?", defaultOption)) {
@@ -329,61 +315,84 @@ public class UserManagementMenu extends CustomMenu {
         EditUserMenu(final String lowerUserType, final U user, final UserDatabase<? extends U> userDatabase) {
             super(user, User::clone, User::set, userDatabase, lowerUserType + " database", "user management menu");
             this.setHelpTitle("[Edit User Menu] Choose a field to edit:");
-            this.add(new FieldCommand("name", copy::getName, (final List<String> args, final Scanner stdin) -> {
+            this.add(new FieldCommand("name", this.copy::getName, (final List<String> args, final Scanner stdin) -> {
                 if (args.size() > 0) {
-                    copy.setName(args.get(0));
+                    final String name = args.get(0);
+                    if (name.length() <= IUser.MAX_NAME_LENGTH) {
+                        this.copy.setName(name);
+                    } else {
+                        System.out.println("Error: Name of " + lowerUserType + " is longer than " + IUser.MAX_NAME_LENGTH + "!");
+                        System.out.println();
+                    }
                 } else if (stdin.hasNextLine()) {
-                    System.out.print("New name: ");
-                    copy.setName(stdin.nextLine());
+                    this.copy.setName(IOUtils.promptMax(stdin, "New name: ", "Name of " + lowerUserType, IUser.MAX_NAME_LENGTH));
                     System.out.println();
                 }
                 return true;
             }));
-            this.add(new FieldCommand("address", copy::getAddress, (final List<String> args, final Scanner stdin) -> {
+            this.add(new FieldCommand("address", this.copy::getAddress, (final List<String> args, final Scanner stdin) -> {
                 if (args.size() > 0) {
-                    copy.setAddress(args.get(0));
+                    final String address = args.get(0);
+                    if (address.length() <= IUser.MAX_ADDRESS_LENGTH) {
+                        this.copy.setAddress(address);
+                    } else {
+                        System.out.println("Error: Address of " + lowerUserType + " is longer than " + IUser.MAX_ADDRESS_LENGTH + "!");
+                        System.out.println();
+                    }
                 } else if (stdin.hasNextLine()) {
-                    System.out.print("New address: ");
-                    copy.setAddress(stdin.nextLine());
+                    this.copy.setName(IOUtils.promptMax(stdin, "New address: ", "Address of " + lowerUserType, IUser.MAX_ADDRESS_LENGTH));
                     System.out.println();
                 }
                 return true;
             }));
-            this.add(new FieldCommand("city", copy::getCity, (final List<String> args, final Scanner stdin) -> {
+            this.add(new FieldCommand("city", this.copy::getCity, (final List<String> args, final Scanner stdin) -> {
                 if (args.size() > 0) {
-                    copy.setCity(args.get(0));
+                    final String city = args.get(0);
+                    if (city.length() <= IUser.MAX_CITY_LENGTH) {
+                        this.copy.setCity(city);
+                    } else {
+                        System.out.println("Error: City of " + lowerUserType + " is longer than " + IUser.MAX_CITY_LENGTH + "!");
+                        System.out.println();
+                    }
                 } else if (stdin.hasNextLine()) {
-                    System.out.print("New city: ");
-                    copy.setCity(stdin.nextLine());
+                    this.copy.setCity(IOUtils.promptMax(stdin, "New city: ", "City of " + lowerUserType, IUser.MAX_CITY_LENGTH));
                     System.out.println();
                 }
                 return true;
             }));
-            this.add(new FieldCommand("state", copy::getState, (final List<String> args, final Scanner stdin) -> {
+            this.add(new FieldCommand("state", this.copy::getState, (final List<String> args, final Scanner stdin) -> {
                 if (args.size() > 0) {
-                    copy.setState(args.get(0));
+                    final String state = args.get(0);
+                    if (state.length() <= IUser.MAX_STATE_LENGTH) {
+                        this.copy.setState(state);
+                    } else {
+                        System.out.println("Error: State of " + lowerUserType + " is longer than " + IUser.MAX_STATE_LENGTH + "!");
+                        System.out.println();
+                    }
                 } else if (stdin.hasNextLine()) {
-                    System.out.print("New state: ");
-                    copy.setState(stdin.nextLine());
+                    this.copy.setState(IOUtils.promptMax(stdin, "New state: ", "State of " + lowerUserType, IUser.MAX_STATE_LENGTH));
                     System.out.println();
                 }
                 return true;
             }));
-            this.add(new FieldCommand("zip", copy::getZip, (final List<String> args, final Scanner stdin) -> {
+            this.add(new FieldCommand("zip", this.copy::getZip, (final List<String> args, final Scanner stdin) -> {
                 if (args.size() > 0) {
-                    final Integer parsedZip = ParseUtils.parseUnsignedInt(args.get(0));
+                    final String zip = args.get(0);
+                    if (zip.length() != IUser.ZIP_LENGTH) {
+                        System.out.println("Error: Zip of " + lowerUserType + " is not " + IUser.ZIP_LENGTH + " digits!");
+                        System.out.println();
+                        return true;
+                    }
+                    final Integer parsedZip = ParseUtils.parseUnsignedInt(zip);
                     if (parsedZip == null) {
                         System.out.println("Failed to parse zip as integer!");
                         System.out.println();
                         return true;
                     }
-                    copy.setZip(parsedZip);
+                    this.copy.setZip(parsedZip);
                 } else {
-                    System.out.print("New zip: ");
-                    copy.setZip(IOUtils.readUnsignedInt(stdin, () -> {
-                        System.out.println("Unable to parse zip as an integer. Please try again...");
-                        System.out.print("New zip: ");
-                    }));
+                    this.copy.setZip(IOUtils.promptUnsignedInt(stdin, "New zip: ", "Zip of " + lowerUserType, IUser.ZIP_LENGTH, 
+                        "Unable to parse zip as an integer. Please try again..."));
                     System.out.println();
                 }
                 return true;

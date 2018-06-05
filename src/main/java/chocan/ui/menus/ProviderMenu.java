@@ -1,6 +1,11 @@
 package chocan.ui.menus;
 
-import chocan.service.*;
+import chocan.service.IService;
+import chocan.service.IServiceRecord;
+import chocan.service.ProviderServiceDirectory;
+import chocan.service.Service;
+import chocan.service.ServiceRecord;
+import chocan.service.ServiceRecordDatabase;
 import chocan.ui.IOUtils;
 import chocan.ui.ParseUtils;
 import chocan.ui.cli.Command;
@@ -149,8 +154,9 @@ public class ProviderMenu extends CustomMenu {
             });
             final IService service = this.readService(stdin);
             if (service != null) {
-                System.out.println("Enter additional comments: (Type an empty line to finish)");
-                final String comments = IOUtils.readMultiLine(stdin);
+                final String comments = IOUtils.readMultiLine(stdin, 
+                    "Enter additional comments: (Type an empty line to finish)", 
+                    "Comments", IServiceRecord.MAX_COMMENTS_LENGTH);
                 // Get service record database
                 final ServiceRecordDatabase<ServiceRecord> serviceRecordDatabase = this.serviceRecordDatabaseSupplier.get();
                 if (serviceRecordDatabase != null) {

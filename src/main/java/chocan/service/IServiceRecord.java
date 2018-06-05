@@ -32,5 +32,15 @@ public interface IServiceRecord {
      * Gets the code of the service that was provided.
      */
     int getServiceCode();
+    
+    /**
+     * The maximum number of characters of the comments field.
+     */
+    int MAX_COMMENTS_LENGTH = 100;
+    
+    /**
+     * Gets the additional comments when the service was provided.
+     */
+    String getComments();
 
 }

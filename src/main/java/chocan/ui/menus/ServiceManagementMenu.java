@@ -117,13 +117,9 @@ public class ServiceManagementMenu extends CustomMenu {
                 final int nextCode = providerServiceDirectory.nextCode();
                 System.out.println("Code: " + nextCode);
                 // Prompt for service information
-                System.out.print("Name: ");
-                final String name = stdin.nextLine();
-                System.out.print("Fee: ");
-                final BigDecimal fee = IOUtils.readMoney(stdin, () -> {
-                    System.out.println("Unable to parse fee as decimal number. Please try again...");
-                    System.out.print("Fee: ");
-                });
+                final String name = IOUtils.promptMax(stdin, "Name: ", "Name of service", IService.MAX_NAME_LENGTH);
+                final BigDecimal fee = IOUtils.promptMoney(stdin, "Fee: ", "Fee of service", IService.MAX_FEE, 
+                    "Unable to parse fee as decimal number. Please try again...");
                 final Service newService = providerServiceDirectory.createService(nextCode, name, fee);
                 System.out.println();
                 // Confirm service information
@@ -255,7 +251,7 @@ public class ServiceManagementMenu extends CustomMenu {
         EditServiceMenu(final Service service, final ProviderServiceDirectory<Service> providerServiceDirectory) {
             super(service, Service::clone, Service::set, providerServiceDirectory, "provider service directory", "service management menu");
             this.setHelpTitle("[Edit Service Menu] Choose a field to edit:");
-            this.add(new FieldCommand("fee", () -> MONEY_FORMAT.format(copy.getFee()), (final List<String> args, final Scanner stdin) -> {
+            this.add(new FieldCommand("fee", () -> MONEY_FORMAT.format(this.copy.getFee()), (final List<String> args, final Scanner stdin) -> {
                 if (args.size() > 0) {
                     final BigDecimal parsedFee = ParseUtils.parseMoney(args.get(0));
                     if (parsedFee == null) {
@@ -263,13 +259,15 @@ public class ServiceManagementMenu extends CustomMenu {
                         System.out.println();
                         return true;
                     }
-                    copy.setFee(parsedFee);
+                    if (parsedFee.compareTo(IService.MAX_FEE) > 0) {
+                        System.out.println("Error: Fee of service is larger than " + NumberFormat.getCurrencyInstance().format(IService.MAX_FEE) + "!");
+                        System.out.println();
+                        return true;
+                    }
+                    this.copy.setFee(parsedFee);
                 } else {
-                    System.out.print("New fee: ");
-                    copy.setFee(IOUtils.readMoney(stdin, () -> {
-                        System.out.println("Unable to parse fee as decimal number. Please try again...");
-                        System.out.print("New fee: ");
-                    }));
+                    this.copy.setFee(IOUtils.promptMoney(stdin, "New fee: ", "Fee of service", IService.MAX_FEE, 
+                        "Unable to parse fee as decimal number. Please try again..."));
                     System.out.println();
                 }
                 return true;
