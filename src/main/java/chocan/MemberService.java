@@ -21,6 +21,14 @@ public class MemberService {
         ServiceDate = null;
     }
 
+    public void delete(){
+        memberName =null;
+        providerName = null;
+        service = null;
+        next = null;
+        ServiceDate = null;
+    }
+
     public MemberService goNext(){
         return next;
     }
