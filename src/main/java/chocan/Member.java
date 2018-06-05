@@ -71,9 +71,11 @@ public class Member {
         out.println("Member zip code: " + zip);
     }
 
-    boolean checkID(int ID) {
-        //check if the ID exists
-        return ID == id;
+    int checkID(int id) {
+        // If id passed in is less than current, return -1.
+        // If id passed in is equal, return 0.
+        // If id passed in is greater than current, return 1.
+        return Integer.compare(id, this.id);
     }
 
     boolean checkActivation(){

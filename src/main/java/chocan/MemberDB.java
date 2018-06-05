@@ -33,9 +33,28 @@ public class MemberDB {
 
         if (root == null) return false;
 
-        if (root.checkID(id)) return true;
+        if (root.checkID(id) == 0) return true;
 
         return checkID(id, root.goLeft()) || checkID(id, root.goRight());
+    }
+
+    // Traverses tree to check for active status.
+    public boolean checkStatus(int id) {
+        return checkStatus(this.root,id);
+    }
+
+    private boolean checkStatus(Member root, int id) {
+        if (root == null) return false;
+
+        // If ID matches, return status.
+        if (root.checkID(id) == 0) return root.checkActivation();
+
+        //Otherwise, traverse tree.
+        if (root.checkID(id) < 0) {
+            return checkStatus(root.goLeft(), id);
+        } else {
+            return checkStatus(root.goRight(), id);
+        }
     }
 
     // Add members via public prompt. (For managers.)
