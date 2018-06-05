@@ -115,6 +115,29 @@ public class ProviderDir {
 
 
     }
+
+    // Look up service code and get fee.
+    public double getFee(int code) {
+
+        return getFee(this.root,code);
+
+    }
+
+    // Traverse tree and get fee.
+    private double getFee(ServiceInfo root, int code) {
+
+        if (root == null) return 0;
+
+        if (root.Find(code)) return root.fee;
+
+        double leftRoot = getFee(root.getLeft(),code);
+
+        if (leftRoot > 0) return leftRoot;
+
+        return getFee(root.getRight(), code);
+
+    }
+
     //Wrapper function for manually adding an entry into the tree.
     public void Add(){
 
