@@ -1,10 +1,10 @@
 package chocan;
 
 import static java.lang.System.out;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+
+import java.io.*;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -452,6 +452,7 @@ public class ProviderDB {
             if (serviceName == null)
                 out.println("Invalid code. Please try again.");
             else {
+                out.println("Service Name: " + serviceName);
                 out.print("Is this the correct service? (Y/N): ");
                 String answer = ask.nextLine();
                 if (answer.startsWith("N") || answer.startsWith("n"))
@@ -465,21 +466,24 @@ public class ProviderDB {
         String serviceComments = ask.nextLine();
 
         // Write service record to disk.
-        File file = new File("src/main/java/chocan/db/services.txt");
-        file.getParentFile().mkdirs();
-        PrintWriter write;
-
         try {
-            write = new PrintWriter(file);
-            write.append(currentDate).append("|");
-            write.append(serviceDate).append("|");
-            write.append(Integer.toString(providerID)).append("|");
-            write.append(Integer.toString(memberID)).append("|");
-            write.append(Integer.toString(serviceCode)).append("|");
-            write.append(serviceComments).append("\n");
-            write.flush();
+            File file = new File("src/main/java/chocan/db/services.txt");
+            file.getParentFile().mkdirs();
+            if (!file.exists()) file.createNewFile();
+
+            FileWriter fw = new FileWriter(file,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter write = new PrintWriter(bw);
+
+            write.print(currentDate + "|");
+            write.print(serviceDate + "|");
+            write.print(providerID + "|");
+            write.print(memberID + "|");
+            write.print(serviceCode + "|");
+            write.println(serviceComments);
             write.close();
-        } catch (FileNotFoundException e) {
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -491,6 +495,8 @@ public class ProviderDB {
         out.print("Comments: " + serviceComments + "\n");
 
         // Display fee to provider.
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+        out.println("Service Fee: " + nf.format(directory.getFee(serviceCode)));
 
         /* Save member service record.
             Date of service (MM-DD-YYYY).
