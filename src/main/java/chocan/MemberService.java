@@ -5,22 +5,25 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MemberService {
+
     private String providerName;
     private String service;
-    private String ServiceDate;
+    private String serviceDate;
     private MemberService next;
 
+    //Constructor
     MemberService()
     {
         providerName = null;
         service = null;
         next = null;
-        ServiceDate = null;
+        serviceDate = null;
     }
-    // Save provider data.
+
+    //Save member's service data to file
     public void save(PrintWriter write) {
 
-        write.print(this.ServiceDate);
+        write.print(this.serviceDate);
         write.print(":");
         write.print(this.providerName);
         write.print(":");
@@ -31,7 +34,7 @@ public class MemberService {
         providerName = null;
         service = null;
         next = null;
-        ServiceDate = null;
+        serviceDate = null;
     }
 
     public MemberService goNext(){
@@ -42,37 +45,37 @@ public class MemberService {
         this.next = next;
     }
 
-    //used when Loading from a file fro mthe first time
+    //Used when loading from a file for the first time
     MemberService(String date, String ProvName, String servName){
-        ServiceDate = date;
+        serviceDate = date;
         providerName = ProvName;
         service = servName;
     }
 
-    //this add is used when a user is manually entering a service record. date is done for them
+    //Adds service info manually for a member. Service date is automatically generated
     public void addService(String servName, String provName){
         service = servName;
         providerName = provName;
-        ServiceDate = getDate();
+        serviceDate = getDate();
     }
 
-    //used to display when the members name needs to be displayed
+    //Displays when member's name is displayed
     public void display(){
+        System.out.println("Date of Service: " + serviceDate);
         System.out.println("Service Received: " + service);
-        System.out.println("Date of service: " + ServiceDate);
-        System.out.println("Provider name: " + providerName);
+        System.out.println("Provider: " + providerName + '\n');
     }
 
     public boolean compareDate(String toCompare){
-        return ServiceDate.equals(toCompare);
+        return serviceDate.equals(toCompare);
     }
 
+    //Returns current date formatted
     private String getDate(){
-        String date = null;
         String pattern = "MM-dd-yyyy";
         SimpleDateFormat formatDate = new SimpleDateFormat(pattern);
         Date currentDate = new Date();
-        return date = formatDate.format(currentDate);
+        return formatDate.format(currentDate);
     }
 
 }

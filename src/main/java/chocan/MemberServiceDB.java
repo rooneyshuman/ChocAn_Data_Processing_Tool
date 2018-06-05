@@ -8,40 +8,38 @@ import java.util.Scanner;
 import static java.lang.System.out;
 
 public class MemberServiceDB {
+
     private MemberService head;
     private File file;
-    private Member memberInfo;
     private String fileName;
+    private Scanner read;
 
-   MemberServiceDB(){
+    //Constructor
+    MemberServiceDB(){
         this.head = null;
-        memberInfo = null;
         file = null;
     }
 
-    //will load a members service record to create a BST pf services provided to that member
-    //will load this information from a text file
-    //To load a specific file enter the files name when you are prompted. the file I used was named RyanCampbell, in this instance the file
-    //names are the names of the members of chocan. To access a specific chocan members service records just enter their name however it is spelt for the file name
-    //for RyanCampbell.txt I would enter RyanCampbell and then hit enter and the file will load.
-    public void Load(){
+    //Loads a member's service data from a text file into LLL by file name (not including file extension)
+    //File names should be a member's membership number
+    public void load(){
        try {
            if(head != null)
                head = null;
 
-           Scanner input = new Scanner(System.in);
-           out.println("Enter Member number to access service records: ");
-           fileName = input.nextLine();
+           read = new Scanner(System.in);
+           out.println("Enter a member number to access service records: ");
+           fileName = read.nextLine();
            file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
-           Scanner read = new Scanner(file);
-           read.useDelimiter("[:\\n]"); //ignore colon and new line
+           Scanner readFromFile = new Scanner(file);
+           readFromFile.useDelimiter("[:\\n]"); //ignore colon and new line
 
            String date, providerName, service;
 
-           while(read.hasNext()) {
-               date = read.next();
-               providerName = read.next();
-               service = read.next();
+           while(readFromFile.hasNext()) {
+               date = readFromFile.next();
+               providerName = readFromFile.next();
+               service = readFromFile.next();
                this.head = addFromFile(this.head, date, providerName, service);
            }
        }
@@ -50,7 +48,7 @@ public class MemberServiceDB {
        }
     }
 
-    //used to add information from a file
+    //Adds member service information from a file to LLL
     public MemberService addFromFile(MemberService current,String date, String provName, String servName){
        if(current == null){
            current = new MemberService(date, provName, servName);
@@ -62,11 +60,12 @@ public class MemberServiceDB {
        }
     }
 
-    //will allow a service to be added to a members service record
+    //Adds service to a members service record through user input
+    //Also acts as a wrapper for recursive method if LLL exists
     public boolean addServiceRecord(){
         if(head == null){
             head = new MemberService();
-            Scanner read = new Scanner(System.in);
+            read = new Scanner(System.in);
             System.out.println("Enter the name of the service: ");
             String service = read.nextLine();
             System.out.println("Enter the name of the Provider: ");
@@ -80,14 +79,15 @@ public class MemberServiceDB {
         }
     }
 
-    //recursivly adds a service to the members records
+    //Recursively adds a service to the members records
     private MemberService addServiceRecord(MemberService current){
        if(current == null){
            current = new MemberService();
-           Scanner read = new Scanner(System.in);
-           System.out.println("Enter the name of the service: ");
+           read = new Scanner(System.in);
+           System.out.println("Enter the following information for the member's new service:");
+           System.out.println("Service name: ");
            String service = read.nextLine();
-           System.out.println("Enter the name of the Provider: ");
+           System.out.println("Provider name: ");
            String provName = read.nextLine();
            current.addService(service, provName);
            return current;
@@ -98,7 +98,7 @@ public class MemberServiceDB {
        }
     }
 
-    //dissplays the entire list of services for the loaded member, wrapper
+    //Displays LLL of services for the loaded member - wrapper
     public void display()
     {
         if(head == null)
@@ -108,7 +108,7 @@ public class MemberServiceDB {
         return;
     }
 
-    //recursivley displays the entire list of services for the loaded member
+    //Recursively displays the entire list of services for the loaded member
     private void display(MemberService current){
        if(current == null)
            return;
@@ -116,13 +116,16 @@ public class MemberServiceDB {
        display(current.goNext());
     }
 
-    //This wrapper is used to search for a service a member received on a specific date.
+    //Search for a service a member received on a specific date - wrapper
     public void find(){
-       if(head == null)
+       if(head == null){
+           System.out.println("Your file is empty. Nothing to search.");
            return;
+       }
+
        else{
-           out.println("Enter the date of the service you are looking for(MM-dd-yyyy): ");
-           Scanner read = new Scanner(System.in);
+           out.println("Enter the date of the service you are looking for (MM-dd-yyyy): ");
+           read = new Scanner(System.in);
            String date = read.nextLine();
            boolean test = head.compareDate(date);
            if(test)
@@ -131,75 +134,55 @@ public class MemberServiceDB {
        }
     }
 
+    //Recursive search for a service received by member using the date
     private void find(MemberService current, String date){
         if(current == null)
             return;
         else{
-            //out.println("Enter the date of the service you are looking for(MM-dd-yyyy): ");
-            //Scanner read = new Scanner(System.in);
-            //String date = read.nextLine();
-            boolean test = current.compareDate(date);
-            if(test)
+            if(current.compareDate(date))
                 current.display();
             find(current.goNext(), date);
         }
     }
 
-   public void remove(){
-       if(head == null)
-           return;
-       out.println("Enter the date of the service you would like to rmeove(MM-dd-yyyy): ");
-       Scanner read = new Scanner(System.in);
-       String date = read.nextLine();
-       boolean test = head.compareDate(date);
-       if(test){
-           head.display();
-           out.println("Is this the service you would like to remove(y/n): ");
-           String answer = read.nextLine();
-           boolean check1 = answer.equals("y");
-           boolean check2 = answer.equals("Y");
-           if(check1 || check2){
-               MemberService temp = head.goNext();
-               head.delete();
-               head = temp;
-           }
-           else{
-               head.setNext(remove(head.goNext(), date));
-           }
-       }
-       else
-           head.setNext(remove(head.goNext(), date));
-   }
+    //Remove a service a member received on a specific date - wrapper
+    public void remove(){
+        if(head == null)
+            return;
+        out.println("Enter the date of the service you would like to remove (MM-dd-yyyy): ");
+        read = new Scanner(System.in);
+        String date = read.nextLine();
+        remove(head, date);
+    }
 
-   private MemberService remove(MemberService current, String date){
-       if(current == null)
-           return current;
-       boolean test = current.compareDate(date);
-       if(test){
-           current.display();
-           out.println("Is this the service you would like to remove(y/n): ");
-           Scanner read = new Scanner(System.in);
-           String answer = read.nextLine();
-           boolean check1 = answer.equals("y");
-           boolean check2 = answer.equals("Y");
-           if(check1 || check2){
-               MemberService temp = current.goNext();
-               current.delete();
-               return temp;
-           }
-           else {
-               current.setNext(remove(current.goNext(), date));
-               return current;
-           }
-       }
-       else {
-           current.setNext(remove(current.goNext(), date));
-           return current;
-       }
-   }
+    //Recursively remove a service received by a member using its date
+    private MemberService remove(MemberService current, String date){
+        if(current == null)
+            return current;
 
-   public void save(){
-       // Saves the list of providers.
+        if(current.compareDate(date)){
+            current.display();
+            out.println("Is this the service you would like to remove(y/n): ");
+            read = new Scanner(System.in);
+            String answer = read.nextLine();
+            if(answer.equalsIgnoreCase("y")){
+                MemberService temp = current.goNext();
+                current.delete();
+                return temp;
+            }
+            else {
+                current.setNext(remove(current.goNext(), date));
+                return current;
+            }
+        }
+        else {
+            current.setNext(remove(current.goNext(), date));
+            return current;
+        }
+    }
+
+    //Save LLL to member's service record file - wrapper
+    public void save(){
            File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
            file.getParentFile().mkdirs();
            PrintWriter write = null;
@@ -216,35 +199,33 @@ public class MemberServiceDB {
 
    }
 
-    // Traverse tree and save data.
+    //Recursively save LLL to member's service record file
     private void save(MemberService head, PrintWriter write) {
 
-        // If empty, return.
-        if (head == null) return;
+        if (head == null)
+            return;
 
-        //Traversal
         head.save(write);
         save(head.goNext(), write);
     }
 
-   //used to empty head to be used again for another member service record access.
-   public void reset(){
-       head.delete();
-   }
+    //Clears out data in head
+    public void reset(){
+        head.delete();
+    }
 
-    //used to test the classes
+    //Test class methods
     public static void main(String[] args)
     {
         MemberServiceDB serviceList = new MemberServiceDB();
-        serviceList.Load();
+        serviceList.load();
         serviceList.display();
-        serviceList.addServiceRecord();
+        //serviceList.addServiceRecord();
         serviceList.addServiceRecord();
 
+        serviceList.remove();
 
         serviceList.save();
-
-        //serviceList.remove();
 
         serviceList.display();
     }
