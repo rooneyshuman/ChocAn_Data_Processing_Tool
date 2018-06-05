@@ -1,5 +1,6 @@
 package chocan;
 
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,6 +16,15 @@ public class MemberService {
         service = null;
         next = null;
         ServiceDate = null;
+    }
+    // Save provider data.
+    public void save(PrintWriter write) {
+
+        write.print(this.ServiceDate);
+        write.print(":");
+        write.print(this.providerName);
+        write.print(":");
+        write.println(this.service);
     }
 
     public void delete(){

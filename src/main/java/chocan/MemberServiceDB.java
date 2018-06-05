@@ -2,6 +2,7 @@ package chocan;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 import static java.lang.System.out;
@@ -10,6 +11,7 @@ public class MemberServiceDB {
     private MemberService head;
     private File file;
     private Member memberInfo;
+    private String fileName;
 
    MemberServiceDB(){
         this.head = null;
@@ -29,7 +31,7 @@ public class MemberServiceDB {
 
            Scanner input = new Scanner(System.in);
            out.println("Enter Member number to access service records: ");
-           String fileName = input.nextLine();
+           fileName = input.nextLine();
            file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
            Scanner read = new Scanner(file);
            read.useDelimiter("[:\\n]"); //ignore colon and new line
@@ -197,8 +199,33 @@ public class MemberServiceDB {
    }
 
    public void save(){
+       // Saves the list of providers.
+           File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
+           file.getParentFile().mkdirs();
+           PrintWriter write = null;
+
+           try {
+               write = new PrintWriter(file);
+           } catch (FileNotFoundException e) {
+               e.printStackTrace();
+           }
+
+           save(this.head, write);
+           out.println("Member service list has been saved.");
+           write.close();
 
    }
+
+    // Traverse tree and save data.
+    private void save(MemberService head, PrintWriter write) {
+
+        // If empty, return.
+        if (head == null) return;
+
+        //Traversal
+        head.save(write);
+        save(head.goNext(), write);
+    }
 
    //used to empty head to be used again for another member service record access.
    public void reset(){
@@ -210,11 +237,14 @@ public class MemberServiceDB {
     {
         MemberServiceDB serviceList = new MemberServiceDB();
         serviceList.Load();
+        serviceList.display();
+        serviceList.addServiceRecord();
         serviceList.addServiceRecord();
 
-        serviceList.display();
 
-        serviceList.remove();
+        serviceList.save();
+
+        //serviceList.remove();
 
         serviceList.display();
     }
