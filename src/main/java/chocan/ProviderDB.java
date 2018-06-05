@@ -473,9 +473,9 @@ public class ProviderDB {
             write = new PrintWriter(file);
             write.append(currentDate).append("|");
             write.append(serviceDate).append("|");
-            write.append((char) providerID).append("|");
-            write.append((char) memberID).append("|");
-            write.append((char) serviceCode).append("|");
+            write.append(Integer.toString(providerID)).append("|");
+            write.append(Integer.toString(memberID)).append("|");
+            write.append(Integer.toString(serviceCode)).append("|");
             write.append(serviceComments).append("\n");
             write.flush();
             write.close();
