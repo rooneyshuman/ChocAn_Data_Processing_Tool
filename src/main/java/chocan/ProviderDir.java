@@ -105,13 +105,15 @@ public class ProviderDir {
         if(root == null)
             return null;
 
-        String factor = Find_code(root.getLeft(), code);
-        if(root.Find(code)){
-            factor = root.Service();
-            return factor;}
-        factor =  Find_code(root.getRight(), code);
 
-        return factor;
+        if(root.Find(code)) {
+            return root.Service();
+        }
+        String factor = Find_code(root.getLeft(), code);
+
+        return (factor != null) ? factor : Find_code(root.getRight(), code);
+
+
     }
     //Wrapper function for manually adding an entry into the tree.
     public void Add(){
