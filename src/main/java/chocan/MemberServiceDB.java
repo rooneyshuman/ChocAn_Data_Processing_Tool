@@ -8,11 +8,13 @@ import static java.lang.System.out;
 
 public class MemberServiceDB {
     private MemberService head;
+    private File file;
     private Member memberInfo;
 
    MemberServiceDB(){
         this.head = null;
         memberInfo = null;
+        file = null;
     }
 
     //will load a members service record to create a BST pf services provided to that member
@@ -28,7 +30,7 @@ public class MemberServiceDB {
            Scanner input = new Scanner(System.in);
            out.println("Enter Member number to access service records: ");
            String fileName = input.nextLine();
-           File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
+           file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
            Scanner read = new Scanner(file);
            read.useDelimiter("[:\\n]"); //ignore colon and new line
 
@@ -184,11 +186,18 @@ public class MemberServiceDB {
                return temp;
            }
            else {
-               return remove(current.goNext(), date);
+               current.setNext(remove(current.goNext(), date));
+               return current;
            }
        }
-       else
-           return remove(current.goNext(), date);
+       else {
+           current.setNext(remove(current.goNext(), date));
+           return current;
+       }
+   }
+
+   public void save(){
+
    }
 
    //used to empty head to be used again for another member service record access.
@@ -201,8 +210,6 @@ public class MemberServiceDB {
     {
         MemberServiceDB serviceList = new MemberServiceDB();
         serviceList.Load();
-        serviceList.addServiceRecord();
-        serviceList.addServiceRecord();
         serviceList.addServiceRecord();
 
         serviceList.display();
