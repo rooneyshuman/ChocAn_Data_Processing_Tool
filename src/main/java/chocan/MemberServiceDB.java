@@ -23,7 +23,7 @@ public class MemberServiceDB {
            Scanner input = new Scanner(System.in);
            out.println("Enter Member number to access service records: ");
            String fileName = input.nextLine();
-           File file = new File("/src/main/java/chocan/db/members/" + fileName + ".txt");
+           File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
            Scanner read = new Scanner(file);
        }
        catch (FileNotFoundException error){
@@ -173,6 +173,7 @@ public class MemberServiceDB {
     public static void main(String[] args)
     {
         MemberServiceDB serviceList = new MemberServiceDB();
+        serviceList.Load();
         serviceList.addServiceRecord();
         serviceList.addServiceRecord();
         serviceList.addServiceRecord();

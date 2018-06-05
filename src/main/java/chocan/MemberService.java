@@ -9,8 +9,6 @@ public class MemberService {
     private String service;
     private String ServiceDate;
     private MemberService next;
-    //String today = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
-
 
     MemberService()
     {
