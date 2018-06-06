@@ -19,19 +19,34 @@ public interface IService extends Cloneable {
      * The maximum (6-digit) service code allowed.
      */
     int MAX_CODE = 999999;
+    
+    /**
+     * The exact number of characters of the code field.
+     */
+    int CODE_LENGTH = 6;
 
     /**
-     * Gets the code of the service.
+     * Gets the 6-digit code of the service.
      */
     int getCode();
-
+    
     /**
-     * Gets the name of the service.
+     * The maximum number of characters of the name field.
+     */
+    int MAX_NAME_LENGTH = 25;
+    
+    /**
+     * Gets the name of the service. (25 character max)
      */
     String getName();
-
+    
     /**
-     * Gets the fee of the service.
+     * The maximum value of the fee field.
+     */
+    BigDecimal MAX_FEE = new BigDecimal("999.99");
+    
+    /**
+     * Gets the fee of the service. (9 character max)
      */
     BigDecimal getFee();
 
@@ -48,8 +63,8 @@ public interface IService extends Cloneable {
      * Gets the header string for a table of services.
      */
     default String displayHeader() {
-        return StringUtils.padRight("Code", 6) +
-            " | " + StringUtils.padRight("Name", 25) +
+        return StringUtils.padRight("Code", CODE_LENGTH) +
+            " | " + StringUtils.padRight("Name", MAX_NAME_LENGTH) +
             " | " + StringUtils.padRight("Fee", 9);
     }
 
@@ -57,8 +72,8 @@ public interface IService extends Cloneable {
      * Gets a row string for this service in a table of services.
      */
     default String displayRow() {
-        return StringUtils.padRight(String.valueOf(this.getCode()), 6) +
-            " | " + StringUtils.padRight(this.getName(), 25) +
+        return StringUtils.padRight(String.valueOf(this.getCode()), CODE_LENGTH) +
+            " | " + StringUtils.padRight(this.getName(), MAX_NAME_LENGTH) +
             " | " + StringUtils.padRight(NumberFormat.getCurrencyInstance().format(this.getFee()), 9);
     }
 
