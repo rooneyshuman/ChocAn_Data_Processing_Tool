@@ -4,6 +4,7 @@ package chocan;
 
 import java.io.File;
 import java.util.Scanner;
+import static java.lang.System.out;
 
 public class ProviderDir {
     protected ServiceInfo root;
@@ -136,11 +137,11 @@ public class ProviderDir {
         int t_code;
         double t_fee;
 
-        System.out.println("Enter the service name.");
+        out.println("Enter the service name.");
         t_name = input.nextLine();
-        System.out.println("Enter the code.");
+        out.println("Enter the code.");
         t_code = input.nextInt();
-        System.out.println("Enter the fee.");
+        out.println("Enter the fee.");
         t_fee = input.nextDouble();
         input.nextLine();
 
@@ -158,7 +159,8 @@ public class ProviderDir {
         tree.display();//Test, this displays the provider directory tree alphabetically by name.
         int code = 598470;
         String factor = tree.findCode(code);//Test, looks up Service Info record by service code.
-        System.out.println("\nThis is the service matching the code: " + factor);
+        out.println("\nThis is the service matching the code: " + factor);
+
     }
 }
 

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
-
 import static java.lang.System.out;
 
 public class MemberServiceDB {
@@ -66,9 +65,9 @@ public class MemberServiceDB {
         if(head == null){
             head = new MemberService();
             read = new Scanner(System.in);
-            System.out.println("Enter the name of the service: ");
+            out.println("Enter the name of the service: ");
             String service = read.nextLine();
-            System.out.println("Enter the name of the Provider: ");
+            out.println("Enter the name of the Provider: ");
             String provName = read.nextLine();
             head.addService(service, provName);
             return true;
@@ -84,10 +83,10 @@ public class MemberServiceDB {
        if(current == null){
            current = new MemberService();
            read = new Scanner(System.in);
-           System.out.println("Enter the following information for the member's new service:");
-           System.out.println("Service name: ");
+           out.println("Enter the following information for the member's new service:");
+           out.println("Service name: ");
            String service = read.nextLine();
-           System.out.println("Provider name: ");
+           out.println("Provider name: ");
            String provName = read.nextLine();
            current.addService(service, provName);
            return current;
@@ -102,10 +101,12 @@ public class MemberServiceDB {
     public void display()
     {
         if(head == null)
-            return;
-        head.display();
-        display(head.goNext());
-        return;
+            out.println("Your file is empty. Nothing to display.");
+
+        else {
+            head.display();
+            display(head.goNext());
+        }
     }
 
     //Recursively displays the entire list of services for the loaded member
@@ -118,10 +119,8 @@ public class MemberServiceDB {
 
     //Search for a service a member received on a specific date - wrapper
     public void find(){
-       if(head == null){
-           System.out.println("Your file is empty. Nothing to search.");
-           return;
-       }
+       if(head == null)
+           out.println("Your file is empty. Nothing to search.");
 
        else{
            out.println("Enter the date of the service you are looking for (MM-dd-yyyy): ");
@@ -137,7 +136,7 @@ public class MemberServiceDB {
     //Recursive search for a service received by member using the date
     private void find(MemberService current, String date){
         if(current == null)
-            return;
+            out.println("No matches found.");
         else{
             if(current.compareDate(date))
                 current.display();

@@ -3,6 +3,7 @@ package chocan;
 //ServiceInfo: holds info for each service code. Contained within Provider Directory
 
 import java.text.NumberFormat;
+import static java.lang.System.out;
 
 public class ServiceInfo {
     //Data fields
@@ -51,12 +52,12 @@ public class ServiceInfo {
 
     //Display function
     public void display(){
-        System.out.printf("--------------------------------------------\n");
-        System.out.println("Service name: " + this.name);
-        System.out.println("Service code: " + this.code);
-        System.out.print("Service fee: ");
+        out.printf("--------------------------------------------\n");
+        out.println("Service name: " + this.name);
+        out.println("Service code: " + this.code);
+        out.print("Service fee: ");
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        System.out.println(formatter.format(this.fee));
+        out.println(formatter.format(this.fee));
     }
 
     //Returns the String of the service name
@@ -66,15 +67,11 @@ public class ServiceInfo {
 
     //Compares the names and returns true if comparison is greater than 0.
     public boolean lessThan(String name){
-        if(this.name.compareTo(name) >0)
-            return true;
-        return false;
+        return (this.name.compareTo(name) > 0);
     }
 
-    //Find by service code
+    //Find by service code - returns true if match is found
     public boolean find(int toFind) {
-        if (toFind == this.code)
-            return true;
-        return false;
+        return (toFind == this.code);
     }
 }
