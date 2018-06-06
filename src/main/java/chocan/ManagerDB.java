@@ -1,13 +1,18 @@
 package chocan;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import static java.lang.System.out;
 
@@ -369,6 +374,132 @@ public class ManagerDB {
 
     }
 
+    // Generate Member Reports
+    public void generateMemberReports() {
+
+        try(Stream<Path> paths = Files.walk(Paths.get("src/main/java/chocan/db/Members"))) {
+
+            paths.forEach(filePath -> {
+
+                if (Files.isRegularFile(filePath)) {
+
+                    try {
+                        // read the file
+
+                        // save the report
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    // Generate Provider Reports
+    public void generateProviderReports() {
+
+        int consultations = 0;
+        double fee, totalFee = 0;
+
+        File file = new File("src/main/java/chocan/db/providers/");
+        File[] files = file.listFiles();
+        Scanner read;
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+
+        for (File f: files) {
+            try {
+                read = new Scanner(f);
+                read.useDelimiter("[|\\n]");
+
+                File report = new File("src/main/java/chocan/report/" + f.getName());
+                report.getParentFile().mkdirs();
+                PrintWriter write = null;
+
+                try {
+                    write = new PrintWriter(report);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                String providerName = read.next();
+                int providerID = read.nextInt();
+                String providerAddress = read.next();
+                String providerCity = read.next();
+                String providerState = read.next();
+                int providerZip = read.nextInt();
+
+                write.println("Provider Name: " + providerName);
+                write.println("Provider ID: " + providerID);
+                write.println("Provider Address: " + providerAddress);
+                write.println("Provider City: " + providerCity);
+                write.println("Provider State: " + providerState);
+                write.println("Provider Zip Code: " + providerZip);
+                write.println("-----------------------------------------");
+
+                out.println("Provider Name: " + providerName);
+                out.println("Provider ID: " + providerID);
+                out.println("Provider Address: " + providerAddress);
+                out.println("Provider City: " + providerCity);
+                out.println("Provider State: " + providerState);
+                out.println("Provider Zip Code: " + providerZip);
+                out.println("-----------------------------------------");
+
+                String serviceDate = read.next();
+                String dateReceived = read.next();
+                String memberName = read.next();
+                int memberID = read.nextInt();
+                int serviceCode = read.nextInt();
+
+                while(read.hasNext()) {
+                    write.println("Service Date: " + serviceDate);
+                    write.println("Date Received: " + dateReceived);
+                    write.println("Member Name: " + memberName);
+                    write.println("Member ID: " + memberID);
+                    write.println("Service Code: " + serviceCode);
+
+                    out.println("Service Date: " + serviceDate);
+                    out.println("Date Received: " + dateReceived);
+                    out.println("Member Name: " + memberName);
+                    out.println("Member ID: " + memberID);
+                    out.println("Service Code: " + serviceCode);
+
+                    fee = read.nextDouble();
+                    totalFee += fee;
+
+                    write.println("Fee: " + nf.format(fee));
+                    write.println("-----------------------------------------");
+
+                    out.println("Fee: " + nf.format(fee));
+                    out.println("-----------------------------------------");
+                    ++consultations;
+                }
+
+                write.println("Total Consultations: " + consultations);
+                write.println("Total Fee: " + nf.format(totalFee));
+
+                out.println("Total Consultations: " + consultations);
+                out.println("Total Fee: " + nf.format(totalFee));
+
+                write.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    // Generate Manager Report
+    public void generateManagerReport() {
+
+    }
+
     public static void main(String[] args) {
 
         ManagerDB managerMenu = new ManagerDB();
@@ -386,7 +517,10 @@ public class ManagerDB {
             out.println("5) Show Manager List");
             out.println("6) Save Manager List");
             out.println("7) Load Manager List");
-            out.println("8) Logout");
+            out.println("8) Generate Member Reports");
+            out.println("9) Generate Provider Reports");
+            out.println("10) Generate Manager Report");
+            out.println("11) Logout");
 
             out.print("Please select an option: ");
 
@@ -435,6 +569,18 @@ public class ManagerDB {
 
                 case 7: // Load Manager List
                     managerMenu.load();
+                    break;
+
+                case 8: // Generate Member Reports
+                    managerMenu.generateMemberReports();
+                    break;
+
+                case 9: // Generate Provider Reports
+                    managerMenu.generateProviderReports();
+                    break;
+
+                case 10: // Generate Manager Report
+                    managerMenu.generateManagerReport();
                     break;
 
                 default:
