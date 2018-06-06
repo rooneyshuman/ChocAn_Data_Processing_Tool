@@ -21,13 +21,6 @@ public class ServiceInfo {
         this.right = null;
     }
 
-    //Copy constructor
-    public ServiceInfo(ServiceInfo to_copy) {
-        this.name = to_copy.name;
-        this.code = to_copy.code;
-        this.fee = to_copy.fee;
-    }
-
     //Copy constructor w/ args
     public ServiceInfo(String t_name, int t_code, double t_fee) {
         this.name = t_name;
@@ -57,7 +50,7 @@ public class ServiceInfo {
     }
 
     //Display function
-    public void Display(){
+    public void display(){
         System.out.printf("--------------------------------------------\n");
         System.out.println("Service name: " + this.name);
         System.out.println("Service code: " + this.code);
@@ -68,20 +61,19 @@ public class ServiceInfo {
 
     //Returns the String of the service name
     public String Service(){
-
         return this.name;
     }
 
     //Compares the names and returns true if comparison is greater than 0.
-    public boolean Less_Than(String name){
+    public boolean lessThan(String name){
         if(this.name.compareTo(name) >0)
             return true;
         return false;
     }
 
     //Find by service code
-    public boolean Find(int to_find) {
-        if (to_find == this.code)
+    public boolean find(int toFind) {
+        if (toFind == this.code)
             return true;
         return false;
     }
