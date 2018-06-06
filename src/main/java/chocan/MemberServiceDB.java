@@ -54,15 +54,15 @@ public class MemberServiceDB {
     //Also acts as a wrapper for recursive method if LLL exists
     public void addServiceRecord(String serviceDate, String providerName, String serviceName){
 
-        addServiceRecord(head, serviceDate, providerName, serviceName);
+        head = addServiceRecord(head, serviceDate, providerName, serviceName);
 
     }
 
     //Recursively adds a service to the members records
     private MemberService addServiceRecord(MemberService current, String serviceDate, String providerName, String serviceName){
        if(current == null){
-           current = new MemberService();
-           return current;
+           return current = new MemberService( serviceDate, providerName, serviceName);
+
        }
        else{
            current.setNext(addServiceRecord(current.goNext(),serviceDate,providerName,serviceName));
@@ -73,8 +73,9 @@ public class MemberServiceDB {
     //Displays LLL of services for the loaded member - wrapper
     public void display()
     {
-        if(head == null)
+        if(head == null){
             out.println("Your file is empty. Nothing to display.");
+            return; }
 
         else {
             head.display();
@@ -184,6 +185,38 @@ public class MemberServiceDB {
         save(head.goNext(), write);
     }
 
+
+    //Opens the text file and checks for exceptions.
+    public void openFile() {
+        try {
+            read = new Scanner(new File("src/main/java/chocan/db/provider directory.txt"));
+        } catch (Exception e) {
+            System.out.println("Can't find file");
+            e.printStackTrace();
+        }
+    }
+
+    //Reads in from text file and calls the insert function to build the tree.
+    public void readFile() {
+        this.openFile();
+        read.useDelimiter("#|\\n");
+
+        String date, providerName, service;
+        while (read.hasNext()) {
+            date = read.next();
+            providerName = read.next();
+            service = read.next();
+            addServiceRecord(date, providerName, service);
+
+        }
+        read.close();
+    }
+
+
+
+
+
+
     //Clears out data in head
     public void reset(){
         head.delete();
@@ -194,14 +227,15 @@ public class MemberServiceDB {
     {
         MemberServiceDB serviceList = new MemberServiceDB();
         //serviceList.load();
+        serviceList.readFile();
         serviceList.display();
         //serviceList.addServiceRecord();
         //serviceList.addServiceRecord();
 
-        serviceList.remove();
+        //serviceList.remove();
 
-        serviceList.save();
+        //serviceList.save();
 
-        serviceList.display();
+        //serviceList.display();
     }
 }

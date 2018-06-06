@@ -17,10 +17,10 @@ public class MemberService {
 
     //Constructor
     MemberService() {
-        providerName = null;
-        service = null;
-        next = null;
-        serviceDate = null;
+        this.providerName = null;
+        this.service = null;
+        this.next = null;
+        this.serviceDate = null;
     }
 
     //Save member's service data to file
@@ -50,9 +50,9 @@ public class MemberService {
 
     //Used when loading from a file for the first time
     MemberService(String date, String ProvName, String serviceName) {
-        serviceDate = date;
-        providerName = ProvName;
-        service = serviceName;
+        this.serviceDate = date;
+        this.providerName = ProvName;
+        this.service = serviceName;
     }
 
     //Adds service info manually for a member.
