@@ -1,6 +1,6 @@
 package chocan;
 
-//This class creates a BST from the Serviceinfo class.
+//This class creates a BST from the ServiceInfo class.
 
 import java.io.File;
 import java.util.Scanner;
@@ -69,7 +69,7 @@ public class ProviderDir {
         }
     }
 
-    //Reads in from text file and calls the insert function to bulld the tree.
+    //Reads in from text file and calls the insert function to build the tree.
     public void readFile() {
         this.openFile();
         read.useDelimiter("#|\\n");

@@ -47,15 +47,15 @@ public class MemberService {
     }
 
     //Used when loading from a file for the first time
-    MemberService(String date, String ProvName, String servName){
+    MemberService(String date, String ProvName, String serviceName){
         serviceDate = date;
         providerName = ProvName;
-        service = servName;
+        service = serviceName;
     }
 
     //Adds service info manually for a member. Service date is automatically generated
-    public void addService(String servName, String provName){
-        service = servName;
+    public void addService(String serviceName, String provName){
+        service = serviceName;
         providerName = provName;
         serviceDate = getDate();
     }

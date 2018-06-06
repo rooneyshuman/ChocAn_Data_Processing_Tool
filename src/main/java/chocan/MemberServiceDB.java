@@ -48,13 +48,13 @@ public class MemberServiceDB {
     }
 
     //Adds member service information from a file to LLL
-    public MemberService addFromFile(MemberService current,String date, String provName, String servName){
+    public MemberService addFromFile(MemberService current,String date, String provName, String serviceName){
        if(current == null){
-           current = new MemberService(date, provName, servName);
+           current = new MemberService(date, provName, serviceName);
            return current;
        }
        else{
-           current.setNext(addFromFile(current.goNext(), date, provName, servName));
+           current.setNext(addFromFile(current.goNext(), date, provName, serviceName));
            return current;
        }
     }
