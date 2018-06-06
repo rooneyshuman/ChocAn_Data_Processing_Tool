@@ -53,11 +53,11 @@ public class MemberService {
         service = serviceName;
     }
 
-    //Adds service info manually for a member. Service date is automatically generated
-    public void addService(String serviceName, String provName){
-        service = serviceName;
-        providerName = provName;
-        serviceDate = getDate();
+    //Adds service info manually for a member.
+    public void addService(String serviceDate, String providerName, String serviceName){
+        this.service = serviceName;
+        this.providerName = providerName;
+        this.serviceDate = serviceDate;
     }
 
     //Displays when member's name is displayed

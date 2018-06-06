@@ -536,6 +536,7 @@ public class ProviderDB {
         String providerName = getName(providerID);
         String memberName = memberList.getName(memberID);
 
+        // Write member service record to disk.
         memberList.addService(memberID,serviceDate,providerName,serviceName);
 
         // Write provider service record to disk.

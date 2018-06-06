@@ -18,5 +18,21 @@ public class Manager extends Member {
 	               final String address, final String city, final String state, final String zip) {
 		super(id, true, name, address, city, state, zip);
 	}
-	
+
+	public Manager goLeft() {
+		return (Manager) super.left;
+	}
+
+	public Manager goRight() {
+		return (Manager) super.right;
+	}
+
+	void setLeft(Manager left) {
+		super.left = left;
+	}
+
+	void setRight(Manager right) {
+		super.right = right;
+	}
+
 }

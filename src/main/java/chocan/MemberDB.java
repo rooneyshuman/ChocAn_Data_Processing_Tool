@@ -406,10 +406,8 @@ public class MemberDB {
     //Add new service records based on the ID provided.
     public void addService(int id, String serviceDate, String providerName, String serviceName) {
 
-        String memberName = getName(id);
-
         try {
-            File file = new File("src/main/java/chocan/db/Members/" + memberName + ".txt");
+            File file = new File("src/main/java/chocan/db/Members/" + id + ".txt");
             file.getParentFile().mkdirs();
             boolean fileExists = file.exists();
 
@@ -424,17 +422,14 @@ public class MemberDB {
             // If new file, create first line with member info.
             if (!fileExists) saveMemberService(this.root, id, write);
 
-            write.print(serviceDate + "|");
-            write.print(providerName + "|");
-            write.println(serviceName);
-            write.close();
+            saveServiceRecord(this.root, id, serviceDate, providerName, serviceName);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Traverse tree and save provider service info.
+    // Traverse tree and save member service info.
     private void saveMemberService(Member root, int id, PrintWriter write) {
 
         // If empty, return.
@@ -442,13 +437,30 @@ public class MemberDB {
 
         // If match, then write data.
         if (root.compareID(id) == 0) {
-            root.saveServiceRecord(write);
+            root.saveMemberService(write);
             return;
         }
 
         // Inorder traversal.
         saveMemberService(root.goLeft(),id,write);
         saveMemberService(root.goRight(),id,write);
+    }
+
+    // Traverse tree and save member service info.
+    private void saveServiceRecord(Member root, int id, String serviceDate, String providerName, String serviceName) {
+
+        // If empty, return.
+        if (root == null) return;
+
+        // If match, then write data.
+        if (root.compareID(id) == 0) {
+            root.saveServiceRecord(serviceDate,providerName,serviceName);
+            return;
+        }
+
+        // Inorder traversal.
+        saveServiceRecord(root.goLeft(),id,serviceDate,providerName,serviceName);
+        saveServiceRecord(root.goRight(),id,serviceDate,providerName,serviceName);
     }
 
     //write the info of the whole database

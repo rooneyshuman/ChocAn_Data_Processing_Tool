@@ -1,8 +1,6 @@
 package chocan;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 import static java.lang.System.out;
 
@@ -21,19 +19,20 @@ public class MemberServiceDB {
 
     //Loads a member's service data from a text file into LLL by file name (not including file extension)
     //File names should be a member's membership number
-    public void load(){
+    public void load(int id){
        try {
            if(head != null)
                head = null;
 
-           read = new Scanner(System.in);
-           out.println("Enter a member number to access service records: ");
-           fileName = read.nextLine();
+           fileName = Integer.toString(id);
+
            file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
            Scanner readFromFile = new Scanner(file);
-           readFromFile.useDelimiter("[:\\n]"); //ignore colon and new line
+           readFromFile.useDelimiter("[|\\n]"); //ignore colon and new line
 
-           String date, providerName, service;
+           String date, providerName, service, ignore;
+
+           ignore = readFromFile.nextLine();
 
            while(readFromFile.hasNext()) {
                date = readFromFile.next();
@@ -41,6 +40,9 @@ public class MemberServiceDB {
                service = readFromFile.next();
                this.head = addFromFile(this.head, date, providerName, service);
            }
+
+           readFromFile.close();
+
        }
        catch (FileNotFoundException error){
            error.printStackTrace();
@@ -61,38 +63,27 @@ public class MemberServiceDB {
 
     //Adds service to a members service record through user input
     //Also acts as a wrapper for recursive method if LLL exists
-    public boolean addServiceRecord(){
+    public boolean addServiceRecord(String serviceDate, String providerName, String serviceName){
         if(head == null){
             head = new MemberService();
-            read = new Scanner(System.in);
-            out.println("Enter the name of the service: ");
-            String service = read.nextLine();
-            out.println("Enter the name of the Provider: ");
-            String provName = read.nextLine();
-            head.addService(service, provName);
+            head.addService(serviceDate, providerName, serviceName);
             return true;
         }
         else{
-            this.head.setNext(addServiceRecord(head.goNext()));
+            this.head.setNext(addServiceRecord(head.goNext(),serviceDate,providerName,serviceName));
             return true;
         }
     }
 
     //Recursively adds a service to the members records
-    private MemberService addServiceRecord(MemberService current){
+    private MemberService addServiceRecord(MemberService current, String serviceDate, String providerName, String serviceName){
        if(current == null){
            current = new MemberService();
-           read = new Scanner(System.in);
-           out.println("Enter the following information for the member's new service:");
-           out.println("Service name: ");
-           String service = read.nextLine();
-           out.println("Provider name: ");
-           String provName = read.nextLine();
-           current.addService(service, provName);
+           current.addService(serviceDate, providerName, serviceName);
            return current;
        }
        else{
-           current.setNext(addServiceRecord(current.goNext()));
+           current.setNext(addServiceRecord(current.goNext(),serviceDate,providerName,serviceName));
            return current;
        }
     }
@@ -182,19 +173,22 @@ public class MemberServiceDB {
 
     //Save LLL to member's service record file - wrapper
     public void save(){
-           File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
-           file.getParentFile().mkdirs();
-           PrintWriter write = null;
 
            try {
-               write = new PrintWriter(file);
-           } catch (FileNotFoundException e) {
+               File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
+               file.getParentFile().mkdirs();
+               if (!file.exists()) file.createNewFile();
+
+               FileWriter fw = new FileWriter(file,true);
+               BufferedWriter bw = new BufferedWriter(fw);
+               PrintWriter write = new PrintWriter(bw);
+               save(this.head, write);
+               out.println("Member service list has been saved.");
+               write.close();
+
+           } catch (IOException e) {
                e.printStackTrace();
            }
-
-           save(this.head, write);
-           out.println("Member service list has been saved.");
-           write.close();
 
    }
 
@@ -217,10 +211,10 @@ public class MemberServiceDB {
     public static void main(String[] args)
     {
         MemberServiceDB serviceList = new MemberServiceDB();
-        serviceList.load();
+        //serviceList.load();
         serviceList.display();
         //serviceList.addServiceRecord();
-        serviceList.addServiceRecord();
+        //serviceList.addServiceRecord();
 
         serviceList.remove();
 

@@ -1,6 +1,6 @@
 package chocan;
 
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 import static java.lang.System.out;
@@ -44,6 +44,30 @@ public class Member {
         left = null;
         right = null;
         serviceDB = new MemberServiceDB();
+
+        try {
+            File file = new File("src/main/java/chocan/db/Members/" + id + ".txt");
+            file.getParentFile().mkdirs();
+            boolean fileExists = file.exists();
+
+            if (!fileExists) {
+                file.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(file,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter write = new PrintWriter(bw);
+
+            // If new file, create first line with member info.
+            if (!fileExists) saveMemberService(write);
+
+            write.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        serviceDB.load(id);
     }
 
     public Member goLeft(){
@@ -139,7 +163,7 @@ public class Member {
     }
 
     // Save member data for service record.
-    public void saveServiceRecord(PrintWriter write) {
+    public void saveMemberService(PrintWriter write) {
 
         write.print(this.name + "|");
         write.print(this.id + "|");
@@ -147,6 +171,13 @@ public class Member {
         write.print(this.city + "|");
         write.print(this.state + "|");
         write.println(this.zip);
+
+    }
+
+    // Save member data for service record.
+    public void saveServiceRecord(String serviceDate, String providerName, String serviceName) {
+
+        serviceDB.addServiceRecord(serviceDate,providerName,serviceName);
 
     }
 
@@ -166,10 +197,6 @@ public class Member {
         write.print(":" + this.name + ":" + this.address + ":" + this.city);
         write.println(":" + this.state + ":" + this.zip);
 
-    }
-
-    void addService(String memberName, String serviceDate, String providerName, String serviceName) {
-        //serviceDB.add(memberName,serviceDate,providerName,serviceName);
     }
 
     void write() {
