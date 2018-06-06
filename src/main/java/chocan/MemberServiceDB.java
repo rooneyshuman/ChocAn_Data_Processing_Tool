@@ -234,8 +234,8 @@ public class MemberServiceDB {
 
         //serviceList.remove();
 
-        //serviceList.save();
+        serviceList.save();
 
-        //serviceList.display();
+        serviceList.display();
     }
 }
