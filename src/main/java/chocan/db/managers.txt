@@ -1,0 +1,11 @@
+800000:True:Cloud Strife:24 Briarwood St.:Garfield:NJ:07026
+800001:True:Tifa Lockhart:82 Hillside Ave.:Staten Island:NY:10301
+800002:True:Aerith Gainsborough:285 Fifth Avenue:Columbia:MD:21044
+800003:True:Barret Wallace:8161 Wayne Ave.:Mahopac:NY:10541
+800004:True:Yuffie Kisaragi:7885 Cactus Lane:Winter Springs:FL:32708
+800005:True:Vincent Valentine:57 Arlington Drive:Harrisonburg:VA:22801
+800006:True:Zack Fair:9766 Euclid Court:Lawndale:CA:90260
+800007:True:Red XIII:934 South Buckingham Drive:Port Huron:MI:48060
+800008:True:Cait Sith:799 Wild Rose St.:Uniontown:PA:15401
+800009:True:Cid Highwind:226 James Road:Orange:NJ:07050
+800010:True:Rufus Shinra:472 East Overlook Ave.:Ooltewah:TN:37363

@@ -14,16 +14,13 @@ import static java.lang.System.out;
 public class ManagerDB {
 
     private Manager root;
-    private MemberDB memberList;
     private int managerCount = 0;
     private int managerID = 0;
 
     ManagerDB() {
 
         this.root = null;
-        //TODO write load method
-        //load(); // Loads the list of managers
-        this.memberList = new MemberDB();
+        load(); // Loads the list of managers
 
     }
 
@@ -57,14 +54,14 @@ public class ManagerDB {
         this.managerID = 0;
 
     }
-/*
-    // Add providers via public prompt. (For managers.)
+
+    // Add managers via public prompt.
     public void add() {
 
         Scanner input = new Scanner(System.in);
 
         out.println("\n-----------------------------------------");
-        out.println("Please enter the provider's information.");
+        out.println("Please enter the manager's information.");
         out.println("-----------------------------------------");
 
         out.print("Name: ");
@@ -107,20 +104,20 @@ public class ManagerDB {
             zip = input.nextLine();
         }
 
-        this.root = add(this.root,(700000 + providerCount),true,name,address,city,state,zip);
-        out.println("Provider added.");
+        this.root = add(this.root,(800000 + managerCount),true,name,address,city,state,zip);
+        out.println("Manager added.");
         save();
 
     }
 
-    // Add providers to tree.
-    private Provider add(Provider root, int id, boolean active, String name, String address, String city, String state, String zip) {
+    // Add manager to tree.
+    private Manager add(Manager root, int id, boolean active, String name, String address, String city, String state, String zip) {
 
-        // If no providers, create it.
+        // If no managers, create it.
         if (root == null) {
 
-            root = new Provider(id,active,name,address,city,state,zip);
-            ++providerCount;
+            root = new Manager(id,active,name,address,city,state,zip);
+            ++managerCount;
             return root;
 
         }
@@ -137,16 +134,16 @@ public class ManagerDB {
 
     }
 
-    // Activate or deactivate provider's account.
+    // Activate or deactivate manager's account.
     public void changeStatus() {
 
         Scanner input = new Scanner(System.in);
 
         out.println("\n-----------------------------------------");
-        out.println("Changing status of a provider...");
+        out.println("Changing status of a manager...");
         out.println("-----------------------------------------");
 
-        out.print("Please enter a provider ID: ");
+        out.print("Please enter a manager ID: ");
 
         while (!input.hasNextInt()) {
 
@@ -163,8 +160,8 @@ public class ManagerDB {
 
     }
 
-    // Traverse tree and change status of a provider.
-    private void changeStatus(Provider root, int id) {
+    // Traverse tree and change status of a manager.
+    private void changeStatus(Manager root, int id) {
 
         // If empty, return.
         if (root == null) return;
@@ -172,7 +169,7 @@ public class ManagerDB {
         // If ID matches, change status.
         if (root.compareID(id) == 0) {
 
-            out.println("Provider status has changed.");
+            out.println("Manager status has changed.");
             root.changeStatus();
             return;
 
@@ -187,11 +184,11 @@ public class ManagerDB {
 
     }
 
-    // Loads the list of providers.
+    // Loads the list of managers.
     private void load() {
 
         try {
-            File file = new File("src/main/java/chocan/db/providers.txt");
+            File file = new File("src/main/java/chocan/db/managers.txt");
             Scanner read = new Scanner(file);
             read.useDelimiter("[:\\n]"); // Will ignore colons and new line character.
 
@@ -221,16 +218,16 @@ public class ManagerDB {
 
     }
 
-    // Delete a provider via public prompt. (For managers.)
+    // Delete a manager via public prompt.
     public void delete() {
 
         Scanner input = new Scanner(System.in);
 
         out.println("\n-----------------------------------------");
-        out.println("Deleting a provider...");
+        out.println("Deleting a manager...");
         out.println("-----------------------------------------");
 
-        out.print("Please enter a provider ID: ");
+        out.print("Please enter a manager ID: ");
 
         while (!input.hasNextInt()) {
             out.print("Please enter a valid number: ");
@@ -245,17 +242,17 @@ public class ManagerDB {
 
     }
 
-    // Delete provider from tree.
-    private Provider delete(Provider root, int id) {
+    // Delete manager from tree.
+    private Manager delete(Manager root, int id) {
 
-        // If no providers, return.
+        // If no managers, return.
         if (root == null) return null;
 
-        // If provider is found, get ready to delete.
+        // If manager is found, get ready to delete.
         if (root.compareID(id) == 0) {
 
-            out.println("Provider deleted.");
-            --providerCount;
+            out.println("Manager deleted.");
+            --managerCount;
 
             // If this is the only node, make it null and return.
             if (root.goLeft() == null && root.goRight() == null)
@@ -270,8 +267,8 @@ public class ManagerDB {
                 return root.goRight();
 
             // If both children exist, find inorder successor on right subtree.
-            Provider temp = root.goRight();
-            Provider previous = null;
+            Manager temp = root.goRight();
+            Manager previous = null;
             while (temp.goLeft() != null) {
                 previous = temp;
                 temp = temp.goLeft();
@@ -314,10 +311,10 @@ public class ManagerDB {
 
     }
 
-    // Saves the list of providers.
+    // Saves the list of managers.
     public void save() {
 
-        File file = new File("src/main/java/chocan/db/providers.txt");
+        File file = new File("src/main/java/chocan/db/managers.txt");
         file.getParentFile().mkdirs();
         PrintWriter write = null;
 
@@ -328,12 +325,12 @@ public class ManagerDB {
         }
 
         save(this.root,write);
-        out.println("Provider list has been saved.");
+        out.println("Manager list has been saved.");
         write.close();
     }
 
     // Traverse tree and save data.
-    private void save(Provider root, PrintWriter write) {
+    private void save(Manager root, PrintWriter write) {
 
         // If empty, return.
         if (root == null) return;
@@ -344,248 +341,52 @@ public class ManagerDB {
         save(root.goRight(),write);
     }
 
-    // Traverse tree and save provider service info.
-    private void saveProviderService(Provider root, int id, PrintWriter write) {
-
-        // If empty, return.
-        if (root == null) return;
-
-        // If match, then write data.
-        if (root.compareID(id) == 0) {
-            root.saveServiceRecord(write);
-            return;
-        }
-
-        // Inorder traversal.
-        saveProviderService(root.goLeft(),id,write);
-        saveProviderService(root.goRight(),id,write);
-    }
-
-    // Displays the list of providers.
-    public void showProviders() {
+    // Displays the list of managers.
+    public void showManagers() {
 
         out.println("\n-----------------------------------------");
-        out.println("Showing list of providers...");
+        out.println("Showing list of managers...");
         out.println("-----------------------------------------");
 
         if (this.root == null) {
-            out.println("(No providers listed.)");
+            out.println("(No managers listed.)");
             return;
         }
 
-        showProviders(this.root);
-        out.println("Total number of providers: " + providerCount);
-
-    }
-
-    private String getName(int id) {
-        return getName(this.root,id);
-    }
-
-    private String getName(Provider root, int id) {
-
-        if (root == null) return null;
-
-        if (root.compareID(id) == 0) return root.getName();
-
-        String result = getName(root.goLeft(),id);
-
-        return (result != null) ? result : getName(root.goRight(),id);
+        showManagers(this.root);
+        out.println("Total number of managers: " + managerCount);
 
     }
 
     // Recursive display.
-    private void showProviders(Provider root) {
+    private void showManagers(Manager root) {
 
         if (root == null) return;
 
-        showProviders(root.goLeft());
+        showManagers(root.goLeft());
         root.display();
-        showProviders(root.goRight());
-
-    }
-
-    public void bill() {
-
-        // Check for authorization.
-        if (providerID == 0) {
-            out.println("Must be logged in with a Provider ID.");
-            return;
-        }
-
-        out.println("\n-----------------------------------------");
-        out.println("Create Service Record");
-        out.println("-----------------------------------------");
-
-        Scanner ask = new Scanner(System.in);
-
-        // Check if member ID is valid.
-        out.print("Please enter member ID: ");
-        while (!ask.hasNextInt()) {
-            out.print("Please enter a valid number: ");
-            ask.nextLine();
-        }
-
-        int memberID = ask.nextInt();
-        if (!memberList.checkID(memberID)) {
-            out.println("Invalid number.");
-            return;
-        }
-
-        // Check member status.
-        if (!memberList.checkStatus(memberID)) {
-            out.println("Member suspended.");
-            return;
-        }
-
-        // Grab current date and time.
-        DateFormat dateFormat1 = new SimpleDateFormat("MM-dd-YYYY HH:MM:ss", Locale.US);
-        Date providerDate = new Date();
-        String currentDate = dateFormat1.format(providerDate);
-
-        // Prompt provider to enter service date.
-        DateFormat dateFormat2 = new SimpleDateFormat("MM-dd-YYYY", Locale.US);
-        out.print("Please enter the service date (MM-DD-YYYY)");
-        Date memberDate = null;
-        String serviceDate = null;
-
-        while (memberDate == null) {
-
-            serviceDate = ask.next();
-
-            try {
-                memberDate = dateFormat2.parse(serviceDate);
-            } catch (ParseException error) {
-                out.print("Invalid date.\nPlease enter a date (MM-DD-YYYY): ");
-            }
-        }
-
-        // Display provider directory.
-        directory.display();
-
-        int serviceCode;
-        String serviceName;
-
-        // Input service code.
-        do {
-            out.print("Please enter the service code: ");
-
-            while (!ask.hasNextInt()) {
-                out.print("Please enter a valid number: ");
-                ask.nextLine(); ask.nextLine();
-            }
-
-            serviceCode = ask.nextInt();
-            ask.nextLine();
-
-            serviceName = directory.findCode(serviceCode);
-
-            if (serviceName == null)
-                out.println("Invalid code. Please try again.");
-            else {
-                out.println("Service Name: " + serviceName);
-                out.print("Is this the correct service? (Y/N): ");
-                String answer = ask.nextLine();
-                if (answer.startsWith("N") || answer.startsWith("n"))
-                    serviceName = null;
-            }
-
-        } while (serviceName == null);
-
-        // Prompt user to enter any comments about the service.
-        out.print("Please enter any comments (optional): ");
-        String serviceComments = ask.nextLine();
-
-        // Write service record to disk.
-        try {
-            File file = new File("src/main/java/chocan/db/services.txt");
-            file.getParentFile().mkdirs();
-            if (!file.exists()) file.createNewFile();
-
-            FileWriter fw = new FileWriter(file,true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter write = new PrintWriter(bw);
-
-            write.print(currentDate + "|");
-            write.print(serviceDate + "|");
-            write.print(providerID + "|");
-            write.print(memberID + "|");
-            write.print(serviceCode + "|");
-            write.println(serviceComments);
-            write.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        out.print("Current date and time: " + currentDate + "\n");
-        out.print("Date service was provided: " + serviceDate + "\n");
-        out.print("Provider number: " + providerID + "\n");
-        out.print("Member number: " + memberID + "\n");
-        out.print("Service code: " + serviceCode + "\n");
-        out.print("Comments: " + serviceComments + "\n");
-
-        // Display fee to provider.
-        NumberFormat nf = NumberFormat.getCurrencyInstance();
-        double serviceFee = directory.getFee(serviceCode);
-
-        out.println("Service Fee: " + nf.format(serviceFee));
-
-        String providerName = getName(providerID);
-        String memberName = memberList.getName(memberID);
-
-        memberList.addService(memberID,serviceDate,providerName,serviceName);
-
-        // Write provider service record to disk.
-        try {
-            File file = new File("src/main/java/chocan/db/providers/" + providerName + ".txt");
-            file.getParentFile().mkdirs();
-            boolean fileExists = file.exists();
-
-            if (!fileExists) {
-                file.createNewFile();
-            }
-
-            FileWriter fw = new FileWriter(file,true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter write = new PrintWriter(bw);
-
-            // If new file, create first line with provider info.
-            if (!fileExists) saveProviderService(this.root, providerID, write);
-
-            write.print(serviceDate + "|");
-            write.print(currentDate + "|");
-            write.print(memberName + "|");
-            write.print(memberID + "|");
-            write.print(serviceCode + "|");
-            write.println(serviceFee);
-            write.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        showManagers(root.goRight());
 
     }
 
     public static void main(String[] args) {
 
-        ManagerDB providerMenu = new ManagerDB();
+        ManagerDB managerMenu = new ManagerDB();
         Scanner input = new Scanner(System.in);
         int menuOption;
 
         do {
             out.println("\n-----------------------------------------");
-            out.println("Provider Test Interface");
+            out.println("Manager Test Interface");
             out.println("-----------------------------------------");
-            out.println("1) Add Provider");
-            out.println("2) Change Status of Provider");
-            out.println("3) Delete Provider");
+            out.println("1) Add Manager");
+            out.println("2) Change Status of Manager");
+            out.println("3) Delete Manager");
             out.println("4) Login");
-            out.println("5) Show Provider List");
-            out.println("6) Save Provider List");
-            out.println("7) Load Provider List");
-            out.println("8) Create Service Record");
-            out.println("9) Logout");
+            out.println("5) Show Manager List");
+            out.println("6) Save Manager List");
+            out.println("7) Load Manager List");
+            out.println("8) Logout");
 
             out.print("Please select an option: ");
 
@@ -598,20 +399,20 @@ public class ManagerDB {
 
             switch (menuOption) {
 
-                case 1: // Add Provider
-                    providerMenu.add();
+                case 1: // Add Manager
+                    managerMenu.add();
                     break;
 
-                case 2: // Change Status of Provider
-                    providerMenu.changeStatus();
+                case 2: // Change Status of Manager
+                    managerMenu.changeStatus();
                     break;
 
-                case 3: // Delete Provider
-                    providerMenu.delete();
+                case 3: // Delete Manager
+                    managerMenu.delete();
                     break;
 
                 case 4: // Login
-                    out.print("Please enter a provider ID: ");
+                    out.print("Please enter a manager ID: ");
 
                     while (!input.hasNextInt()) {
                         out.print("Please enter a valid number: ");
@@ -619,29 +420,25 @@ public class ManagerDB {
                     }
 
                     int id = input.nextInt();
-                    if (providerMenu.login(id))
-                        out.println("Provider has been logged in.");
+                    if (managerMenu.login(id))
+                        out.println("Manager has been logged in.");
 
                     break;
 
-                case 5: // Show Provider List
-                    providerMenu.showProviders();
+                case 5: // Show Manager List
+                    managerMenu.showManagers();
                     break;
 
-                case 6: // Save Provider List
-                    providerMenu.save();
+                case 6: // Save Manager List
+                    managerMenu.save();
                     break;
 
-                case 7: // Load Provider List
-                    providerMenu.load();
-                    break;
-
-                case 8: // Create Service Record
-                    providerMenu.bill();
+                case 7: // Load Manager List
+                    managerMenu.load();
                     break;
 
                 default:
-                    providerMenu.logout();
+                    managerMenu.logout();
                     return;
 
             }
@@ -649,7 +446,6 @@ public class ManagerDB {
 
 
     }
-    */
 
     private static boolean again() {
 

@@ -87,12 +87,18 @@ public class Member {
     }
 
     public void display() {
-        out.println("Member name: " + name);
-        out.println("Member number: " + id);
-        out.println("Member street address: " + address);
-        out.println("Member city: " + city);
-        out.println("Member state: " + state);
-        out.println("Member zip code: " + zip);
+
+        out.println("Member Name: " + name);
+        out.println("Member Number: " + id);
+        out.println("Member Address: " + address);
+        out.println("Member City: " + city);
+        out.println("Member State: " + state);
+        out.println("Member Zip Code: " + zip);
+
+        if (active) out.println("Member Status: Active");
+        else out.println("Member Status: Inactive");
+
+        out.println("-----------------------------------------");
     }
 
     int checkID(int id) {
@@ -135,26 +141,6 @@ public class Member {
         zip = new_zip;
 
         return true;
-    }
-
-    public boolean updateActivation() {
-        Scanner sc = new Scanner(System.in);
-        String reply;
-
-        if (displayStatus()) {
-            out.print("Change the status to be suspended(Y/N): ");
-            reply = sc.nextLine();
-            if(reply.equalsIgnoreCase("Y"))
-                active = false;
-        }
-        else {
-            out.print("Change the status to be active(Y/N): ");
-            reply = sc.nextLine();
-            if(reply.equalsIgnoreCase("Y"))
-                active = true;
-        }
-
-       return displayStatus();
     }
 
     // Get name of member.
