@@ -14,9 +14,9 @@ public class Manager extends Member {
 	 * @param state The state of the manager.
 	 * @param zip The zip of the manager.
 	 */
-	public Manager(final int id, final String name, 
+	public Manager(final int id, final boolean active, final String name,
 	               final String address, final String city, final String state, final String zip) {
-		super(id, true, name, address, city, state, zip);
+		super(id, active, name, address, city, state, zip);
 	}
 
 	public Manager goLeft() {
