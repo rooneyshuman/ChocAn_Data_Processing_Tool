@@ -38,7 +38,7 @@ public class MemberServiceDB {
                date = readFromFile.next();
                providerName = readFromFile.next();
                service = readFromFile.next();
-               this.head = addFromFile(this.head, date, providerName, service);
+               this.head = addServiceRecord(this.head, date, providerName, service);
            }
 
            readFromFile.close();
@@ -48,38 +48,20 @@ public class MemberServiceDB {
            error.printStackTrace();
        }
     }
-
-    //Adds member service information from a file to LLL
-    public MemberService addFromFile(MemberService current,String date, String provName, String serviceName){
-       if(current == null){
-           current = new MemberService(date, provName, serviceName);
-           return current;
-       }
-       else{
-           current.setNext(addFromFile(current.goNext(), date, provName, serviceName));
-           return current;
-       }
-    }
+    
 
     //Adds service to a members service record through user input
     //Also acts as a wrapper for recursive method if LLL exists
-    public boolean addServiceRecord(String serviceDate, String providerName, String serviceName){
-        if(head == null){
-            head = new MemberService();
-            head.addService(serviceDate, providerName, serviceName);
-            return true;
-        }
-        else{
-            this.head.setNext(addServiceRecord(head.goNext(),serviceDate,providerName,serviceName));
-            return true;
-        }
+    public void addServiceRecord(String serviceDate, String providerName, String serviceName){
+
+        addServiceRecord(head, serviceDate, providerName, serviceName);
+
     }
 
     //Recursively adds a service to the members records
     private MemberService addServiceRecord(MemberService current, String serviceDate, String providerName, String serviceName){
        if(current == null){
            current = new MemberService();
-           current.addService(serviceDate, providerName, serviceName);
            return current;
        }
        else{
