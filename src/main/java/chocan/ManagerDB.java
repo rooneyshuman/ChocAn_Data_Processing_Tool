@@ -377,26 +377,69 @@ public class ManagerDB {
     // Generate Member Reports
     public void generateMemberReports() {
 
-        try(Stream<Path> paths = Files.walk(Paths.get("src/main/java/chocan/db/Members"))) {
+        File file = new File("src/main/java/chocan/db/Members/");
+        File[] files = file.listFiles();
+        Scanner read;
 
-            paths.forEach(filePath -> {
+        for (File f: files) {
+            try {
+                read = new Scanner(f);
+                read.useDelimiter("[|\\n]");
 
-                if (Files.isRegularFile(filePath)) {
+                File report = new File("src/main/java/chocan/report/" + f.getName());
+                report.getParentFile().mkdirs();
+                PrintWriter write = null;
 
-                    try {
-                        // read the file
+                try {
+                    write = new PrintWriter(report);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 
-                        // save the report
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                String memberName = read.next();
+                int memberID = read.nextInt();
+                String memberAddress = read.next();
+                String memberCity = read.next();
+                String memberState = read.next();
+                int memberZip = read.nextInt();
+
+                write.println("Member Name: " + memberName);
+                write.println("Member ID: " + memberID);
+                write.println("Member Address: " + memberAddress);
+                write.println("Member City: " + memberCity);
+                write.println("Member State: " + memberState);
+                write.println("Member Zip Code: " + memberZip);
+                write.println("-----------------------------------------");
+
+                out.println("Member Name: " + memberName);
+                out.println("Member ID: " + memberID);
+                out.println("Member Address: " + memberAddress);
+                out.println("Member City: " + memberCity);
+                out.println("Member State: " + memberState);
+                out.println("Member Zip Code: " + memberZip);
+                out.println("-----------------------------------------");
+
+                while(read.hasNext()) {
+
+                    String serviceDate = read.next();
+                    String providerName = read.next();
+                    String serviceName = read.next();
+
+                    write.println("Service Date: " + serviceDate);
+                    write.println("Provider Name: " + providerName);
+                    write.println("Service Name: " + serviceName);
+
+                    out.println("Service Date: " + serviceDate);
+                    out.println("Provider Name: " + providerName);
+                    out.println("Service Name: " + serviceName);
 
                 }
 
-            });
+                write.close();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -450,13 +493,13 @@ public class ManagerDB {
                 out.println("Provider Zip Code: " + providerZip);
                 out.println("-----------------------------------------");
 
-                String serviceDate = read.next();
-                String dateReceived = read.next();
-                String memberName = read.next();
-                int memberID = read.nextInt();
-                int serviceCode = read.nextInt();
-
                 while(read.hasNext()) {
+                    String serviceDate = read.next();
+                    String dateReceived = read.next();
+                    String memberName = read.next();
+                    int memberID = read.nextInt();
+                    int serviceCode = read.nextInt();
+
                     write.println("Service Date: " + serviceDate);
                     write.println("Date Received: " + dateReceived);
                     write.println("Member Name: " + memberName);
