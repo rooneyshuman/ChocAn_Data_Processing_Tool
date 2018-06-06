@@ -164,16 +164,23 @@ public class MemberServiceDB {
     }
 
     //Save LLL to member's service record file - wrapper
-    public void save(){
+    public void save(String name, int id, String address, String city, String state, String zip){
 
            try {
                File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
                file.getParentFile().mkdirs();
                if (!file.exists()) file.createNewFile();
 
-               FileWriter fw = new FileWriter(file,true);
-               BufferedWriter bw = new BufferedWriter(fw);
-               PrintWriter write = new PrintWriter(bw);
+               PrintWriter write = new PrintWriter(file);
+
+               // Write first line.
+               write.print(name + "|");
+               write.print(id + "|");
+               write.print(address + "|");
+               write.print(city + "|");
+               write.print(state + "|");
+               write.println(zip);
+
                save(this.head, write);
                out.println("Member service list has been saved.");
                write.close();
@@ -198,7 +205,7 @@ public class MemberServiceDB {
     //Opens the text file and checks for exceptions.
     public void openFile() {
         try {
-            read = new Scanner(new File("src/main/java/chocan/db/services.txt"));
+            read = new Scanner(new File("src/main/java/chocan/db/Members/" + fileName + ".txt"));
         } catch (Exception e) {
             System.out.println("Can't find file");
             e.printStackTrace();
@@ -206,11 +213,15 @@ public class MemberServiceDB {
     }
 
     //Reads in from text file and calls the insert function to build the tree.
-    public void readFile() {
+    public void readFile(String fileName) {
+        this.fileName = fileName;
         this.openFile();
-        read.useDelimiter("#|\\n");
+        read.useDelimiter("[|\\n]");
 
         String date, providerName, service;
+
+        date = read.nextLine(); // This will ignore the first line of the file.
+
         while (read.hasNext()) {
             date = read.next();
             providerName = read.next();
@@ -218,7 +229,9 @@ public class MemberServiceDB {
             addServiceRecord(date, providerName, service);
 
         }
+
         read.close();
+
     }
 
 
@@ -236,7 +249,7 @@ public class MemberServiceDB {
     {
         MemberServiceDB serviceList = new MemberServiceDB();
         //serviceList.load();
-        serviceList.readFile();
+        //serviceList.readFile();
         serviceList.display();
         //serviceList.addServiceRecord();
         //serviceList.addServiceRecord();

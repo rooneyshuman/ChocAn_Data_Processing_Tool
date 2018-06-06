@@ -34,6 +34,7 @@ public class Member {
 
     //id,active,name,address,city,state,zip
     Member(int newId, boolean newActive, String newName, String newAddress, String newCity, String newState, String newZip) {
+
         id = newId;
         active = newActive;
         name = newName;
@@ -45,29 +46,6 @@ public class Member {
         right = null;
         serviceDB = new MemberServiceDB();
 
-        try {
-            File file = new File("src/main/java/chocan/db/Members/" + id + ".txt");
-            file.getParentFile().mkdirs();
-            boolean fileExists = file.exists();
-
-            if (!fileExists) {
-                file.createNewFile();
-            }
-
-            FileWriter fw = new FileWriter(file,true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter write = new PrintWriter(bw);
-
-            // If new file, create first line with member info.
-            if (!fileExists) saveMemberService(write);
-
-            write.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        serviceDB.load(id);
     }
 
     public Member goLeft(){
@@ -163,7 +141,32 @@ public class Member {
     // Save member data for service record.
     public void saveServiceRecord(String serviceDate, String providerName, String serviceName) {
 
-        serviceDB.addServiceRecord(serviceDate,providerName,serviceName);
+        try {
+            File file = new File("src/main/java/chocan/db/Members/" + this.name + ".txt");
+            file.getParentFile().mkdirs();
+            boolean fileExists = file.exists();
+
+            if (!fileExists) {
+                file.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(file,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter write = new PrintWriter(bw);
+
+            // If new file, create first line with member info.
+            if (!fileExists) saveMemberService(write);
+
+            serviceDB.readFile(this.name);
+
+            serviceDB.addServiceRecord(serviceDate,providerName,serviceName);
+            serviceDB.save(this.name,this.id,this.address,this.city,this.state,this.zip);
+
+            write.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -1,8 +1,0 @@
-04-22-1960#Dietician Session#125.00
-12-03-1905#Aerobics Exercise Session#42.00
-02-22-1985#Blood Work#84.00
-03-14-1923#Group Therapy Session#55.00
-01-02-1969#Blood Pressure Exam#27.00
-04-02-1973#Addiction Consultation#89.00
-02-01-1947#Chocolate Patch#23.00
-08-26-1986#Chocolate Pill#21.00

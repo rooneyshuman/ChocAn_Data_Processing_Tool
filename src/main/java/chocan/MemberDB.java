@@ -406,8 +406,10 @@ public class MemberDB {
     //Add new service records based on the ID provided.
     public void addService(int id, String serviceDate, String providerName, String serviceName) {
 
+        String memberName = getName(id);
+
         try {
-            File file = new File("src/main/java/chocan/db/Members/" + id + ".txt");
+            File file = new File("src/main/java/chocan/db/Members/" + memberName + ".txt");
             file.getParentFile().mkdirs();
             boolean fileExists = file.exists();
 
@@ -421,6 +423,8 @@ public class MemberDB {
 
             // If new file, create first line with member info.
             if (!fileExists) saveMemberService(this.root, id, write);
+
+            write.close();
 
             saveServiceRecord(this.root, id, serviceDate, providerName, serviceName);
 

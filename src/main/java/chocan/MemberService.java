@@ -28,10 +28,11 @@ public class MemberService {
     public void save(PrintWriter write) {
 
         write.print(this.serviceDate);
-        write.print(":");
+        write.print("|");
         write.print(this.providerName);
-        write.print(":");
+        write.print("|");
         write.println(this.service);
+
     }
 
     public void delete() {

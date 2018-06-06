@@ -464,6 +464,7 @@ public class ProviderDB {
 
         // Display provider directory.
         directory.display();
+        out.println("-----------------------------------------");
 
         int serviceCode;
         String serviceName;
@@ -485,7 +486,9 @@ public class ProviderDB {
             if (serviceName == null)
                 out.println("Invalid code. Please try again.");
             else {
+                out.println("-----------------------------------------");
                 out.println("Service Name: " + serviceName);
+                out.println("-----------------------------------------");
                 out.print("Is this the correct service? (Y/N): ");
                 String answer = ask.nextLine();
                 if (answer.startsWith("N") || answer.startsWith("n"))
@@ -497,6 +500,7 @@ public class ProviderDB {
         // Prompt user to enter any comments about the service.
         out.print("Please enter any comments (optional): ");
         String serviceComments = ask.nextLine();
+        out.println("-----------------------------------------");
 
         // Write service record to disk.
         try {
@@ -532,6 +536,7 @@ public class ProviderDB {
         double serviceFee = directory.getFee(serviceCode);
 
         out.println("Service Fee: " + nf.format(serviceFee));
+        out.println("-----------------------------------------");
 
         String providerName = getName(providerID);
         String memberName = memberList.getName(memberID);
@@ -541,7 +546,7 @@ public class ProviderDB {
 
         // Write provider service record to disk.
         try {
-            File file = new File("src/main/java/chocan/db/providers/" + providerID + ".txt");
+            File file = new File("src/main/java/chocan/db/providers/" + providerName + ".txt");
             file.getParentFile().mkdirs();
             boolean fileExists = file.exists();
 
@@ -660,7 +665,7 @@ public class ProviderDB {
         out.print("Go back to menu? (Yes/No) ");
         reply = input.next(); input.nextLine();
 
-        return reply.equalsIgnoreCase("yes");
+        return reply.startsWith("Y") || reply.startsWith("y");
 
     }
 
