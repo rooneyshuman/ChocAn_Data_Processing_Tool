@@ -3,6 +3,7 @@ package chocan;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import static java.lang.System.out;
 
 public class MemberService {
 
@@ -61,9 +62,9 @@ public class MemberService {
 
     //Displays when member's name is displayed
     public void display(){
-        System.out.println("Date of Service: " + serviceDate);
-        System.out.println("Service Received: " + service);
-        System.out.println("Provider: " + providerName + '\n');
+        out.println("Date of Service: " + serviceDate);
+        out.println("Service Received: " + service);
+        out.println("Provider: " + providerName + '\n');
     }
 
     public boolean compareDate(String toCompare){

@@ -3,6 +3,7 @@ package chocan;
 //ServiceInfo: holds info for each service code. Contained within Provider Directory
 
 import java.text.NumberFormat;
+import static java.lang.System.out;
 
 public class ServiceInfo {
     //Data fields
@@ -19,13 +20,6 @@ public class ServiceInfo {
         this.fee = 0;
         this.left = null;
         this.right = null;
-    }
-
-    //Copy constructor
-    public ServiceInfo(ServiceInfo to_copy) {
-        this.name = to_copy.name;
-        this.code = to_copy.code;
-        this.fee = to_copy.fee;
     }
 
     //Copy constructor w/ args
@@ -57,32 +51,27 @@ public class ServiceInfo {
     }
 
     //Display function
-    public void Display(){
-        System.out.printf("--------------------------------------------\n");
-        System.out.println("Service name: " + this.name);
-        System.out.println("Service code: " + this.code);
-        System.out.print("Service fee: ");
+    public void display(){
+        out.printf("--------------------------------------------\n");
+        out.println("Service name: " + this.name);
+        out.println("Service code: " + this.code);
+        out.print("Service fee: ");
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        System.out.println(formatter.format(this.fee));
+        out.println(formatter.format(this.fee));
     }
 
     //Returns the String of the service name
     public String Service(){
-
         return this.name;
     }
 
     //Compares the names and returns true if comparison is greater than 0.
-    public boolean Less_Than(String name){
-        if(this.name.compareTo(name) >0)
-            return true;
-        return false;
+    public boolean lessThan(String name){
+        return (this.name.compareTo(name) > 0);
     }
 
-    //Find by service code
-    public boolean Find(int to_find) {
-        if (to_find == this.code)
-            return true;
-        return false;
+    //Find by service code - returns true if match is found
+    public boolean find(int toFind) {
+        return (toFind == this.code);
     }
 }
