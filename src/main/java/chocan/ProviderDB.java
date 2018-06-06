@@ -540,7 +540,7 @@ public class ProviderDB {
 
         // Write provider service record to disk.
         try {
-            File file = new File("src/main/java/chocan/db/providers/" + providerName + ".txt");
+            File file = new File("src/main/java/chocan/db/providers/" + providerID + ".txt");
             file.getParentFile().mkdirs();
             boolean fileExists = file.exists();
 
