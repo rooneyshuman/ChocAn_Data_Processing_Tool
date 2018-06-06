@@ -61,7 +61,7 @@ public class ProviderDir {
     //Opens the text file and checks for exceptions.
     public void openFile() {
         try {
-            read = new Scanner(new File("Provider Directory"));
+            read = new Scanner(new File("src/main/java/chocan/db/provider directory.txt"));
         } catch (Exception e) {
             System.out.println("Can't find file");
             e.printStackTrace();
@@ -156,8 +156,9 @@ public class ProviderDir {
         //tree.Add();
         tree.readFile();//Testing, this reads from the provider dir text file and builds directory tree
         tree.display();//Test, this displays the provider directory tree alphabetically by name.
-        int code = 0;
-        tree.findCode(code);//Test, looks up Service Info record by service code.
+        int code = 598470;
+        String factor = tree.findCode(code);//Test, looks up Service Info record by service code.
+        System.out.println("\nThis is the service matching the code: " + factor);
     }
 }
 

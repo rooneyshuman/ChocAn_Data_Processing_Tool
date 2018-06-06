@@ -25,7 +25,7 @@ public class ProviderDB {
         load(); // Loads the list of providers.
         this.memberList = new MemberDB();
         this.directory = new ProviderDir();
-        this.directory.Read_txt();
+        this.directory.readFile();
 
     }
 
@@ -463,7 +463,7 @@ public class ProviderDB {
         }
 
         // Display provider directory.
-        directory.Display();
+        directory.display();
 
         int serviceCode;
         String serviceName;
@@ -480,7 +480,7 @@ public class ProviderDB {
             serviceCode = ask.nextInt();
             ask.nextLine();
 
-            serviceName = directory.Find_code(serviceCode);
+            serviceName = directory.findCode(serviceCode);
 
             if (serviceName == null)
                 out.println("Invalid code. Please try again.");

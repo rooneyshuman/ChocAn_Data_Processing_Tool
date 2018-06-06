@@ -1,0 +1,8 @@
+598470#Dietician Session#125.00
+883948#Aerobics Exercise Session#42.00
+234893#Blood Work#84.00
+857396#Group Therapy Session#55.00
+239408#Blood Pressure Exam#27.00
+475839#Addiction Consultation#89.00
+903848#Chocolate Patch#23.00
+457387#Chocolate Pill#21.00
