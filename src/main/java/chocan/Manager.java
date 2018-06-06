@@ -1,5 +1,7 @@
 package chocan;
 
+import static java.lang.System.out;
+
 /**
  * A manager of the ChocAn software system.
  */
@@ -35,4 +37,18 @@ public class Manager extends Member {
 		super.right = right;
 	}
 
+	public void display() {
+
+		out.println("Manager Name: " + name);
+		out.println("Manager Number: " + id);
+		out.println("Manager Address: " + address);
+		out.println("Manager City: " + city);
+		out.println("Manager State: " + state);
+		out.println("Manager Zip Code: " + zip);
+
+		if (active) out.println("Manager Status: Active");
+		else out.println("Manager Status: Inactive");
+
+		out.println("-----------------------------------------");
+	}
 }
