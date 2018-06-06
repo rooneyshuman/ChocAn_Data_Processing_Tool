@@ -61,13 +61,22 @@ public class MemberServiceDB {
     //Recursively adds a service to the members records
     private MemberService addServiceRecord(MemberService current, String serviceDate, String providerName, String serviceName){
        if(current == null){
-           return current = new MemberService( serviceDate, providerName, serviceName);
+           return new MemberService( serviceDate, providerName, serviceName);}
+
+
+           else if(current.Comparedate(serviceDate)<0){
+           MemberService temp = new MemberService(serviceDate, providerName, serviceName);
+           temp.setNext(current);
+           return temp;}
+
+
+        else {
+           current.setNext(addServiceRecord(current.goNext(), serviceDate, providerName, serviceName));
+           return current;
+
 
        }
-       else{
-           current.setNext(addServiceRecord(current.goNext(),serviceDate,providerName,serviceName));
-           return current;
-       }
+
     }
 
     //Displays LLL of services for the loaded member - wrapper
@@ -189,7 +198,7 @@ public class MemberServiceDB {
     //Opens the text file and checks for exceptions.
     public void openFile() {
         try {
-            read = new Scanner(new File("src/main/java/chocan/db/provider directory.txt"));
+            read = new Scanner(new File("src/main/java/chocan/db/services.txt"));
         } catch (Exception e) {
             System.out.println("Can't find file");
             e.printStackTrace();
@@ -234,8 +243,8 @@ public class MemberServiceDB {
 
         //serviceList.remove();
 
-        serviceList.save();
+        //serviceList.save();
 
-        serviceList.display();
+        //serviceList.display();
     }
 }

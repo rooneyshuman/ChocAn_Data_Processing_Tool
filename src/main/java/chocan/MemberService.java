@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import static java.lang.System.out;
 
+
 public class MemberService {
 
     private String providerName;
@@ -74,14 +75,18 @@ public class MemberService {
         return serviceDate.equals(toCompare);
     }
 
-    public void Comparedate(String Servicedate) {
 
+    //Converets string to date object and compares dates and returns the result.
+    public int Comparedate(String Servicedate) {
 
+        int num = 0;
         try
 
         {
             Date date1 = new SimpleDateFormat("MM-DD-YYYY").parse(Servicedate);
             Date date2 = new SimpleDateFormat("MM-DD-YYYY").parse(this.serviceDate);
+            num = date1.compareTo(date2);
+            
 
         } catch (
                 ParseException e)
@@ -89,7 +94,7 @@ public class MemberService {
         {
             e.printStackTrace();
         }
-
+        return num;
     }
     //Returns current date formatted
     private String getDate(){
