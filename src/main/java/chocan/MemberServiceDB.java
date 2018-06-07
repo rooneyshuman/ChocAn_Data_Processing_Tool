@@ -30,7 +30,7 @@ public class MemberServiceDB {
        if(current == null){
            return new MemberService( serviceDate, providerName, serviceName);}
 
-           else if(current.compareDate(serviceDate)<0){
+           else if(current.compareDate(serviceDate) > 0){
            MemberService temp = new MemberService(serviceDate, providerName, serviceName);
            temp.setNext(current);
            return temp;}
