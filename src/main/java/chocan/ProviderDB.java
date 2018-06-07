@@ -140,6 +140,13 @@ public class ProviderDB {
 
         int direction = root.compareID(id);
 
+        //When a provider is deleted sometimes there can be duplicate ID's this will increment a duplicate ID to
+        //prevent them from being the same.
+        if(direction == 0){
+            ++id;
+            direction = root.compareID(id);
+        }
+
         // Traverse tree to find where to add.
         if (direction < 0)
             root.setLeft(addProvider(root.goLeft(),id,active,name,address,city,state,zip));
