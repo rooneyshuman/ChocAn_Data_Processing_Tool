@@ -425,6 +425,11 @@ public class ProviderDB {
 
     }
 
+    // Show Provider Directory
+    public void showDirectory() {
+        directory.display();
+    }
+
     private String getName(int id) {
         return getName(this.root,id);
     }
