@@ -358,6 +358,24 @@ public class ManagerDB {
         save(root.goRight(),write);
     }
 
+    // Get name of manager logged in.
+    private String getName() {
+        return getName(this.root,this.managerID);
+    }
+
+    // Traverse tree to find manager.
+    private String getName(Manager root, int id) {
+
+        if (root == null) return null;
+
+        if (root.compareID(id) == 0) return root.getName();
+
+        String result = getName(root.goLeft(),id);
+
+        return (result != null) ? result : getName(root.goRight(),id);
+
+    }
+
     // Displays the list of managers.
     public void showManagers() {
 
@@ -407,6 +425,10 @@ public class ManagerDB {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+
+                write.println("-----------------------------------------");
+                write.println("Member Report");
+                write.println("-----------------------------------------");
 
                 String memberName = read.next();
                 int memberID = read.nextInt();
@@ -482,6 +504,10 @@ public class ManagerDB {
                     e.printStackTrace();
                 }
 
+                write.println("-----------------------------------------");
+                write.println("Provider Report");
+                write.println("-----------------------------------------");
+
                 String providerName = read.next();
                 int providerID = read.nextInt();
                 String providerAddress = read.next();
@@ -552,6 +578,111 @@ public class ManagerDB {
 
     // Generate Manager Report
     public void generateManagerReport() {
+
+        // Check for authorization.
+        if (managerID == 0) {
+            out.println("Must be logged in with a Manager ID");
+            return;
+        }
+
+        String managerName = getName();
+
+        int consultations = 0, totalConsultations = 0, providers = 0;
+        double fee = 0, totalFee = 0;
+
+        File file = new File("src/main/java/chocan/db/providers/");
+        File[] files = file.listFiles();
+        Scanner read;
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+
+        for (File f: files) {
+            try {
+                read = new Scanner(f);
+                read.useDelimiter("[|\\n]");
+
+                File report = new File("src/main/java/chocan/report/" + managerName + ".txt");
+                report.getParentFile().mkdirs();
+                PrintWriter write = null;
+
+                try {
+                    write = new PrintWriter(report);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                write.println("-----------------------------------------");
+                write.println("Manager Report");
+                write.println("-----------------------------------------");
+
+                String providerName = read.next();
+                int providerID = read.nextInt();
+                String ignore = read.next();
+                ignore = read.next();
+                ignore = read.next();
+                ignore = String.valueOf(read.nextInt());
+
+                write.println("-----------------------------------------");
+                write.println("Provider Name: " + providerName);
+                write.println("Provider ID: " + providerID);
+
+                out.println("-----------------------------------------");
+                out.println("Provider Name: " + providerName);
+                out.println("Provider ID: " + providerID);
+
+                while(read.hasNext()) {
+                    ignore = read.next();
+                    ignore = read.next();
+                    ignore = read.next();
+                    ignore = String.valueOf(read.nextInt());
+                    ignore = String.valueOf(read.nextInt());
+
+                    fee += read.nextDouble();
+                    ++consultations;
+                }
+
+                write.println("Total Consultations: " + consultations);
+                write.println("Total Fee: " + nf.format(fee));
+                write.println("-----------------------------------------");
+
+                out.println("Total Consultations: " + consultations);
+                out.println("Total Fee: " + nf.format(fee));
+                out.println("-----------------------------------------");
+
+                totalFee += fee;
+                totalConsultations += consultations;
+                ++providers;
+                write.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Append last line in report.
+        try {
+            File report = new File("src/main/java/chocan/report/" + managerName + ".txt");
+            report.getParentFile().mkdirs();
+            if (!report.exists()) report.createNewFile();
+
+            FileWriter fw = new FileWriter(report,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter write = new PrintWriter(bw);
+
+            write.println("Total Providers: " + providers);
+            write.println("Total Consultations: " + totalConsultations);
+            write.println("Total Fee: " + nf.format(totalFee));
+            write.println("-----------------------------------------");
+
+            out.println("Total Providers: " + providers);
+            out.println("Total Consultations: " + totalConsultations);
+            out.println("Total Fee: " + nf.format(totalFee));
+            out.println("-----------------------------------------");
+
+            write.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -663,6 +794,6 @@ public class ManagerDB {
         out.print("Go back to menu? (Yes/No) ");
         reply = input.next(); input.nextLine();
 
-        return reply.equalsIgnoreCase("yes");
+        return reply.startsWith("Y") || reply.startsWith("y");
     }
 }
