@@ -72,7 +72,13 @@ public class MemberDB {
     }
 
     // Add members via public prompt. (For managers.)
-    public void add() {
+    public void add(Manager manager) {
+
+        // Check for manager authorization.
+        if (manager == null) {
+            out.println("Please login as a manager.");
+            return;
+        }
 
         Scanner input = new Scanner(System.in);
 
@@ -151,7 +157,13 @@ public class MemberDB {
     }
 
     // Activate or deactivate member's account.
-    public void changeStatus() {
+    public void changeStatus(Manager manager) {
+
+        // Check for manager authorization.
+        if (manager == null) {
+            out.println("Please login as a manager.");
+            return;
+        }
 
         Scanner input = new Scanner(System.in);
 
@@ -240,7 +252,13 @@ public class MemberDB {
     }
 
     // Delete a member via public prompt. (For managers.)
-    public void delete() {
+    public void delete(Manager manager) {
+
+        // Check for manager authorization.
+        if (manager == null) {
+            out.println("Please login as a manager.");
+            return;
+        }
 
         Scanner input = new Scanner(System.in);
 
@@ -509,6 +527,8 @@ public class MemberDB {
     public static void main(String[] args) {
 
         MemberDB memberMenu = new MemberDB();
+        ManagerDB managerMenu = new ManagerDB();
+
         Scanner input = new Scanner(System.in);
         int menuOption;
 
@@ -537,15 +557,15 @@ public class MemberDB {
             switch (menuOption) {
 
                 case 1: // Add Member
-                    memberMenu.add();
+                    memberMenu.add(managerMenu.authorize());
                     break;
 
                 case 2: // Change Status of Member
-                    memberMenu.changeStatus();
+                    memberMenu.changeStatus(managerMenu.authorize());
                     break;
 
                 case 3: // Delete Member
-                    memberMenu.delete();
+                    memberMenu.delete(managerMenu.authorize());
                     break;
 
                 case 4: // Check Member ID

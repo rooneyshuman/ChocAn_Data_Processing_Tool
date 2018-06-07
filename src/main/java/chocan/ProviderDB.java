@@ -60,8 +60,13 @@ public class ProviderDB {
 
     }
 
+    // Add members via public prompt. (For managers.)
+    public void addMember(Manager manager) {
+        memberList.add(manager);
+    }
+
     // Add providers via public prompt. (For managers.)
-    public void add(Manager manager) {
+    public void addProvider(Manager manager) {
 
         // Check for manager authorization.
         if (manager == null) {
@@ -115,14 +120,14 @@ public class ProviderDB {
             zip = input.nextLine();
         }
 
-        this.root = add(this.root,(700000000 + providerCount),true,name,address,city,state,zip);
+        this.root = addProvider(this.root,(700000000 + providerCount),true,name,address,city,state,zip);
         out.println("Provider added.");
         save();
 
     }
 
     // Add providers to tree.
-    private Provider add(Provider root, int id, boolean active, String name, String address, String city, String state, String zip) {
+    private Provider addProvider(Provider root, int id, boolean active, String name, String address, String city, String state, String zip) {
 
         // If no providers, create it.
         if (root == null) {
@@ -137,16 +142,21 @@ public class ProviderDB {
 
         // Traverse tree to find where to add.
         if (direction < 0)
-            root.setLeft(add(root.goLeft(),id,active,name,address,city,state,zip));
+            root.setLeft(addProvider(root.goLeft(),id,active,name,address,city,state,zip));
         else if (direction > 0)
-            root.setRight(add(root.goRight(),id,active,name,address,city,state,zip));
+            root.setRight(addProvider(root.goRight(),id,active,name,address,city,state,zip));
 
         return root;
 
     }
 
+    // Activate or deactivate member's account.
+    public void changeStatusMember(Manager manager) {
+        memberList.changeStatus(manager);
+    }
+
     // Activate or deactivate provider's account.
-    public void changeStatus(Manager manager) {
+    public void changeStatusProvider(Manager manager) {
 
         // Check for manager authorization.
         if (manager == null) {
@@ -177,13 +187,13 @@ public class ProviderDB {
 
         input.nextLine();
 
-        changeStatus(this.root,id);
+        changeStatusProvider(this.root,id);
         save();
 
     }
 
     // Traverse tree and change status of a provider.
-    private void changeStatus(Provider root, int id) {
+    private void changeStatusProvider(Provider root, int id) {
 
         // If empty, return.
         if (root == null) return;
@@ -199,9 +209,9 @@ public class ProviderDB {
 
         //Otherwise, traverse tree.
         if (root.compareID(id) < 0) {
-            changeStatus(root.goLeft(), id);
+            changeStatusProvider(root.goLeft(), id);
         } else {
-            changeStatus(root.goRight(), id);
+            changeStatusProvider(root.goRight(), id);
         }
 
     }
@@ -228,7 +238,7 @@ public class ProviderDB {
                 state = read.next();
                 zip = read.next();
 
-                this.root = add(this.root,id,active,name,address,city,state,zip);
+                this.root = addProvider(this.root,id,active,name,address,city,state,zip);
             }
 
             read.close();
@@ -240,8 +250,13 @@ public class ProviderDB {
 
     }
 
+    // Delete a member via public prompt. (For managers.)
+    public void deleteMember(Manager manager) {
+        memberList.delete(manager);
+    }
+
     // Delete a provider via public prompt. (For managers.)
-    public void delete(Manager manager) {
+    public void deleteProvider(Manager manager) {
 
         // Check for manager authorization.
         if (manager == null) {
@@ -272,13 +287,13 @@ public class ProviderDB {
 
         input.nextLine();
 
-        this.root = delete(this.root,id);
+        this.root = deleteProvider(this.root,id);
         save();
 
     }
 
     // Delete provider from tree.
-    private Provider delete(Provider root, int id) {
+    private Provider deleteProvider(Provider root, int id) {
 
         // If no providers, return.
         if (root == null) return null;
@@ -338,9 +353,9 @@ public class ProviderDB {
 
         // If less than, go left.
         if (root.compareID(id) < 0)
-            root.setLeft(delete(root.goLeft(), id));
+            root.setLeft(deleteProvider(root.goLeft(), id));
         else
-            root.setRight(delete(root.goRight(), id));
+            root.setRight(deleteProvider(root.goRight(), id));
 
         return root;
 
@@ -653,15 +668,15 @@ public class ProviderDB {
 
                 case 1: // Add Provider
                     managerMenu.login(800000000);
-                    providerMenu.add(managerMenu.authorize());
+                    providerMenu.addProvider(managerMenu.authorize());
                     break;
 
                 case 2: // Change Status of Provider
-                    providerMenu.changeStatus(managerMenu.authorize());
+                    providerMenu.changeStatusProvider(managerMenu.authorize());
                     break;
 
                 case 3: // Delete Provider
-                    providerMenu.delete(managerMenu.authorize());
+                    providerMenu.deleteProvider(managerMenu.authorize());
                     break;
 
                 case 4: // Login
