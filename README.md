@@ -19,3 +19,15 @@ This is Group 6's term project for CS 300 at Portland State University.
 5. Manager Interface
 6. Viewing Reports
 
+### 1. Installation
+In order to run the program, it needs to be compiled.
+
+Download IntelliJ here: https://www.jetbrains.com/idea/download/#section=mac
+
+Running the program with IntelliJ
+```
+- Import the project. (Using the pom.xml file.)
+- Build & run project.
+```
+
+### 2. How to Use
