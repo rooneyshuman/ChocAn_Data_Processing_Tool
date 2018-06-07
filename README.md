@@ -20,14 +20,15 @@ This is Group 6's term project for CS 300 at Portland State University.
 6. Viewing Reports
 
 ### 1. Installation
-In order to run the program, it needs to be compiled.
+In order to run the program, it needs to be compiled. Download IntelliJ here: https://www.jetbrains.com/idea/download/
 
-Download IntelliJ here: https://www.jetbrains.com/idea/download/
-
-Running the program with IntelliJ
+Compile the program with IntelliJ
 ```
 - Import the project. (Using the pom.xml file.)
-- Build & run project.
+- Build > Build Project
 ```
 
 ### 2. How to Use
+`Run > Run 'Main'`
+
+The program uses a series of text menus. You will be prompted to input a number associated with the menu items. Simply type in a number to make your choice.
