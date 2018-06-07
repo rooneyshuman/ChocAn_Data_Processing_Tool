@@ -104,12 +104,12 @@ public class ManagerDB {
         out.print("Zip Code: ");
         String zip = input.nextLine();
 
-        while (zip.length() < 1 || zip.length() > 6) {
-            out.print("Please enter 1-6 characters: ");
+        while (zip.length() != 6) {
+            out.print("Please enter 6 digits: ");
             zip = input.nextLine();
         }
 
-        this.root = add(this.root,(800000 + managerCount),true,name,address,city,state,zip);
+        this.root = add(this.root,(800000000 + managerCount),true,name,address,city,state,zip);
         out.println("Manager added.");
         save();
 
@@ -151,13 +151,18 @@ public class ManagerDB {
         out.print("Please enter a manager ID: ");
 
         while (!input.hasNextInt()) {
-
             out.print("Please enter a valid number: ");
             input.nextLine();
-
         }
 
         int id = input.nextInt();
+
+        //Error message if input is out of bounds
+        while (id < 800000000 || id > 899999999) {
+            out.print("Please enter 1-9 characters. Manager ID's begin with '8': ");
+            id = input.nextInt();
+        }
+
         input.nextLine();
 
         changeStatus(this.root,id);
@@ -240,6 +245,13 @@ public class ManagerDB {
         }
 
         int id = input.nextInt();
+
+        //Error message if input is out of bounds
+        while (id < 800000000 || id > 899999999) {
+            out.print("Please enter 1-9 characters. Manager ID's begin with '8': ");
+            id = input.nextInt();
+        }
+
         input.nextLine();
 
         this.root = delete(this.root,id);
@@ -591,12 +603,20 @@ public class ManagerDB {
                 case 4: // Login
                     out.print("Please enter a manager ID: ");
 
+                    //Error message if input is not an int
                     while (!input.hasNextInt()) {
                         out.print("Please enter a valid number: ");
                         input.nextLine();
                     }
 
                     int id = input.nextInt();
+
+                    //Error message if input is out of bounds
+                    while (id < 800000000 || id > 899999999) {
+                        out.print("Please enter 1-25 characters. Manager ID's begin with '8': ");
+                        id = input.nextInt();
+                    }
+
                     if (managerMenu.login(id))
                         out.println("Manager has been logged in.");
 
@@ -637,14 +657,11 @@ public class ManagerDB {
     }
 
     private static boolean again() {
-
         Scanner input = new Scanner(System.in);
         String reply;
         out.print("Go back to menu? (Yes/No) ");
         reply = input.next(); input.nextLine();
 
         return reply.equalsIgnoreCase("yes");
-
     }
-
 }
