@@ -22,6 +22,7 @@ This is Group 6's term project for CS 300 at Portland State University.
 8. Viewing Provider Reports
 9. Viewing Manager Reports
 10. Viewing EFT Records
+11. Test Accounts
 
 ### 1. Installation
 In order to run the program, it needs to be compiled. Download IntelliJ here: https://www.jetbrains.com/idea/download/
