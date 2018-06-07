@@ -17,39 +17,6 @@ public class MemberServiceDB {
         file = null;
     }
 
-    //Loads a member's service data from a text file into LLL by file name (not including file extension)
-    //File names should be a member's membership number
-    public void load(int id){
-       try {
-           if(head != null)
-               head = null;
-
-           fileName = Integer.toString(id);
-
-           file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
-           Scanner readFromFile = new Scanner(file);
-           readFromFile.useDelimiter("[|\\n]"); //ignore colon and new line
-
-           String date, providerName, service, ignore;
-
-           ignore = readFromFile.nextLine();
-
-           while(readFromFile.hasNext()) {
-               date = readFromFile.next();
-               providerName = readFromFile.next();
-               service = readFromFile.next();
-               this.head = addServiceRecord(this.head, date, providerName, service);
-           }
-
-           readFromFile.close();
-
-       }
-       catch (FileNotFoundException error){
-           error.printStackTrace();
-       }
-    }
-    
-
     //Adds service to a members service record through user input
     //Also acts as a wrapper for recursive method if LLL exists
     public void addServiceRecord(String serviceDate, String providerName, String serviceName){
@@ -64,7 +31,7 @@ public class MemberServiceDB {
            return new MemberService( serviceDate, providerName, serviceName);}
 
 
-           else if(current.Comparedate(serviceDate)<0){
+           else if(current.compareDate(serviceDate)<0){
            MemberService temp = new MemberService(serviceDate, providerName, serviceName);
            temp.setNext(current);
            return temp;}
@@ -109,8 +76,7 @@ public class MemberServiceDB {
            out.println("Enter the date of the service you are looking for (MM-dd-yyyy): ");
            read = new Scanner(System.in);
            String date = read.nextLine();
-           boolean test = head.compareDate(date);
-           if(test)
+           if(head.compareDate(date) == 0)
                head.display();
            find(head.goNext(), date);
        }
@@ -121,7 +87,7 @@ public class MemberServiceDB {
         if(current == null)
             out.println("No matches found.");
         else{
-            if(current.compareDate(date))
+            if(current.compareDate(date) == 0)
                 current.display();
             find(current.goNext(), date);
         }
@@ -142,7 +108,7 @@ public class MemberServiceDB {
         if(current == null)
             return current;
 
-        if(current.compareDate(date)){
+        if(current.compareDate(date) == 0){
             current.display();
             out.println("Is this the service you would like to remove(y/n): ");
             read = new Scanner(System.in);
@@ -220,7 +186,7 @@ public class MemberServiceDB {
 
         String date, providerName, service;
 
-        date = read.nextLine(); // This will ignore the first line of the file.
+        read.nextLine(); // This will ignore the first line of the file.
 
         while (read.hasNext()) {
             date = read.next();
@@ -249,7 +215,7 @@ public class MemberServiceDB {
     {
         MemberServiceDB serviceList = new MemberServiceDB();
         //serviceList.load();
-        //serviceList.readFile();
+        serviceList.readFile("test");
         serviceList.display();
         //serviceList.addServiceRecord();
         //serviceList.addServiceRecord();
