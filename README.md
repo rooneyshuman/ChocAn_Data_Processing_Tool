@@ -48,7 +48,7 @@ The program uses a series of text menus. You will be prompted to input a number 
 
 
 ### 6. Viewing Service Records
-The service records are located in the following directory: /Users/nikolasapostolos/Documents/GitHub/Team6/src/main/java/chocan/db/services.txt
+The service records are located in the following directory: `src/main/java/chocan/db/services.txt`
 
 
 
