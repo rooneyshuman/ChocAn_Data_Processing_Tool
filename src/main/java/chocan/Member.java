@@ -96,8 +96,8 @@ public class Member {
         out.print("New ID: ");
         int new_id = sc.nextInt();
 
-        while (new_id < 1000000000 || new_id > 999999999) {
-            out.print("Please enter 1-25 characters: ");
+        while (new_id < 100000000 || new_id > 999999999) {
+            out.print("Please enter 9 characters: ");
             new_id = sc.nextInt();
         }
 
