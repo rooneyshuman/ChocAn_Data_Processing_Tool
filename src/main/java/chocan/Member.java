@@ -96,20 +96,50 @@ public class Member {
         out.print("New ID: ");
         int new_id = sc.nextInt();
 
+        while (new_id < 1000000000 || new_id > 999999999) {
+            out.print("Please enter 1-25 characters: ");
+            new_id = sc.nextInt();
+        }
+
         out.print("New name: ");
         String new_name = sc.nextLine();
+
+        while (new_name.length() < 1 || new_name.length() > 25) {
+            out.print("Please enter 1-25 characters: ");
+            new_name = sc.nextLine();
+        }
 
         out.print("New address: ");
         String new_address = sc.nextLine();
 
+        while (new_address.length() < 1 || new_address.length() > 25) {
+            out.print("Please enter 1-25 characters: ");
+            new_address = sc.nextLine();
+        }
+
         out.print("New city: ");
         String new_city = sc.nextLine();
+
+        while (new_city.length() < 1 || new_city.length() > 14) {
+            out.print("Please enter 1-14 characters: ");
+            new_city = sc.nextLine();
+        }
 
         out.print("New state: ");
         String new_state = sc.nextLine();
 
+        while (new_state.length() != 2) {
+            out.print("Please enter 2 characters: ");
+            new_state = sc.nextLine();
+        }
+
         out.print("New zip: ");
         String new_zip = sc.nextLine();
+
+        while (new_zip.length() < 1 || new_zip.length() > 6) {
+            out.print("Please enter 1-6 characters: ");
+            new_zip = sc.nextLine();
+        }
 
         id = new_id;
         name = new_name;
