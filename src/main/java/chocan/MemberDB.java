@@ -171,7 +171,7 @@ public class MemberDB {
         //Error if input is out of range
         int id = input.nextInt();
         while (id < 600000000 || id > 699999999) {
-            out.print("Please enter 9 characters: ");
+            out.print("Please enter 9 digits. Member ID's begin with '6': ");
             id = input.nextInt();
         }
         input.nextLine();
@@ -259,7 +259,7 @@ public class MemberDB {
 
         //Error if input is out of range
         while (id < 600000000 || id > 699999999) {
-            out.print("Please enter 9 characters: ");
+            out.print("Please enter 9 digits. Member ID's begin with '6': ");
             id = input.nextInt();
         }
 
@@ -560,7 +560,7 @@ public class MemberDB {
 
                     //Error if input is out of range
                     while (id < 600000000 || id > 699999999) {
-                        out.print("Please enter 9 characters: ");
+                        out.print("Please enter 9 digits. Member ID's begin with '6': ");
                         id = input.nextInt();
                     }
 
