@@ -14,10 +14,14 @@ This is Group 6's term project for CS 300 at Portland State University.
 ## Table of Contents
 1. Installation
 2. How to Use
-3. Menu Options
-4. Provider Interface
-5. Manager Interface
-6. Viewing Reports
+3. Main Menu
+4. Provider Menu
+5. Manager Menu
+6. Viewing Service Records
+7. Viewing Member Reports
+8. Viewing Provider Reports
+9. Viewing Manager Reports
+10. Viewing EFT Records
 
 ### 1. Installation
 In order to run the program, it needs to be compiled. Download IntelliJ here: https://www.jetbrains.com/idea/download/
