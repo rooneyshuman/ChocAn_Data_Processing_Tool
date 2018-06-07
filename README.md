@@ -22,7 +22,7 @@ This is Group 6's term project for CS 300 at Portland State University.
 ### 1. Installation
 In order to run the program, it needs to be compiled.
 
-Download IntelliJ here: https://www.jetbrains.com/idea/download/#section=mac
+Download IntelliJ here: https://www.jetbrains.com/idea/download/
 
 Running the program with IntelliJ
 ```
