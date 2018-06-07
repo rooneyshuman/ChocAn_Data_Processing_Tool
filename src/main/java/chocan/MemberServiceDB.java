@@ -30,18 +30,14 @@ public class MemberServiceDB {
        if(current == null){
            return new MemberService( serviceDate, providerName, serviceName);}
 
-
            else if(current.compareDate(serviceDate)<0){
            MemberService temp = new MemberService(serviceDate, providerName, serviceName);
            temp.setNext(current);
            return temp;}
 
-
         else {
            current.setNext(addServiceRecord(current.goNext(), serviceDate, providerName, serviceName));
            return current;
-
-
        }
 
     }
@@ -154,7 +150,6 @@ public class MemberServiceDB {
            } catch (IOException e) {
                e.printStackTrace();
            }
-
    }
 
     //Recursively save LLL to member's service record file
@@ -167,8 +162,7 @@ public class MemberServiceDB {
         save(head.goNext(), write);
     }
 
-
-    //Opens the text file and checks for exceptions.
+    //Opens the text file and checks for exceptions
     public void openFile() {
         try {
             read = new Scanner(new File("src/main/java/chocan/db/Members/" + fileName + ".txt"));
@@ -178,7 +172,7 @@ public class MemberServiceDB {
         }
     }
 
-    //Reads in from text file and calls the insert function to build the tree.
+    //Reads in from text file and calls the insert function to build the tree
     public void readFile(String fileName) {
         this.fileName = fileName;
         this.openFile();
@@ -193,17 +187,10 @@ public class MemberServiceDB {
             providerName = read.next();
             service = read.next();
             addServiceRecord(date, providerName, service);
-
         }
 
         read.close();
-
     }
-
-
-
-
-
 
     //Clears out data in head
     public void reset(){
