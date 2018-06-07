@@ -1,6 +1,6 @@
 package chocan;
 
-import javafx.util.converter.DateStringConverter;
+//import javafx.util.converter.DateStringConverter;
 
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -72,31 +72,11 @@ public class MemberService {
         out.println("Provider: " + providerName + '\n');
     }
 
-    public boolean compareDate(String toCompare) {
-        return serviceDate.equals(toCompare);
+    public int compareDate(String toCompare)
+    {
+        return serviceDate.compareToIgnoreCase(toCompare);
     }
 
-
-    //Converets string to date object and compares dates and returns the result.
-    public int Comparedate(String Servicedate) {
-
-        int num = 0;
-        try
-
-        {
-            Date date1 = new SimpleDateFormat("MM-DD-YYYY").parse(Servicedate);
-            Date date2 = new SimpleDateFormat("MM-DD-YYYY").parse(this.serviceDate);
-            num = date1.compareTo(date2);
-            
-
-        } catch (
-                ParseException e)
-
-        {
-            e.printStackTrace();
-        }
-        return num;
-    }
     //Returns current date formatted
     private String getDate(){
 
