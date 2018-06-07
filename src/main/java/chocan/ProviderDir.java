@@ -7,14 +7,10 @@ import java.util.Scanner;
 import static java.lang.System.out;
 
 public class ProviderDir {
+    
     protected ServiceInfo root;
     protected Scanner input;
-
     protected Scanner read;
-
-    private void deleteRoot() {
-        root = null;
-    }
 
     protected ServiceInfo insert(ServiceInfo root, String name, int code, double fee) {
         if (root == null) {
@@ -130,31 +126,10 @@ public class ProviderDir {
         return getFee(root.getRight(), code);
     }
 
-    //Wrapper function for manually adding an entry into the tree.
-    public void add(){
-
-        String t_name;
-        int t_code;
-        double t_fee;
-
-        out.println("Enter the service name.");
-        t_name = input.nextLine();
-        out.println("Enter the code.");
-        t_code = input.nextInt();
-        out.println("Enter the fee.");
-        t_fee = input.nextDouble();
-        input.nextLine();
-
-        add(t_name, t_code, t_fee);
-    }
-
     //Test class methods
     public static void main(String[] args) {
         ProviderDir tree = new ProviderDir();
 
-        //tree.Add();//Testing, This prompts user for input to build the provide dir tree.
-        //tree.Add();
-        //tree.Add();
         tree.readFile();//Testing, this reads from the provider dir text file and builds directory tree
         tree.display();//Test, this displays the provider directory tree alphabetically by name.
         int code = 598470;
