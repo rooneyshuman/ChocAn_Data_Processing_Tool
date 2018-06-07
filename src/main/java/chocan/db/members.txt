@@ -1,11 +1,11 @@
-600000:True:Terra Branford:151 Canterbury Street:Georgetown:SC:29440
-600001:True:Locke Cole:132 Pin Oak Ave.:Downers Grove:IL:60515
-600002:True:Celes Chere:1 Ridgeview Ave.:Hollis:NY:11423
-600003:True:Edgar Figaro:7948 Inverness Dr.:Parlin:NJ:08859
-600004:True:Sabin Figaro:8291 Indian Spring Court:Fall River:MA:02720
-600005:True:Cyan Garamonde:69 Old Garden Lane:Middle River:MD:21220
-600006:True:Shadow:45 Littleton St.:Kingston:NY:12401
-600007:True:Gau:7392 North Middle River Ave.:Anaheim:CA:92806
-600008:True:Setzer Gabbiani:2 Pendergast Court:Dunedin:FL:34698
-600009:True:Strago Magus:48 Argyle Road:Royersford:PA:19468
-600010:True:Relm Arrowny:64 Bellevue St.:Hope Mills:NC:28348
+600000000:True:Terra Branford:151 Canterbury Street:Georgetown:SC:29440
+600000001:True:Locke Cole:132 Pin Oak Ave.:Downers Grove:IL:60515
+600000002:True:Celes Chere:1 Ridgeview Ave.:Hollis:NY:11423
+600000003:True:Edgar Figaro:7948 Inverness Dr.:Parlin:NJ:08859
+600000004:True:Sabin Figaro:8291 Indian Spring Court:Fall River:MA:02720
+600000005:True:Cyan Garamonde:69 Old Garden Lane:Middle River:MD:21220
+600000006:True:Shadow:45 Littleton St.:Kingston:NY:12401
+600000007:True:Gau:7392 North Middle River Ave.:Anaheim:CA:92806
+600000008:True:Setzer Gabbiani:2 Pendergast Court:Dunedin:FL:34698
+600000009:True:Strago Magus:48 Argyle Road:Royersford:PA:19468
+600000010:True:Relm Arrowny:64 Bellevue St.:Hope Mills:NC:28348
