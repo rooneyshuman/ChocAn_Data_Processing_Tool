@@ -115,8 +115,8 @@ public class MemberDB {
         out.print("Zip Code: ");
         String zip = input.nextLine();
 
-        while (zip.length() < 1 || zip.length() > 6) {
-            out.print("Please enter 1-6 characters: ");
+        while (zip.length() != 6) {
+            out.print("Please enter 6 digits: ");
             zip = input.nextLine();
         }
 
@@ -168,7 +168,12 @@ public class MemberDB {
 
         }
 
+        //Error if input is out of range
         int id = input.nextInt();
+        while (id < 600000000 || id > 699999999) {
+            out.print("Please enter 9 characters: ");
+            id = input.nextInt();
+        }
         input.nextLine();
 
         changeStatus(this.root,id);
@@ -251,6 +256,13 @@ public class MemberDB {
         }
 
         int id = input.nextInt();
+
+        //Error if input is out of range
+        while (id < 600000000 || id > 699999999) {
+            out.print("Please enter 9 characters: ");
+            id = input.nextInt();
+        }
+
         input.nextLine();
 
         this.root = delete(this.root,id);
@@ -545,6 +557,13 @@ public class MemberDB {
                     }
 
                     int id = input.nextInt();
+
+                    //Error if input is out of range
+                    while (id < 600000000 || id > 699999999) {
+                        out.print("Please enter 9 characters: ");
+                        id = input.nextInt();
+                    }
+
                     if (memberMenu.checkID(id))
                         out.println("Member ID is valid.");
                     break;
