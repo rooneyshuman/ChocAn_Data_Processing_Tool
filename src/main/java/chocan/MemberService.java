@@ -3,9 +3,6 @@ package chocan;
 //import javafx.util.converter.DateStringConverter;
 
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import static java.lang.System.out;
 
 
@@ -76,14 +73,4 @@ public class MemberService {
     {
         return serviceDate.compareToIgnoreCase(toCompare);
     }
-
-    //Returns current date formatted
-    private String getDate(){
-
-        String pattern = "MM-dd-yyyy";
-        SimpleDateFormat formatDate = new SimpleDateFormat(pattern);
-        Date currentDate = new Date();
-        return formatDate.format(currentDate);
-    }
-
 }
