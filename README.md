@@ -27,6 +27,8 @@ This is Group 6's term project for CS 300 at Portland State University.
 ### 1. Installation
 In order to run the program, it needs to be compiled. Download IntelliJ here: https://www.jetbrains.com/idea/download/
 
+This is a Maven project so it will install all the dependencies required for the program.
+
 Compile the program with IntelliJ
 ```
 - Import the project. (Using the pom.xml file.)
