@@ -484,6 +484,10 @@ public class ManagerDB {
         int consultations = 0;
         double fee, totalFee = 0;
 
+        // Delete EFT records first.
+        File eft = new File("src/main/java/chocan/report/EFT.txt");
+        eft.delete();
+
         File file = new File("src/main/java/chocan/db/providers/");
         File[] files = file.listFiles();
         Scanner read;
@@ -523,6 +527,7 @@ public class ManagerDB {
                 write.println("Provider Zip Code: " + providerZip);
                 write.println("-----------------------------------------");
 
+                out.println("-----------------------------------------");
                 out.println("Provider Name: " + providerName);
                 out.println("Provider ID: " + providerID);
                 out.println("Provider Address: " + providerAddress);
@@ -569,6 +574,12 @@ public class ManagerDB {
 
                 write.close();
 
+                generateEFT(providerName,providerID,totalFee);
+
+                // Reset for next providers.
+                consultations = 0;
+                totalFee = 0;
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -595,24 +606,24 @@ public class ManagerDB {
         Scanner read;
         NumberFormat nf = NumberFormat.getCurrencyInstance();
 
+        File report = new File("src/main/java/chocan/report/" + managerName + ".txt");
+        report.getParentFile().mkdirs();
+        PrintWriter write = null;
+
+        try {
+            write = new PrintWriter(report);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        write.println("-----------------------------------------");
+        write.println("Manager Report");
+        write.println("-----------------------------------------");
+
         for (File f: files) {
             try {
                 read = new Scanner(f);
                 read.useDelimiter("[|\\n]");
-
-                File report = new File("src/main/java/chocan/report/" + managerName + ".txt");
-                report.getParentFile().mkdirs();
-                PrintWriter write = null;
-
-                try {
-                    write = new PrintWriter(report);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-                write.println("-----------------------------------------");
-                write.println("Manager Report");
-                write.println("-----------------------------------------");
 
                 String providerName = read.next();
                 int providerID = read.nextInt();
@@ -621,7 +632,6 @@ public class ManagerDB {
                 ignore = read.next();
                 ignore = String.valueOf(read.nextInt());
 
-                write.println("-----------------------------------------");
                 write.println("Provider Name: " + providerName);
                 write.println("Provider ID: " + providerID);
 
@@ -651,7 +661,6 @@ public class ManagerDB {
                 totalFee += fee;
                 totalConsultations += consultations;
                 ++providers;
-                write.close();
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -659,14 +668,14 @@ public class ManagerDB {
         }
 
         // Append last line in report.
-        try {
-            File report = new File("src/main/java/chocan/report/" + managerName + ".txt");
-            report.getParentFile().mkdirs();
-            if (!report.exists()) report.createNewFile();
+        //try {
+            //File report = new File("src/main/java/chocan/report/" + managerName + ".txt");
+            //report.getParentFile().mkdirs();
+            //if (!report.exists()) report.createNewFile();
 
-            FileWriter fw = new FileWriter(report,true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter write = new PrintWriter(bw);
+            //FileWriter fw = new FileWriter(report,true);
+            //BufferedWriter bw = new BufferedWriter(fw);
+            //PrintWriter pw = new PrintWriter(bw);
 
             write.println("Total Providers: " + providers);
             write.println("Total Consultations: " + totalConsultations);
@@ -677,6 +686,34 @@ public class ManagerDB {
             out.println("Total Consultations: " + totalConsultations);
             out.println("Total Fee: " + nf.format(totalFee));
             out.println("-----------------------------------------");
+
+            write.close();
+
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
+
+    }
+
+
+    // Generate EFT Records
+    public void generateEFT(String providerName, int providerID, double totalFee) {
+
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+
+        try {
+            File report = new File("src/main/java/chocan/report/EFT.txt");
+            report.getParentFile().mkdirs();
+            if (!report.exists()) report.createNewFile();
+
+            FileWriter fw = new FileWriter(report,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter write = new PrintWriter(bw);
+
+            write.println("Provider Name: " + providerName);
+            write.println("Provider ID: " + providerID);
+            write.println("Transfer Amount: " + nf.format(totalFee));
+            write.println("-----------------------------------------");
 
             write.close();
 
