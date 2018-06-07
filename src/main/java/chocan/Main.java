@@ -101,6 +101,7 @@ public class Main {
                     } while (again);
 
                     again = true;
+                    menuOption = 0;
 
                 }
             }
@@ -262,6 +263,7 @@ public class Main {
                     } while (again);
 
                     again = true;
+                    menuOption = 0;
                 }
             }
 
