@@ -165,7 +165,13 @@ public class MemberServiceDB {
     //Opens the text file and checks for exceptions
     public void openFile() {
         try {
-            read = new Scanner(new File("src/main/java/chocan/db/Members/" + fileName + ".txt"));
+            File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
+            file.getParentFile().mkdir();
+
+            if (!file.exists())
+                return;
+
+            read = new Scanner(file);
         } catch (Exception e) {
             System.out.println("Can't find file");
             e.printStackTrace();
@@ -175,7 +181,20 @@ public class MemberServiceDB {
     //Reads in from text file and calls the insert function to build the tree
     public void readFile(String fileName) {
         this.fileName = fileName;
-        this.openFile();
+
+        try {
+            File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
+            file.getParentFile().mkdir();
+
+            if (!file.exists())
+                return;
+
+            read = new Scanner(file);
+        } catch (Exception e) {
+            System.out.println("Can't find file");
+            e.printStackTrace();
+        }
+
         read.useDelimiter("[|\\n]");
 
         String date, providerName, service;

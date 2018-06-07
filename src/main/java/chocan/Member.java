@@ -45,6 +45,7 @@ public class Member {
         left = null;
         right = null;
         serviceDB = new MemberServiceDB();
+        serviceDB.readFile(name);
 
     }
 
@@ -186,8 +187,6 @@ public class Member {
 
             // If new file, create first line with member info.
             if (!fileExists) saveMemberService(write);
-
-            serviceDB.readFile(this.name);
 
             serviceDB.addServiceRecord(serviceDate,providerName,serviceName);
             serviceDB.save(this.name,this.id,this.address,this.city,this.state,this.zip);
