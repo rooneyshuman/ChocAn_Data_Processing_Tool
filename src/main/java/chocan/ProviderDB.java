@@ -61,7 +61,13 @@ public class ProviderDB {
     }
 
     // Add providers via public prompt. (For managers.)
-    public void add() {
+    public void add(Manager manager) {
+
+        // Check for manager authorization.
+        if (manager == null) {
+            out.println("Please login as a manager.");
+            return;
+        }
 
         Scanner input = new Scanner(System.in);
 
@@ -140,7 +146,13 @@ public class ProviderDB {
     }
 
     // Activate or deactivate provider's account.
-    public void changeStatus() {
+    public void changeStatus(Manager manager) {
+
+        // Check for manager authorization.
+        if (manager == null) {
+            out.println("Please login as a manager.");
+            return;
+        }
 
         Scanner input = new Scanner(System.in);
 
@@ -229,7 +241,13 @@ public class ProviderDB {
     }
 
     // Delete a provider via public prompt. (For managers.)
-    public void delete() {
+    public void delete(Manager manager) {
+
+        // Check for manager authorization.
+        if (manager == null) {
+            out.println("Please login as a manager.");
+            return;
+        }
 
         Scanner input = new Scanner(System.in);
 
@@ -604,6 +622,7 @@ public class ProviderDB {
     public static void main(String[] args) {
 
         ProviderDB providerMenu = new ProviderDB();
+        ManagerDB managerMenu = new ManagerDB();
         Scanner input = new Scanner(System.in);
         int menuOption;
 
@@ -633,15 +652,16 @@ public class ProviderDB {
             switch (menuOption) {
 
                 case 1: // Add Provider
-                    providerMenu.add();
+                    managerMenu.login(800000000);
+                    providerMenu.add(managerMenu.authorize());
                     break;
 
                 case 2: // Change Status of Provider
-                    providerMenu.changeStatus();
+                    providerMenu.changeStatus(managerMenu.authorize());
                     break;
 
                 case 3: // Delete Provider
-                    providerMenu.delete();
+                    providerMenu.delete(managerMenu.authorize());
                     break;
 
                 case 4: // Login

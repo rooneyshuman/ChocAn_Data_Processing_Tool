@@ -60,8 +60,35 @@ public class ManagerDB {
 
     }
 
+    // This function will be used by ProviderDB.
+    public Manager authorize() {
+
+        return authorize(this.root,managerID);
+    }
+
+    // Traverse tree to find manager.
+    private Manager authorize(Manager root, int id) {
+
+        if (root == null || id == 0) return null;
+
+        if (root.checkID(id) == 0) return root;
+
+        Manager temp = authorize(root.goLeft(),id);
+
+        if (temp != null)
+            return temp;
+        else
+            return authorize(root.goRight(),id);
+    }
+
     // Add managers via public prompt.
     public void add() {
+
+        // Check for authorization.
+        if (managerID == 0) {
+            out.println("Must be logged in with a Manager ID.");
+            return;
+        }
 
         Scanner input = new Scanner(System.in);
 
@@ -141,6 +168,12 @@ public class ManagerDB {
 
     // Activate or deactivate manager's account.
     public void changeStatus() {
+
+        // Check for authorization.
+        if (managerID == 0) {
+            out.println("Must be logged in with a Manager ID.");
+            return;
+        }
 
         Scanner input = new Scanner(System.in);
 
@@ -231,6 +264,12 @@ public class ManagerDB {
     // Delete a manager via public prompt.
     public void delete() {
 
+        // Check for authorization.
+        if (managerID == 0) {
+            out.println("Must be logged in with a Manager ID.");
+            return;
+        }
+
         Scanner input = new Scanner(System.in);
 
         out.println("\n-----------------------------------------");
@@ -250,6 +289,12 @@ public class ManagerDB {
         while (id < 800000000 || id > 899999999) {
             out.print("Please enter 9 digits. Manager ID's begin with '8': ");
             id = input.nextInt();
+        }
+
+        // Check if deleting self.
+        if (id == managerID) {
+            out.println("Cannot delete yourself. Please login with another manager account.");
+            return;
         }
 
         input.nextLine();
@@ -407,6 +452,12 @@ public class ManagerDB {
     // Generate Member Reports
     public void generateMemberReports() {
 
+        // Check for authorization.
+        if (managerID == 0) {
+            out.println("Must be logged in with a Manager ID.");
+            return;
+        }
+
         File file = new File("src/main/java/chocan/db/Members/");
         File[] files = file.listFiles();
         Scanner read;
@@ -480,6 +531,12 @@ public class ManagerDB {
 
     // Generate Provider Reports
     public void generateProviderReports() {
+
+        // Check for authorization.
+        if (managerID == 0) {
+            out.println("Must be logged in with a Manager ID.");
+            return;
+        }
 
         int consultations = 0;
         double fee, totalFee = 0;
@@ -698,6 +755,12 @@ public class ManagerDB {
 
     // Generate EFT Records
     public void generateEFT(String providerName, int providerID, double totalFee) {
+
+        // Check for authorization.
+        if (managerID == 0) {
+            out.println("Must be logged in with a Manager ID.");
+            return;
+        }
 
         NumberFormat nf = NumberFormat.getCurrencyInstance();
 
