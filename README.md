@@ -29,7 +29,7 @@ In order to run the program, it needs to be compiled. Download IntelliJ here: ht
 
 This is a Maven project so it will install all the dependencies required for the program.
 
-Compile the program with IntelliJ
+_Compile the program with IntelliJ:_
 ```
 - Import the project. (Using the pom.xml file.)
 - Build > Build Project
