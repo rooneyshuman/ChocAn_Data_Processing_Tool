@@ -159,7 +159,7 @@ public class ManagerDB {
 
         //Error message if input is out of bounds
         while (id < 800000000 || id > 899999999) {
-            out.print("Please enter 1-9 characters. Manager ID's begin with '8': ");
+            out.print("Please enter 9 characters. Manager ID's begin with '8': ");
             id = input.nextInt();
         }
 
@@ -248,7 +248,7 @@ public class ManagerDB {
 
         //Error message if input is out of bounds
         while (id < 800000000 || id > 899999999) {
-            out.print("Please enter 1-9 characters. Manager ID's begin with '8': ");
+            out.print("Please enter 9 characters. Manager ID's begin with '8': ");
             id = input.nextInt();
         }
 

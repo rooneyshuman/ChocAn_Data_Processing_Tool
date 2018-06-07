@@ -104,12 +104,12 @@ public class ProviderDB {
         out.print("Zip Code: ");
         String zip = input.nextLine();
 
-        while (zip.length() < 1 || zip.length() > 6) {
-            out.print("Please enter 1-6 characters: ");
+        while (zip.length() != 6) {
+            out.print("Please enter 1-6 digits: ");
             zip = input.nextLine();
         }
 
-        this.root = add(this.root,(700000 + providerCount),true,name,address,city,state,zip);
+        this.root = add(this.root,(700000000 + providerCount),true,name,address,city,state,zip);
         out.println("Provider added.");
         save();
 
@@ -158,6 +158,13 @@ public class ProviderDB {
         }
 
         int id = input.nextInt();
+
+        //Error message if input is out of bounds
+        while (id < 700000000 || id > 799999999) {
+            out.print("Please enter 9 characters. Manager ID's begin with '7': ");
+            id = input.nextInt();
+        }
+
         input.nextLine();
 
         changeStatus(this.root,id);
