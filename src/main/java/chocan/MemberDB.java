@@ -120,7 +120,7 @@ public class MemberDB {
             zip = input.nextLine();
         }
 
-        this.root = add(this.root,(700000 + memberCount),true,name,address,city,state,zip);
+        this.root = add(this.root,(600000000 + memberCount),true,name,address,city,state,zip);
         out.println("Member added.");
         save();
 
