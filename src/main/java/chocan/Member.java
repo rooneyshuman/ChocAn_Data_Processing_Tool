@@ -136,8 +136,8 @@ public class Member {
         out.print("New zip: ");
         String new_zip = sc.nextLine();
 
-        while (new_zip.length() < 1 || new_zip.length() > 6) {
-            out.print("Please enter 1-6 characters: ");
+        while (new_zip.length() != 6) {
+            out.print("Please enter 6 digits: ");
             new_zip = sc.nextLine();
         }
 
