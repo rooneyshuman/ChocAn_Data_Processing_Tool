@@ -105,7 +105,7 @@ public class ProviderDB {
         String zip = input.nextLine();
 
         while (zip.length() != 6) {
-            out.print("Please enter 1-6 digits: ");
+            out.print("Please enter 6 digits: ");
             zip = input.nextLine();
         }
 
@@ -151,17 +151,15 @@ public class ProviderDB {
         out.print("Please enter a provider ID: ");
 
         while (!input.hasNextInt()) {
-
             out.print("Please enter a valid number: ");
             input.nextLine();
-
         }
 
         int id = input.nextInt();
 
         //Error message if input is out of bounds
         while (id < 700000000 || id > 799999999) {
-            out.print("Please enter 9 characters. Manager ID's begin with '7': ");
+            out.print("Please enter 9 digits. Provider ID's begin with '7': ");
             id = input.nextInt();
         }
 
@@ -247,6 +245,13 @@ public class ProviderDB {
         }
 
         int id = input.nextInt();
+
+        //Error message if input is out of bounds
+        while (id < 700000000 || id > 799999999) {
+            out.print("Please enter 9 digits. Provider ID's begin with '7': ");
+            id = input.nextInt();
+        }
+
         input.nextLine();
 
         this.root = delete(this.root,id);
@@ -436,6 +441,13 @@ public class ProviderDB {
         }
 
         int memberID = ask.nextInt();
+
+        //Error message if input is out of bounds
+        while (memberID < 600000000 || memberID > 699999999) {
+            out.print("Please enter 9 digits. Member ID's begin with '6': ");
+            memberID = ask.nextInt();
+        }
+
         if (!memberList.checkID(memberID)) {
             out.println("Invalid number.");
             return;
@@ -486,6 +498,13 @@ public class ProviderDB {
             }
 
             serviceCode = ask.nextInt();
+
+            //Error message if input is out of bounds
+            while (serviceCode < 500000 || serviceCode > 599999) {
+                out.print("Please enter 6 digits. Service ID's begin with '5': ");
+                serviceCode = ask.nextInt();
+            }
+
             ask.nextLine();
 
             serviceName = directory.findCode(serviceCode);
@@ -634,6 +653,13 @@ public class ProviderDB {
                     }
 
                     int id = input.nextInt();
+
+                    //Error message if input is out of bounds
+                    while (id < 700000000 || id > 799999999) {
+                        out.print("Please enter 9 digit. Provider ID's begin with '7': ");
+                        id = input.nextInt();
+                    }
+
                     if (providerMenu.login(id))
                         out.println("Provider has been logged in.");
 
@@ -661,8 +687,6 @@ public class ProviderDB {
 
             }
         } while (again());
-
-
     }
 
     private static boolean again() {
@@ -675,5 +699,4 @@ public class ProviderDB {
         return reply.startsWith("Y") || reply.startsWith("y");
 
     }
-
 }
