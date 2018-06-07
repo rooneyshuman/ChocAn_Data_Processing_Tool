@@ -248,7 +248,7 @@ public class ManagerDB {
 
         //Error message if input is out of bounds
         while (id < 800000000 || id > 899999999) {
-            out.print("Please enter 9 characters. Manager ID's begin with '8': ");
+            out.print("Please enter 9 digits. Manager ID's begin with '8': ");
             id = input.nextInt();
         }
 
@@ -613,7 +613,7 @@ public class ManagerDB {
 
                     //Error message if input is out of bounds
                     while (id < 800000000 || id > 899999999) {
-                        out.print("Please enter 1-25 characters. Manager ID's begin with '8': ");
+                        out.print("Please enter 9 digits. Manager ID's begin with '8': ");
                         id = input.nextInt();
                     }
 
@@ -657,6 +657,7 @@ public class ManagerDB {
     }
 
     private static boolean again() {
+
         Scanner input = new Scanner(System.in);
         String reply;
         out.print("Go back to menu? (Yes/No) ");
