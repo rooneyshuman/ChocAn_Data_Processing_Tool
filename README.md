@@ -243,28 +243,28 @@ The manager will be logged out and returned to the main menu.
 ### 6. Viewing Service Records
 The service records are located in the following directory: `src/main/java/chocan/db/services.txt`
 
-Under file name services.txt
+Under file name **services.txt**
 
 ### 7. Viewing Member Reports
 The member reports can are located in the following directory: `src/main/java/chocan/report/member`
 
-The files will be saved as name_date.txt
+The files will be saved as **name_date.txt**
 
 
 ### 8.  Viewing Provider Reports
 The provider reports are located in the following directory: `src/main/java/chocan/report/provider`
 
-The files will be saved as name_date.txt
+The files will be saved as **name_date.txt**
 
 ### 9.  Viewing Manager Reports
-The manager reports are located in the follwoing directory: `src/main/java/chocan/report/manager`
+The manager reports are located in the following directory: `src/main/java/chocan/report/manager`
 
-The files will be saved as name_date.txt
+The files will be saved as **name_date.txt**
 
 ### 10.  Viewing EFT Records
 The EFT records are located in the following directory: `src/main/java/chocan/db`
 
-Under the file name EFT.txt
+Under the file name **EFT.txt**
 
 ### 11.  Testing Accounts
 All user accounts and service codes can be found in the following directories:
@@ -275,10 +275,11 @@ All user accounts and service codes can be found in the following directories:
 
 The following specific ID numbers and codes can also be used for testing:
 
-Provider Terminal
+**Provider Terminal**
   * Login: use Provider ID 700000001
   * Create Service Record: use Member ID 600000001, use Service Code 500001
-Manager Terminal
+  
+**Manager Terminal**
   * Login: use Manager ID 800000001
   * Activate/Suspend Member: use Member ID 600000002
   * Activate/Suspend Provider: use Provider ID 700000002
