@@ -468,12 +468,15 @@ public class ManagerDB {
         File[] files = file.listFiles();
         Scanner read;
 
+        //used to get the current date to append to the end of the file name
+        String date = getDate();
+
         for (File f: files) {
             try {
                 read = new Scanner(f);
                 read.useDelimiter("[|\\n]");
 
-                File report = new File("src/main/java/chocan/report/" + f.getName());
+                File report = new File("src/main/java/chocan/report/" + f.getName() + "_" + date);
                 report.getParentFile().mkdirs();
                 PrintWriter write = null;
 
@@ -547,6 +550,9 @@ public class ManagerDB {
         int consultations = 0;
         double fee, totalFee = 0;
 
+        //used to get the current date to append to the end of the file name
+        String date = getDate();
+
         // Delete EFT records first.
         File eft = new File("src/main/java/chocan/report/EFT.txt");
         eft.delete();
@@ -561,7 +567,7 @@ public class ManagerDB {
                 read = new Scanner(f);
                 read.useDelimiter("[|\\n]");
 
-                File report = new File("src/main/java/chocan/report/" + f.getName());
+                File report = new File("src/main/java/chocan/report/" + f.getName() + "_" + date);
                 report.getParentFile().mkdirs();
                 PrintWriter write = null;
 
@@ -664,12 +670,15 @@ public class ManagerDB {
         int consultations = 0, totalConsultations = 0, providers = 0;
         double fee = 0, totalFee = 0;
 
+        //used to get the current date to append to the end of the file name
+        String date = getDate();
+
         File file = new File("src/main/java/chocan/db/providers/");
         File[] files = file.listFiles();
         Scanner read;
         NumberFormat nf = NumberFormat.getCurrencyInstance();
 
-        File report = new File("src/main/java/chocan/report/" + managerName + ".txt");
+        File report = new File("src/main/java/chocan/report/" + managerName + ".txt" + "_" + date);
         report.getParentFile().mkdirs();
         PrintWriter write = null;
 
@@ -768,10 +777,12 @@ public class ManagerDB {
             return;
         }
 
+        String date = getDate();
+
         NumberFormat nf = NumberFormat.getCurrencyInstance();
 
         try {
-            File report = new File("src/main/java/chocan/report/EFT.txt");
+            File report = new File("src/main/java/chocan/report/EFT.txt" + "_" + date);
             report.getParentFile().mkdirs();
             if (!report.exists()) report.createNewFile();
 
@@ -901,5 +912,13 @@ public class ManagerDB {
         reply = input.next(); input.nextLine();
 
         return reply.startsWith("Y") || reply.startsWith("y");
+    }
+
+    private String getDate(){
+        String date = null;
+        String pattern = "MM-dd-yyyy";
+        SimpleDateFormat formatDate = new SimpleDateFormat(pattern);
+        Date currentDate = new Date();
+        return date = formatDate.format(currentDate);
     }
 }
