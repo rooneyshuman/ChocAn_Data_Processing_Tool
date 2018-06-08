@@ -78,6 +78,7 @@ The following specific ID numbers and codes can also be used for testing:
 Provider Terminal
   * Login: use Provider ID 700000001
   * Create Service Record: use Member ID 600000001, use Service Code 500001
+  
 Manager Terminal
   * Login: use Manager ID 800000001
   * Activate/Suspend Member: use Member ID 600000002
