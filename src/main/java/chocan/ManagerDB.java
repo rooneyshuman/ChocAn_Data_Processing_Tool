@@ -480,7 +480,7 @@ public class ManagerDB {
                 String mName = f.getName();
                 String aName = new StringBuilder(mName).insert(mName.length()-4, "_"+date).toString();
 
-                File report = new File("src/main/java/chocan/report/" + aName);
+                File report = new File("src/main/java/chocan/report/member/" + aName);
                 report.getParentFile().mkdirs();
                 PrintWriter write = null;
 
@@ -576,7 +576,7 @@ public class ManagerDB {
                 String aName = new StringBuilder(mName).insert(mName.length()-4, "_"+date).toString();
 
 
-                File report = new File("src/main/java/chocan/report/" + aName);
+                File report = new File("src/main/java/chocan/report/provider/" + aName);
                 report.getParentFile().mkdirs();
                 PrintWriter write = null;
 
@@ -687,7 +687,7 @@ public class ManagerDB {
         Scanner read;
         NumberFormat nf = NumberFormat.getCurrencyInstance();
 
-        File report = new File("src/main/java/chocan/report/" + managerName + "_" + date + ".txt");
+        File report = new File("src/main/java/chocan/report/manager/" + managerName + "_" + date + ".txt");
         report.getParentFile().mkdirs();
         PrintWriter write = null;
 
