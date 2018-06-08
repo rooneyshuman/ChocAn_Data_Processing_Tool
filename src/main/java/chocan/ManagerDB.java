@@ -546,11 +546,12 @@ public class ManagerDB {
                     write.println("Service Date: " + serviceDate);
                     write.println("Provider Name: " + providerName);
                     write.println("Service Name: " + serviceName);
+                    write.println("-----------------------------------------");
 
                     out.println("Service Date: " + serviceDate);
                     out.println("Provider Name: " + providerName);
                     out.println("Service Name: " + serviceName);
-
+                    out.println("-----------------------------------------");
                 }
 
                 write.close();
@@ -651,12 +652,14 @@ public class ManagerDB {
                     write.println("Member Name: " + memberName);
                     write.println("Member ID: " + memberID);
                     write.println("Service Code: " + serviceCode);
+                    write.println("-----------------------------------------");
 
                     out.println("Service Date: " + serviceDate);
                     out.println("Date Received: " + dateReceived);
                     out.println("Member Name: " + memberName);
                     out.println("Member ID: " + memberID);
                     out.println("Service Code: " + serviceCode);
+                    out.println("-----------------------------------------");
 
                     fee = read.nextDouble();
                     totalFee += fee;
