@@ -289,6 +289,27 @@ Under the file name
 The EFT records are located in the following directory: `src/main/java/chocan/db/services.txt`
 Under the file name EFT.txt
 
+### 11.  Testing Accounts
+All user accounts and service codes can be found in the following directories:
+  * Member accounts: `src/main/java/chocan/db/members.txt`
+  * Manager accounts: `src/main/java/chocan/db/manangers.txt`
+  * Provider accounts: `src/main/java/chocan/db/providers.txt`
+  * Service Data: `src/main/java/chocan/db/provider directory.txt`
+
+The following specific ID numbers and codes can also be used for testing:
+
+Provider Terminal
+  * Login: use Provider ID 700000001
+  * Create Service Record: use Member ID 600000001, use Service Code 500001
+Manager Terminal
+  * Login: use Manager ID 800000001
+  * Activate/Suspend Member: use Member ID 600000002
+  * Activate/Suspend Provider: use Provider ID 700000002
+  * Activate/Suspend Manager: use Manager ID 800000002 
+  * Delete Member: use Member ID 600000002
+  * Delete Provider: use Provider ID 700000002
+  * Delete Manager: use Manager ID 800000002
+
 
 
 
