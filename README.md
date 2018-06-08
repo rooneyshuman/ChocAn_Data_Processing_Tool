@@ -249,15 +249,15 @@ Option 7, 8, 9 on the menu behave at the same way to delete members, providers, 
 
 The users only need to enter the valid ID for members, providers, or managers.
 
-5.10) Generate Member Reports
+5.6) Generate Member Reports
 
 This function shows member reports.
 
-5.11) Generate Provider Reports and EFT Records
+5.7) Generate Provider Reports and EFT Records
 
 This function shows provider reports which are same with EFT records.
 
-5.12) Generate Manager Report
+5.8) Generate Manager Report
 
 This function shows manager reports.
 
