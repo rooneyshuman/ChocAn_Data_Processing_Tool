@@ -1,8 +1,7 @@
 package chocan;
 
-//import javafx.util.converter.DateStringConverter;
-
 import java.io.PrintWriter;
+
 import static java.lang.System.out;
 
 
@@ -72,5 +71,9 @@ public class MemberService {
     public int compareDate(String toCompare)
     {
         return serviceDate.compareToIgnoreCase(toCompare);
+    }
+
+    public String getDate() {
+        return this.serviceDate;
     }
 }

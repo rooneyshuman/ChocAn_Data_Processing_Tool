@@ -1,6 +1,11 @@
 package chocan;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 import static java.lang.System.out;
 
@@ -19,18 +24,30 @@ public class MemberServiceDB {
 
     //Adds service to a members service record through user input
     //Also acts as a wrapper for recursive method if LLL exists
-    public void addServiceRecord(String serviceDate, String providerName, String serviceName){
+    public void addServiceRecord(String serviceDate, String providerName, String serviceName) {
 
         head = addServiceRecord(head, serviceDate, providerName, serviceName);
 
     }
 
     //Recursively adds a service to the members records
-    private MemberService addServiceRecord(MemberService current, String serviceDate, String providerName, String serviceName){
-       if(current == null){
-           return new MemberService( serviceDate, providerName, serviceName);}
+    private MemberService addServiceRecord(MemberService current, String serviceDate, String providerName, String serviceName) {
 
-           else if(current.compareDate(serviceDate) > 0){
+        if(current == null) {
+           return new MemberService(serviceDate, providerName, serviceName);
+        }
+
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-YYYY", Locale.US);
+        Date date = null;
+        Date currentDate = null;
+        try {
+            date = dateFormat.parse(serviceDate);
+            currentDate = dateFormat.parse(current.getDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if(date.compareTo(currentDate) < 0){
            MemberService temp = new MemberService(serviceDate, providerName, serviceName);
            temp.setNext(current);
            return temp;}
@@ -204,7 +221,7 @@ public class MemberServiceDB {
     {
         MemberServiceDB serviceList = new MemberServiceDB();
         //serviceList.load();
-        serviceList.readFile("test");
+        //serviceList.readFile("test");
         serviceList.display();
         //serviceList.addServiceRecord();
         //serviceList.addServiceRecord();
