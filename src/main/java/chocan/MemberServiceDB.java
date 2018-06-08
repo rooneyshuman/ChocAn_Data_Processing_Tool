@@ -162,22 +162,6 @@ public class MemberServiceDB {
         save(head.goNext(), write);
     }
 
-    //Opens the text file and checks for exceptions
-    public void openFile() {
-        try {
-            File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
-            file.getParentFile().mkdir();
-
-            if (!file.exists())
-                return;
-
-            read = new Scanner(file);
-        } catch (Exception e) {
-            System.out.println("Can't find file");
-            e.printStackTrace();
-        }
-    }
-
     //Reads in from text file and calls the insert function to build the tree
     public void readFile(String fileName) {
         this.fileName = fileName;

@@ -36,7 +36,7 @@ public class MemberTest {
 
     @Test
     public void checkActivation() {
-        assertFalse(testMem.checkActivation());
+        assertFalse(testMem.checkStatus());
     }
 
     @Test

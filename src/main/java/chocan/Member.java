@@ -87,7 +87,7 @@ public class Member {
         return Integer.compare(id, this.id);
     }
 
-    boolean checkActivation(){
+    boolean checkStatus(){
         return active;
     }
 

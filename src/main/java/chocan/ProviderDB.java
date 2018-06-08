@@ -32,25 +32,45 @@ public class ProviderDB {
     // This checks the providers ID and logs them in.
     public boolean login(int id) {
 
-        if (login(id,this.root)) {
+        int status = login(id,this.root);
+
+        if (status == 1) {
             this.providerID = id;
             return true;
         }
+
+        if (status == 0) {
+            out.println("Provider suspended.");
+            return false;
+        }
         else {
-            out.print("Invalid member.\n");
+            out.print("Invalid provider.\n");
             return false;
         }
 
     }
 
-    // Traverses tree to check ID.
-    private boolean login(int id, Provider root) {
+    /*
+    Traverses tree to check ID.
+    Return 1 if active.
+    Return 0 if suspended.
+    Return -1 if not found.
+     */
+    private int login(int id, Provider root) {
 
-        if (root == null) return false;
+        if (root == null) return -1;
 
-        if (root.checkID(id) == 0) return true;
+        if (root.checkID(id) == 0) {
 
-        return login(id, root.goLeft()) || login(id, root.goRight());
+            if (root.checkStatus()) return 1;
+
+            return 0;
+        }
+
+        int status = login(id, root.goLeft());
+
+        return status == -1 ? login(id,root.goRight()) : status;
+
     }
 
     // Log out provider.

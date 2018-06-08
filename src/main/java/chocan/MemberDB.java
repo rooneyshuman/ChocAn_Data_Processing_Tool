@@ -45,7 +45,7 @@ public class MemberDB {
         if (root == null) return false;
 
         // If ID matches, return status.
-        if (root.checkID(id) == 0) return root.checkActivation();
+        if (root.checkID(id) == 0) return root.checkStatus();
 
         //Otherwise, traverse tree.
         if (root.checkID(id) < 0) {
