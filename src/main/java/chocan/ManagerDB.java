@@ -801,7 +801,7 @@ public class ManagerDB {
         NumberFormat nf = NumberFormat.getCurrencyInstance();
 
         try {
-            File report = new File("src/main/java/chocan/report/EFT.txt" + "_" + date);
+            File report = new File("src/main/java/chocan/report/EFT.txt");
             report.getParentFile().mkdirs();
             if (!report.exists()) report.createNewFile();
 

@@ -1,0 +1,16 @@
+-----------------------------------------
+Member Report
+-----------------------------------------
+Member Name: Terra Branford
+Member ID: 600000000
+Member Address: 151 Canterbury Street
+Member City: Georgetown
+Member State: SC
+Member Zip Code: 29440
+-----------------------------------------
+Service Date: 10-11-2017
+Provider Name: Doctor Who
+Service Name: Dietician Session
+Service Date: 12-10-2017
+Provider Name: Doctor Who
+Service Name: Group Therapy Session
