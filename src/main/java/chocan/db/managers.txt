@@ -1,11 +1,12 @@
-800000000:True:Cloud Strife:24 Briarwood St.:Garfield:NJ:07026
-800000001:True:Tifa Lockhart:82 Hillside Ave.:Staten Island:NY:10301
-800000002:True:Aerith Gainsborough:285 Fifth Avenue:Columbia:MD:21044
-800000003:True:Barret Wallace:8161 Wayne Ave.:Mahopac:NY:10541
-800000004:True:Yuffie Kisaragi:7885 Cactus Lane:Winter Springs:FL:32708
-800000005:True:Vincent Valentine:57 Arlington Drive:Harrisonburg:VA:22801
-800000006:True:Zack Fair:9766 Euclid Court:Lawndale:CA:90260
-800000007:True:Red XIII:934 South Buckingham Drive:Port Huron:MI:48060
-800000008:True:Cait Sith:799 Wild Rose St.:Uniontown:PA:15401
-800000009:True:Cid Highwind:226 James Road:Orange:NJ:07050
-800000010:True:Rufus Shinra:472 East Overlook Ave.:Ooltewah:TN:37363
+800000000:false:Cloud Strife:24 Briarwood St.:Garfield:NJ:07026
+800000001:true:Tifa Lockhart:82 Hillside Ave.:Staten Island:NY:10301
+800000002:true:Aerith Gainsborough:285 Fifth Avenue:Columbia:MD:21044
+800000003:true:Barret Wallace:8161 Wayne Ave.:Mahopac:NY:10541
+800000004:true:Yuffie Kisaragi:7885 Cactus Lane:Winter Springs:FL:32708
+800000005:true:Vincent Valentine:57 Arlington Drive:Harrisonburg:VA:22801
+800000006:true:Zack Fair:9766 Euclid Court:Lawndale:CA:90260
+800000007:true:Red XIII:934 South Buckingham Drive:Port Huron:MI:48060
+800000008:true:Cait Sith:799 Wild Rose St.:Uniontown:PA:15401
+800000009:true:Cid Highwind:226 James Road:Orange:NJ:07050
+800000010:true:Rufus Shinra:472 East Overlook Ave.:Ooltewah:TN:37363
+800000011:true:ABC:15400 NE Fargo Pl:Portland:OR:000000
