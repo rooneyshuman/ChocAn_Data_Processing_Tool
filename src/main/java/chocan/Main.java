@@ -22,7 +22,7 @@ public class Main {
             out.println("-----------------------------------------");
             out.println("1) Login to Provider Terminal");
             out.println("2) Login to Manager Terminal");
-            out.println("3) Exit Program");
+            out.println("3) Exit Program\n");
 
             out.print("Please select an option: ");
 
@@ -53,15 +53,16 @@ public class Main {
                 }
 
                 if (provider.login(id)) {
-                    out.println("\n" + provider.getName(id) + " has been logged in.");
+                    String providerName = provider.getName(id);
+                    out.println("\n" + providerName + " has been logged in.");
 
                     do {
                         out.println("\n-----------------------------------------");
-                        out.println("Provider Menu");
+                        out.println("Provider Menu - " + providerName);
                         out.println("-----------------------------------------");
                         out.println("1) Create Service Record");
                         out.println("2) View Provider Directory");
-                        out.println("3) Logout (Return to Main Menu)");
+                        out.println("3) Logout (Return to Main Menu)\n");
 
                         out.print("Please select an option: ");
 
@@ -126,11 +127,12 @@ public class Main {
                 }
 
                 if (manager.login(id)) {
-                    out.println("\n" + manager.getName() + " has been logged in.");
+                    String managerName = manager.getName();
+                    out.println("\n" + managerName + " has been logged in.");
 
                     do {
                         out.println("\n-----------------------------------------");
-                        out.println("Manager Menu");
+                        out.println("Manager Menu - " + managerName);
                         out.println("-----------------------------------------");
                         out.println("01) Add Member");
                         out.println("02) Add Provider");
@@ -144,7 +146,7 @@ public class Main {
                         out.println("10) Generate Member Reports");
                         out.println("11) Generate Provider Reports and EFT Records");
                         out.println("12) Generate Manager Report");
-                        out.println("13) Logout (Return to Main Menu)");
+                        out.println("13) Logout (Return to Main Menu)\n");
 
                         out.print("Please select an option: ");
 
@@ -276,7 +278,7 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
         String reply;
-        out.print("Go back to main menu? (Yes/No) ");
+        out.print("\nGo back to main menu? (Yes/No): ");
         reply = input.next(); input.nextLine();
 
         return reply.startsWith("Y") || reply.startsWith("y");
