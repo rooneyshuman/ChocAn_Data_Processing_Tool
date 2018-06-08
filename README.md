@@ -13,16 +13,16 @@ This is Group 6's term project for CS 300 at Portland State University.
 
 ## Table of Contents
 1. [Installation](https://github.com/Gilmore-PDX-CS/Team6/blob/master/README.md#1-installation)
-2. How to Use
-3. Main Menu
-4. Provider Menu
-5. Manager Menu
-6. Viewing Service Records
-7. Viewing Member Reports
-8. Viewing Provider Reports
-9. Viewing Manager Reports
-10. Viewing EFT Records
-11. Test Accounts
+2. [How to Use](https://github.com/Gilmore-PDX-CS/Team6#2-how-to-use)
+3. [Main Menu](https://github.com/Gilmore-PDX-CS/Team6#3main-menu)
+4. [Provider Menu](https://github.com/Gilmore-PDX-CS/Team6#4-provider-menu)
+5. [Manager Menu](https://github.com/Gilmore-PDX-CS/Team6#5-manager-menu)
+6. [Viewing Service Records](https://github.com/Gilmore-PDX-CS/Team6#6-viewing-service-records)
+7. [Viewing Member Reports](https://github.com/Gilmore-PDX-CS/Team6#7-viewing-member-reports)
+8. [Viewing Provider Reports](https://github.com/Gilmore-PDX-CS/Team6#8--viewing-provider-reports)
+9. [Viewing Manager Reports](https://github.com/Gilmore-PDX-CS/Team6#9--viewing-manager-reports)
+10. [Viewing EFT Records](https://github.com/Gilmore-PDX-CS/Team6#10--viewing-eft-records)
+11. [Test Accounts](https://github.com/Gilmore-PDX-CS/Team6#11--testing-accounts)
 
 ### 1. Installation
 In order to run the program, it needs to be compiled. Download IntelliJ here: https://www.jetbrains.com/idea/download/
