@@ -155,6 +155,12 @@ public class ManagerDB {
         }
 
         int direction = root.compareID(id);
+        //When a manager is deleted sometimes there can be duplicate ID's this will increment a duplicate ID to
+        //prevent them from being the same.
+        if(direction == 0){
+            ++id;
+            direction = root.compareID(id);
+        }
 
         // Traverse tree to find where to add.
         if (direction < 0)
@@ -462,12 +468,19 @@ public class ManagerDB {
         File[] files = file.listFiles();
         Scanner read;
 
+        //used to get the current date to append to the end of the file name
+        String date = getDate();
+
         for (File f: files) {
             try {
                 read = new Scanner(f);
                 read.useDelimiter("[|\\n]");
 
-                File report = new File("src/main/java/chocan/report/" + f.getName());
+                //these two lines are used to format the file name.
+                String mName = f.getName();
+                String aName = new StringBuilder(mName).insert(mName.length()-4, "_"+date).toString();
+
+                File report = new File("src/main/java/chocan/report/" + aName);
                 report.getParentFile().mkdirs();
                 PrintWriter write = null;
 
@@ -541,6 +554,9 @@ public class ManagerDB {
         int consultations = 0;
         double fee, totalFee = 0;
 
+        //used to get the current date to append to the end of the file name
+        String date = getDate();
+
         // Delete EFT records first.
         File eft = new File("src/main/java/chocan/report/EFT.txt");
         eft.delete();
@@ -555,7 +571,12 @@ public class ManagerDB {
                 read = new Scanner(f);
                 read.useDelimiter("[|\\n]");
 
-                File report = new File("src/main/java/chocan/report/" + f.getName());
+                //these two lines are used to format the file name.
+                String mName = f.getName();
+                String aName = new StringBuilder(mName).insert(mName.length()-4, "_"+date).toString();
+
+
+                File report = new File("src/main/java/chocan/report/" + aName);
                 report.getParentFile().mkdirs();
                 PrintWriter write = null;
 
@@ -658,12 +679,15 @@ public class ManagerDB {
         int consultations = 0, totalConsultations = 0, providers = 0;
         double fee = 0, totalFee = 0;
 
+        //used to get the current date to append to the end of the file name
+        String date = getDate();
+
         File file = new File("src/main/java/chocan/db/providers/");
         File[] files = file.listFiles();
         Scanner read;
         NumberFormat nf = NumberFormat.getCurrencyInstance();
 
-        File report = new File("src/main/java/chocan/report/" + managerName + ".txt");
+        File report = new File("src/main/java/chocan/report/" + managerName + "_" + date + ".txt");
         report.getParentFile().mkdirs();
         PrintWriter write = null;
 
@@ -762,10 +786,12 @@ public class ManagerDB {
             return;
         }
 
+        String date = getDate();
+
         NumberFormat nf = NumberFormat.getCurrencyInstance();
 
         try {
-            File report = new File("src/main/java/chocan/report/EFT.txt");
+            File report = new File("src/main/java/chocan/report/EFT.txt" + "_" + date);
             report.getParentFile().mkdirs();
             if (!report.exists()) report.createNewFile();
 
@@ -895,5 +921,13 @@ public class ManagerDB {
         reply = input.next(); input.nextLine();
 
         return reply.startsWith("Y") || reply.startsWith("y");
+    }
+
+    private String getDate(){
+        String date = null;
+        String pattern = "MM-dd-yyyy";
+        SimpleDateFormat formatDate = new SimpleDateFormat(pattern);
+        Date currentDate = new Date();
+        return date = formatDate.format(currentDate);
     }
 }
