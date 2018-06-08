@@ -60,11 +60,11 @@ Please select an option:
 
 ### 4. Provider Menu
 
-The provider menu will ask users to enter a provider ID to verify their identification.
+The provider menu asks users to enter a provider ID to verify their identification.
 
 `Please enter a provider ID:`
 
-If a valid ID is entered, the provider menu will be shown.
+If a valid ID is entered, the provider menu will be shown:
 
 ```-----------------------------------------
 Provider Menu
@@ -76,15 +76,15 @@ Please select an option:
 
 ```
 #### 4.1) Create Service Record
-Providers will be prompted to enter the member ID of their client.
+Providers will be prompted to enter the member ID of their client:
 
 `Please enter member ID: `
 
-After the member ID is verified, providers need to enter the service date.
+After the member ID is verified, providers need to enter the service date:
 
 `Please enter a date (MM-DD-YYYY):`
 
-After a valid date has been entered, an alphabetical list of provider services will be displayed.
+After a valid date has been entered, an alphabetical list of provider services will be displayed:
 
 ```--------------------------------------------
 Service name: Addiction Consultation
@@ -129,7 +129,7 @@ The name of the service will be displayed and the provider will be asked to veri
 
 `Is this the correct service? (Y/N):`
 
-Providers will be able to enter optional comments.
+Providers will be able to enter optional comments:
 
 `Please enter any comments (optional):`
 
@@ -145,11 +145,11 @@ The provider will be logged out and returned to the main menu.
 
 ### 5. Manager Menu
 
-The manager menu will ask users to enter a manager ID to verify their identification.
+The manager menu will ask users to enter a manager ID to verify their identification:
 
 `Please enter a manager ID: `
 
-If a valid ID has been entered, the manager menu will be shown.
+If a valid ID has been entered, the manager menu will be shown:
 
 ``` -----------------------------------------
 Manager Menu
@@ -174,7 +174,7 @@ Manager Menu
 
 This function adds new members to the member database.
 
-The member information contains the following fields.
+The member information contains the following fields:
 
 ```
 Name:
@@ -188,7 +188,7 @@ Zip Code:
 
 This function adds new providers to the provider database.
 
-The provider information contains the following fields.
+The provider information contains the following fields:
 
 ```
 Name:
@@ -202,7 +202,7 @@ Zip Code:
 
 This function adds new managers to the manager database.
 
-The manager information contains the following fields.
+The manager information contains the following fields:
 
 ```
 Name:
@@ -226,15 +226,15 @@ The users only need to enter the valid ID for members, providers, or managers.
 
 #### 5.6) Generate Member Reports
 
-This function will generate reports for all members.
+This function generates reports for all members.
 
 #### 5.7) Generate Provider Reports and EFT Records
 
-This function will generate the EFT records and reports for all providers.
+This function generates the EFT records and reports for all providers.
 
 #### 5.8) Generate Manager Report
 
-This function will generate provider summary reports for the manager.
+This function generates provider summary reports for the manager.
 
 #### 5.9) Logout (Return to Main Menu)
 
