@@ -286,6 +286,7 @@ The manager reports are located in the follwoing directory: `src/main/java/choca
 Under the file name
 
 ### 10.  Viewing EFT Records
+The EFT records are located in the following directory: `src/main/java/chocan/db/services.txt`
 Under the file name EFT.txt
 
 
