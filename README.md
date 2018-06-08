@@ -12,7 +12,7 @@ This is Group 6's term project for CS 300 at Portland State University.
 * Ryan Campbell
 
 ## Table of Contents
-1. Installation
+1. [Installation](https://github.com/Gilmore-PDX-CS/Team6/blob/master/README.md#1-installation)
 2. How to Use
 3. Main Menu
 4. Provider Menu
