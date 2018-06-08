@@ -566,6 +566,11 @@ public class ManagerDB {
         Scanner read;
         NumberFormat nf = NumberFormat.getCurrencyInstance();
 
+        if(files == null){
+            out.println("Error, no records found. Unable to generate report.");
+            return;
+        }
+
         for (File f: files) {
             try {
                 read = new Scanner(f);
@@ -700,6 +705,11 @@ public class ManagerDB {
         write.println("-----------------------------------------");
         write.println("Manager Report");
         write.println("-----------------------------------------");
+
+        if(files == null){
+            out.println("Error, no records found. Unable to generate report.");
+            return;
+        }
 
         for (File f: files) {
             try {
