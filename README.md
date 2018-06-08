@@ -261,7 +261,7 @@ This function shows provider reports which are same with EFT records.
 
 This function shows manager reports.
 
-5.13) Logout (Return to Main Menu)
+5.9) Logout (Return to Main Menu)
 
 This function ends the program session.
 
