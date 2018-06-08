@@ -44,7 +44,7 @@ public class Main {
                     input.nextLine();
                 }
 
-                int id = input.nextInt();
+                int id = input.nextInt(); input.nextLine();
 
                 //Error message if input is out of bounds
                 while (id < 700000000 || id > 799999999) {
@@ -53,7 +53,7 @@ public class Main {
                 }
 
                 if (provider.login(id)) {
-                    out.println("Provider has been logged in.");
+                    out.println("\n" + provider.getName(id) + " has been logged in.");
 
                     do {
                         out.println("\n-----------------------------------------");
@@ -117,7 +117,7 @@ public class Main {
                     input.nextLine();
                 }
 
-                int id = input.nextInt();
+                int id = input.nextInt(); input.nextLine();
 
                 //Error message if input is out of bounds
                 while (id < 800000000 || id > 899999999) {
@@ -126,7 +126,7 @@ public class Main {
                 }
 
                 if (manager.login(id)) {
-                    out.println("Manager has been logged in.");
+                    out.println("\n" + manager.getName() + " has been logged in.");
 
                     do {
                         out.println("\n-----------------------------------------");

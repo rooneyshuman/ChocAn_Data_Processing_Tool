@@ -457,7 +457,7 @@ public class ProviderDB {
         directory.display();
     }
 
-    private String getName(int id) {
+    public String getName(int id) {
         return getName(this.root,id);
     }
 

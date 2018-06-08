@@ -430,7 +430,7 @@ public class ManagerDB {
     }
 
     // Get name of manager logged in.
-    private String getName() {
+    public String getName() {
         return getName(this.root,this.managerID);
     }
 
