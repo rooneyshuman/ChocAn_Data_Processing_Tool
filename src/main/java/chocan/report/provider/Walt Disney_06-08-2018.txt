@@ -1,0 +1,68 @@
+-----------------------------------------
+Provider Report
+-----------------------------------------
+Provider Name: Walt Disney
+Provider ID: 700000011
+Provider Address: 1313 Disneyland Dr
+Provider City: Anaheim
+Provider State: CA
+Provider Zip Code: 92802
+-----------------------------------------
+Service Date: 02-20-2018
+Date Received: 06-08-2018 04:02:53
+Member Name: Gau
+Member ID: 600000007
+Service Code: 500006
+-----------------------------------------
+Fee: $23.00
+-----------------------------------------
+Service Date: 06-21-2018
+Date Received: 06-08-2018 04:05:28
+Member Name: Celes Chere
+Member ID: 600000002
+Service Code: 500000
+-----------------------------------------
+Fee: $125.00
+-----------------------------------------
+Service Date: 04-21-2018
+Date Received: 06-08-2018 04:06:47
+Member Name: Strago Magus
+Member ID: 600000009
+Service Code: 500006
+-----------------------------------------
+Fee: $23.00
+-----------------------------------------
+Service Date: 05-21-2018
+Date Received: 06-08-2018 04:08:35
+Member Name: Locke Cole
+Member ID: 600000001
+Service Code: 500002
+-----------------------------------------
+Fee: $84.00
+-----------------------------------------
+Service Date: 02-24-2018
+Date Received: 06-08-2018 04:10:10
+Member Name: Strago Magus
+Member ID: 600000009
+Service Code: 500002
+-----------------------------------------
+Fee: $84.00
+-----------------------------------------
+Service Date: 02-20-2018
+Date Received: 06-08-2018 04:11:45
+Member Name: Cyan Garamonde
+Member ID: 600000005
+Service Code: 500002
+-----------------------------------------
+Fee: $84.00
+-----------------------------------------
+Service Date: 06-21-2018
+Date Received: 06-08-2018 04:12:41
+Member Name: Locke Cole
+Member ID: 600000001
+Service Code: 500002
+-----------------------------------------
+Fee: $84.00
+-----------------------------------------
+Total Consultations: 7
+Total Fee: $507.00

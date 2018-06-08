@@ -1,0 +1,18 @@
+-----------------------------------------
+Member Report
+-----------------------------------------
+Member Name: Locke Cole
+Member ID: 600000001
+Member Address: 132 Pin Oak Ave.
+Member City: Downers Grove
+Member State: IL
+Member Zip Code: 60515
+-----------------------------------------
+Service Date: 05-21-2018
+Provider Name: Walt Disney
+Service Name: Blood Work
+-----------------------------------------
+Service Date: 06-21-2018
+Provider Name: Walt Disney
+Service Name: Blood Work
+-----------------------------------------

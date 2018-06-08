@@ -1,0 +1,14 @@
+-----------------------------------------
+Member Report
+-----------------------------------------
+Member Name: Gau
+Member ID: 600000007
+Member Address: 7392 North Middle River Ave.
+Member City: Anaheim
+Member State: CA
+Member Zip Code: 92806
+-----------------------------------------
+Service Date: 02-20-2018
+Provider Name: Walt Disney
+Service Name: Chocolate Patch
+-----------------------------------------

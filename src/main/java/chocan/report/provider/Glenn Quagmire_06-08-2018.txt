@@ -1,0 +1,28 @@
+-----------------------------------------
+Provider Report
+-----------------------------------------
+Provider Name: Glenn Quagmire
+Provider ID: 700000004
+Provider Address: 29 Spooner St
+Provider City: Quahog
+Provider State: RI
+Provider Zip Code: 2907
+-----------------------------------------
+Service Date: 04-23-2018
+Date Received: 06-08-2018 03:51:18
+Member Name: Terra Branford
+Member ID: 600000000
+Service Code: 500001
+-----------------------------------------
+Fee: $42.00
+-----------------------------------------
+Service Date: 02-23-2018
+Date Received: 06-08-2018 03:52:21
+Member Name: Relm Arrowny
+Member ID: 600000010
+Service Code: 500001
+-----------------------------------------
+Fee: $42.00
+-----------------------------------------
+Total Consultations: 2
+Total Fee: $84.00

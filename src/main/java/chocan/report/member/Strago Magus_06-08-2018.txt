@@ -1,0 +1,18 @@
+-----------------------------------------
+Member Report
+-----------------------------------------
+Member Name: Strago Magus
+Member ID: 600000009
+Member Address: 48 Argyle Road
+Member City: Royersford
+Member State: PA
+Member Zip Code: 19468
+-----------------------------------------
+Service Date: 02-24-2018
+Provider Name: Walt Disney
+Service Name: Blood Work
+-----------------------------------------
+Service Date: 04-21-2018
+Provider Name: Walt Disney
+Service Name: Chocolate Patch
+-----------------------------------------

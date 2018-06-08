@@ -1,0 +1,44 @@
+-----------------------------------------
+Provider Report
+-----------------------------------------
+Provider Name: Karla Fant
+Provider ID: 700000005
+Provider Address: 1825 SW Broadway
+Provider City: Portland
+Provider State: OR
+Provider Zip Code: 97201
+-----------------------------------------
+Service Date: 06-01-2018
+Date Received: 06-08-2018 03:41:37
+Member Name: Sabin Figaro
+Member ID: 600000004
+Service Code: 500007
+-----------------------------------------
+Fee: $21.00
+-----------------------------------------
+Service Date: 06-05-2018
+Date Received: 06-08-2018 03:47:43
+Member Name: Cyan Garamonde
+Member ID: 600000005
+Service Code: 500002
+-----------------------------------------
+Fee: $84.00
+-----------------------------------------
+Service Date: 06-02-2018
+Date Received: 06-08-2018 03:48:47
+Member Name: Setzer Gabbiani
+Member ID: 600000008
+Service Code: 500005
+-----------------------------------------
+Fee: $89.00
+-----------------------------------------
+Service Date: 06-21-2018
+Date Received: 06-08-2018 06:09:34
+Member Name: Celes Chere
+Member ID: 600000002
+Service Code: 500003
+-----------------------------------------
+Fee: $55.00
+-----------------------------------------
+Total Consultations: 4
+Total Fee: $249.00

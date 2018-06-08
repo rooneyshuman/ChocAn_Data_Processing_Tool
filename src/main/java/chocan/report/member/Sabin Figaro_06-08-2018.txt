@@ -1,0 +1,22 @@
+-----------------------------------------
+Member Report
+-----------------------------------------
+Member Name: Sabin Figaro
+Member ID: 600000004
+Member Address: 8291 Indian Spring Court
+Member City: Fall River
+Member State: MA
+Member Zip Code: 2720
+-----------------------------------------
+Service Date: 11-12-2017
+Provider Name: Doctor Who
+Service Name: Blood Pressure Exam
+-----------------------------------------
+Service Date: 12-23-2017
+Provider Name: Eren Yeager
+Service Name: Group Therapy Session
+-----------------------------------------
+Service Date: 06-01-2018
+Provider Name: Karla Fant
+Service Name: Chocolate Pill
+-----------------------------------------

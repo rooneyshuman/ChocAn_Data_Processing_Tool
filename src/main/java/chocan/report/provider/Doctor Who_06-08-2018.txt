@@ -1,0 +1,36 @@
+-----------------------------------------
+Provider Report
+-----------------------------------------
+Provider Name: Doctor Who
+Provider ID: 700000000
+Provider Address: 123 4th St
+Provider City: Portland
+Provider State: OR
+Provider Zip Code: 97218
+-----------------------------------------
+Service Date: 08-11-2017
+Date Received: 06-08-2018 03:53:48
+Member Name: Celes Chere
+Member ID: 600000002
+Service Code: 500003
+-----------------------------------------
+Fee: $55.00
+-----------------------------------------
+Service Date: 11-12-2017
+Date Received: 06-08-2018 03:56:30
+Member Name: Sabin Figaro
+Member ID: 600000004
+Service Code: 500004
+-----------------------------------------
+Fee: $27.00
+-----------------------------------------
+Service Date: 05-20-2018
+Date Received: 06-08-2018 03:58:52
+Member Name: Terra Branford
+Member ID: 600000000
+Service Code: 500003
+-----------------------------------------
+Fee: $55.00
+-----------------------------------------
+Total Consultations: 3
+Total Fee: $137.00

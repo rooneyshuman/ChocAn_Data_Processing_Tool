@@ -1,0 +1,22 @@
+-----------------------------------------
+Member Report
+-----------------------------------------
+Member Name: Celes Chere
+Member ID: 600000002
+Member Address: 1 Ridgeview Ave.
+Member City: Hollis
+Member State: NY
+Member Zip Code: 11423
+-----------------------------------------
+Service Date: 08-11-2017
+Provider Name: Doctor Who
+Service Name: Group Therapy Session
+-----------------------------------------
+Service Date: 06-21-2018
+Provider Name: Walt Disney
+Service Name: Dietician Session
+-----------------------------------------
+Service Date: 06-21-2018
+Provider Name: Karla Fant
+Service Name: Group Therapy Session
+-----------------------------------------

@@ -1,0 +1,32 @@
+-----------------------------------------
+Manager Report
+-----------------------------------------
+Provider Name: Glenn Quagmire
+Provider ID: 700000004
+Total Consultations: 2
+Total Fee: $84.00
+-----------------------------------------
+Provider Name: Eren Yeager
+Provider ID: 700000002
+Total Consultations: 3
+Total Fee: $139.00
+-----------------------------------------
+Provider Name: Doctor Who
+Provider ID: 700000000
+Total Consultations: 6
+Total Fee: $276.00
+-----------------------------------------
+Provider Name: Walt Disney
+Provider ID: 700000011
+Total Consultations: 13
+Total Fee: $783.00
+-----------------------------------------
+Provider Name: Karla Fant
+Provider ID: 700000005
+Total Consultations: 17
+Total Fee: $1,032.00
+-----------------------------------------
+Total Providers: 5
+Total Consultations: 41
+Total Fee: $2,314.00
+-----------------------------------------

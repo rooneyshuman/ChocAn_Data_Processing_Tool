@@ -1,0 +1,18 @@
+-----------------------------------------
+Member Report
+-----------------------------------------
+Member Name: Terra Branford
+Member ID: 600000000
+Member Address: 151 Canterbury Street
+Member City: Georgetown
+Member State: SC
+Member Zip Code: 29440
+-----------------------------------------
+Service Date: 04-23-2018
+Provider Name: Glenn Quagmire
+Service Name: Aerobics Exercise Session
+-----------------------------------------
+Service Date: 05-20-2018
+Provider Name: Doctor Who
+Service Name: Group Therapy Session
+-----------------------------------------

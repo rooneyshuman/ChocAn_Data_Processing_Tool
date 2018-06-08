@@ -1,0 +1,18 @@
+-----------------------------------------
+Member Report
+-----------------------------------------
+Member Name: Cyan Garamonde
+Member ID: 600000005
+Member Address: 69 Old Garden Lane
+Member City: Middle River
+Member State: MD
+Member Zip Code: 21220
+-----------------------------------------
+Service Date: 02-20-2018
+Provider Name: Walt Disney
+Service Name: Blood Work
+-----------------------------------------
+Service Date: 06-05-2018
+Provider Name: Karla Fant
+Service Name: Blood Work
+-----------------------------------------

@@ -1,0 +1,20 @@
+-----------------------------------------
+Provider Report
+-----------------------------------------
+Provider Name: Eren Yeager
+Provider ID: 700000002
+Provider Address: 2009 Shingeki no Kyojin
+Provider City: Orlando
+Provider State: FL
+Provider Zip Code: 13201
+-----------------------------------------
+Service Date: 12-23-2017
+Date Received: 06-08-2018 06:12:45
+Member Name: Sabin Figaro
+Member ID: 600000004
+Service Code: 500003
+-----------------------------------------
+Fee: $55.00
+-----------------------------------------
+Total Consultations: 1
+Total Fee: $55.00

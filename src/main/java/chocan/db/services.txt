@@ -1,0 +1,17 @@
+06-08-2018 03:41:37|06-01-2018|700000005|600000004|500007|Prescribed chocolate pill for patient.
+06-08-2018 03:47:43|06-05-2018|700000005|600000005|500002|Drew blood samples and sent to lab for analysis.
+06-08-2018 03:48:47|06-02-2018|700000005|600000008|500005|Discussed therapeutic strategies to help cope with chocolate cravings. Suggested exercise and proper diet.
+06-08-2018 03:51:18|04-23-2018|700000004|600000000|500001|Giggity.
+06-08-2018 03:52:21|02-23-2018|700000004|600000010|500001|Giggity giggity.
+06-08-2018 03:53:48|08-11-2017|700000000|600000002|500003|Patient and spouse were treated for depression. They were dealing with a death in the family.
+06-08-2018 03:56:30|11-12-2017|700000000|600000004|500004|Blood pressure levels seemed high. Oxygen concentration in hemoglobin abnormal.
+06-08-2018 03:58:52|05-20-2018|700000000|600000000|500003|Patient seemed to show signs of amnesia. Chocolate seemed to trigger an episode. May need Chocolate Pill prescriptions.
+06-08-2018 04:02:53|02-20-2018|700000011|600000007|500006|Patient has been experiencing hypertension. Chocolate Patch was given to help relieve the symptoms. May need another appointment in a couple weeks to discuss options.
+06-08-2018 04:05:28|06-21-2018|700000011|600000002|500000|Patient seems to have improved since last visit. She seems highly motivated to start the diet.
+06-08-2018 04:06:47|04-21-2018|700000011|600000009|500006|Patient seemed happy after being prescribed Chocolate Pill. Further observation may be necessary to make sure diagnosis is accurate.
+06-08-2018 04:08:35|05-21-2018|700000011|600000001|500002|Patient became disoriented after blood draw. Need to reschedule appointment and allow patient to drink more liquid prior to coming to the lab.
+06-08-2018 04:10:10|02-24-2018|700000011|600000009|500002|Lab results came in. Signs of Hepatitis B were observed. May need to refer patient to a gastroenterologist.
+06-08-2018 04:11:45|02-20-2018|700000011|600000005|500002|Patient is starting school and needs lab results sent to PSU for admission requirements.
+06-08-2018 04:12:41|06-21-2018|700000011|600000001|500002|All lab results came back normal.
+06-08-2018 06:09:34|06-21-2018|700000005|600000002|500003|Patient shows improvement.
+06-08-2018 06:12:45|12-23-2017|700000002|600000004|500003|Patient shows sign of improvement.
