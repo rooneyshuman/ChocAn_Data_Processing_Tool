@@ -257,7 +257,7 @@ public class ManagerDB {
     private void load() {
 
         try {
-            File file = new File("src/main/java/chocan/db/managers.txt");
+            File file = new File("db/managers.txt");
             Scanner read = new Scanner(file);
             read.useDelimiter("[:\\n]"); // Will ignore colons and new line character.
 
@@ -402,7 +402,7 @@ public class ManagerDB {
     // Saves the list of managers.
     public void save() {
 
-        File file = new File("src/main/java/chocan/db/managers.txt");
+        File file = new File("db/managers.txt");
         file.getParentFile().mkdirs();
         PrintWriter write = null;
 
@@ -484,7 +484,7 @@ public class ManagerDB {
             return;
         }
 
-        File file = new File("src/main/java/chocan/db/Members/");
+        File file = new File("db/Members/");
         File[] files = file.listFiles();
         Scanner read;
 
@@ -500,7 +500,7 @@ public class ManagerDB {
                 String mName = f.getName();
                 String aName = new StringBuilder(mName).insert(mName.length()-4, "_"+date).toString();
 
-                File report = new File("src/main/java/chocan/report/member/" + aName);
+                File report = new File("report/member/" + aName);
                 report.getParentFile().mkdirs();
                 PrintWriter write = null;
 
@@ -579,10 +579,10 @@ public class ManagerDB {
         String date = getDate();
 
         // Delete EFT records first.
-        File eft = new File("src/main/java/chocan/report/EFT.txt");
+        File eft = new File("report/EFT.txt");
         eft.delete();
 
-        File file = new File("src/main/java/chocan/db/providers/");
+        File file = new File("db/providers/");
         File[] files = file.listFiles();
         Scanner read;
         NumberFormat nf = NumberFormat.getCurrencyInstance();
@@ -602,7 +602,7 @@ public class ManagerDB {
                 String aName = new StringBuilder(mName).insert(mName.length()-4, "_"+date).toString();
 
 
-                File report = new File("src/main/java/chocan/report/provider/" + aName);
+                File report = new File("report/provider/" + aName);
                 report.getParentFile().mkdirs();
                 PrintWriter write = null;
 
@@ -710,12 +710,12 @@ public class ManagerDB {
         //used to get the current date to append to the end of the file name
         String date = getDate();
 
-        File file = new File("src/main/java/chocan/db/providers/");
+        File file = new File("db/providers/");
         File[] files = file.listFiles();
         Scanner read;
         NumberFormat nf = NumberFormat.getCurrencyInstance();
 
-        File report = new File("src/main/java/chocan/report/manager/" + managerName + "_" + date + ".txt");
+        File report = new File("report/manager/" + managerName + "_" + date + ".txt");
         report.getParentFile().mkdirs();
         PrintWriter write = null;
 
@@ -783,7 +783,7 @@ public class ManagerDB {
 
         // Append last line in report.
         //try {
-            //File report = new File("src/main/java/chocan/report/" + managerName + ".txt");
+            //File report = new File("report/" + managerName + ".txt");
             //report.getParentFile().mkdirs();
             //if (!report.exists()) report.createNewFile();
 
@@ -824,7 +824,7 @@ public class ManagerDB {
         NumberFormat nf = NumberFormat.getCurrencyInstance();
 
         try {
-            File report = new File("src/main/java/chocan/report/EFT.txt");
+            File report = new File("report/EFT.txt");
             report.getParentFile().mkdirs();
             if (!report.exists()) report.createNewFile();
 

@@ -146,7 +146,7 @@ public class MemberServiceDB {
     public void save(String name, int id, String address, String city, String state, String zip){
 
            try {
-               File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
+               File file = new File("db/Members/" + fileName + ".txt");
                file.getParentFile().mkdirs();
                if (!file.exists()) file.createNewFile();
 
@@ -183,7 +183,7 @@ public class MemberServiceDB {
         this.fileName = fileName;
 
         try {
-            File file = new File("src/main/java/chocan/db/Members/" + fileName + ".txt");
+            File file = new File("db/Members/" + fileName + ".txt");
             file.getParentFile().mkdir();
 
             if (!file.exists())

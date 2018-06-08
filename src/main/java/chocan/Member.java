@@ -173,7 +173,7 @@ public class Member {
     public void saveServiceRecord(String serviceDate, String providerName, String serviceName) {
 
         try {
-            File file = new File("src/main/java/chocan/db/Members/" + this.name + ".txt");
+            File file = new File("db/Members/" + this.name + ".txt");
             file.getParentFile().mkdirs();
             boolean fileExists = file.exists();
 

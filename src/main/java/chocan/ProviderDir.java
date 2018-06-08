@@ -58,7 +58,7 @@ public class ProviderDir {
     //Opens the text file and checks for exceptions.
     public void openFile() {
         try {
-            read = new Scanner(new File("src/main/java/chocan/db/provider directory.txt"));
+            read = new Scanner(new File("db/provider directory.txt"));
         } catch (Exception e) {
             System.out.println("Can't find file");
             e.printStackTrace();

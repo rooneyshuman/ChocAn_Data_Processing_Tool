@@ -247,7 +247,7 @@ public class ProviderDB {
     private void load() {
 
         try {
-            File file = new File("src/main/java/chocan/db/providers.txt");
+            File file = new File("db/providers.txt");
             Scanner read = new Scanner(file);
             read.useDelimiter("[:\\n]"); // Will ignore colons and new line character.
 
@@ -391,7 +391,7 @@ public class ProviderDB {
     // Saves the list of providers.
     public void save() {
 
-        File file = new File("src/main/java/chocan/db/providers.txt");
+        File file = new File("db/providers.txt");
         file.getParentFile().mkdirs();
         PrintWriter write = null;
 
@@ -595,7 +595,7 @@ public class ProviderDB {
 
         // Write service record to disk.
         try {
-            File file = new File("src/main/java/chocan/db/services.txt");
+            File file = new File("db/services.txt");
             file.getParentFile().mkdirs();
             if (!file.exists()) file.createNewFile();
 
@@ -637,7 +637,7 @@ public class ProviderDB {
 
         // Write provider service record to disk.
         try {
-            File file = new File("src/main/java/chocan/db/providers/" + providerName + ".txt");
+            File file = new File("db/providers/" + providerName + ".txt");
             file.getParentFile().mkdirs();
             boolean fileExists = file.exists();
 

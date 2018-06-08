@@ -227,7 +227,7 @@ public class MemberDB {
     private void load() {
 
         try {
-            File file = new File("src/main/java/chocan/db/members.txt");
+            File file = new File("db/members.txt");
             Scanner read = new Scanner(file);
             read.useDelimiter("[:\\n]"); // Will ignore colons and new line character.
 
@@ -366,7 +366,7 @@ public class MemberDB {
     // Saves the list of members.
     public void save() {
 
-        File file = new File("src/main/java/chocan/db/members.txt");
+        File file = new File("db/members.txt");
         file.getParentFile().mkdirs();
         PrintWriter write = null;
 
@@ -445,7 +445,7 @@ public class MemberDB {
         String memberName = getName(id);
 
         try {
-            File file = new File("src/main/java/chocan/db/Members/" + memberName + ".txt");
+            File file = new File("db/Members/" + memberName + ".txt");
             file.getParentFile().mkdirs();
             boolean fileExists = file.exists();
 
