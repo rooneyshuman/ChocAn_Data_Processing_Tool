@@ -525,13 +525,13 @@ public class ProviderDB {
         }
 
         // Grab current date and time.
-        DateFormat dateFormat1 = new SimpleDateFormat("MM-dd-YYYY HH:MM:ss", Locale.US);
+        DateFormat dateFormat1 = new SimpleDateFormat("MM-dd-YYYY HH:mm:ss", Locale.US);
         Date providerDate = new Date();
         String currentDate = dateFormat1.format(providerDate);
 
         // Prompt provider to enter service date.
         DateFormat dateFormat2 = new SimpleDateFormat("MM-dd-YYYY", Locale.US);
-        out.print("Please enter the service date (MM-DD-YYYY)");
+        out.print("Please enter the service date (MM-DD-YYYY):");
         Date memberDate = null;
         String serviceDate = null;
 

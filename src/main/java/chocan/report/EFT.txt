@@ -1,4 +1,0 @@
-Provider Name: Doctor Who
-Provider ID: 700000000
-Transfer Amount: $180.00
------------------------------------------
