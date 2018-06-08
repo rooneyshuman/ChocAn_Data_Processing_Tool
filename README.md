@@ -53,14 +53,17 @@ The file name
 
 ### 7. Viewing Member Reports
 The member reports can are located in the following directory: `src/main/java/chocan/report`
+
 Under the file name
 
 ### 8.  Viewing Provider Reports
 The provider reports are located in the following directory: `src/main/java/chocan/report`
+
 Under the file name
 
 ### 9.  Viewing Manager Reports
 The manager reports are located in the follwoing directory: `src/main/java/chocan/report`
+
 Under the file name
 
 ### 10.  Viewing EFT Records
