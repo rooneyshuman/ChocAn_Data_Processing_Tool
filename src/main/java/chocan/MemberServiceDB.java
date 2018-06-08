@@ -144,7 +144,6 @@ public class MemberServiceDB {
                write.println(zip);
 
                save(this.head, write);
-               out.println("Member service list has been saved.");
                write.close();
 
            } catch (IOException e) {

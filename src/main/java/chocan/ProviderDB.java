@@ -664,6 +664,8 @@ public class ProviderDB {
             e.printStackTrace();
         }
 
+        out.println("Service record has been saved.\n");
+
     }
 
     public static void main(String[] args) {
