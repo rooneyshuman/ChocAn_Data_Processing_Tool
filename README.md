@@ -4,12 +4,12 @@ This software is not intended for real use.
 This is Group 6's term project for CS 300 at Portland State University.
 
 ## Group 6 Team Members
-* Belén Bustamante
-* Bounnoy Phanthavong
-* Bradley Odell
-* Nick Battalia
-* Matthew Bui
-* Ryan Campbell
+* [Belén Bustamante](https://github.com/rooneyshuman)
+* [Bounnoy Phanthavong](https://github.com/Bounnoy)
+* [Bradley Odell](https://github.com/BTOdell)
+* [Nick Battalia](https://github.com/Nbattalia)
+* [Matthew Bui](https://github.com/mbui0529)
+* [Ryan Campbell](https://github.com/cam28)
 
 ## Table of Contents
 1. [Installation](https://github.com/Gilmore-PDX-CS/Team6/blob/master/README.md#1-installation)
