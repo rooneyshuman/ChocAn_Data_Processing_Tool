@@ -50,7 +50,7 @@ The program uses a series of text menus. You will be prompted to input a number 
 ### 6. Viewing Service Records
 The service records are located in the following directory: `src/main/java/chocan/report`
 
-The file name  
+Under file name  
 
 ### 7. Viewing Member Reports
 The member reports can are located in the following directory: `src/main/java/chocan/report`
@@ -64,7 +64,6 @@ Under the file name
 
 ### 9.  Viewing Manager Reports
 The manager reports are located in the follwoing directory: `src/main/java/chocan/report`
-
 Under the file name
 
 ### 10.  Viewing EFT Records
