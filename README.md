@@ -42,7 +42,7 @@ From the menu in IntelliJ, select:
 
 The program uses a series of text menus. You will be prompted to input a number associated with the menu items. Simply type in a number to make your choice.
 
-### 3.Main Menu
+### 3. Main Menu
 
 The main menu asks users to verify either if they are a provider or the manager.
 
@@ -251,22 +251,22 @@ The member reports can are located in the following directory: `src/main/java/ch
 The files will be saved as **name_date.txt**
 
 
-### 8.  Viewing Provider Reports
+### 8. Viewing Provider Reports
 The provider reports are located in the following directory: `src/main/java/chocan/report/provider`
 
 The files will be saved as **name_date.txt**
 
-### 9.  Viewing Manager Reports
+### 9. Viewing Manager Reports
 The manager reports are located in the following directory: `src/main/java/chocan/report/manager`
 
 The files will be saved as **name_date.txt**
 
-### 10.  Viewing EFT Records
+### 10. Viewing EFT Records
 The EFT records are located in the following directory: `src/main/java/chocan/db`
 
 Under the file name **EFT.txt**
 
-### 11.  Testing Accounts
+### 11. Testing Accounts
 All user accounts and service codes can be found in the following directories:
   * Member accounts: `src/main/java/chocan/db/members.txt`
   * Manager accounts: `src/main/java/chocan/db/manangers.txt`
