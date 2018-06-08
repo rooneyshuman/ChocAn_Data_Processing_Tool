@@ -36,6 +36,8 @@ _Compile the program with IntelliJ:_
 ```
 
 ### 2. How to Use
+From the menu in IntelliJ, select:
+
 `Run > Run 'Main'`
 
 The program uses a series of text menus. You will be prompted to input a number associated with the menu items. Simply type in a number to make your choice.
@@ -58,15 +60,11 @@ Please select an option:
 
 ### 4. Provider Menu
 
-First at all, the provider menu asks users to use the provider ID to verify their identification.
+The provider menu will ask users to enter a provider ID to verify their identification.
 
 `Please enter a provider ID:`
 
-If users input the invalid ID, the program prints out the following error massage until users input the valid IDs.
-
-`Please enter 9 digit. Provider ID's begin with '7': `
-
-Since users input valid ID, the provider menu will be shown up.
+If a valid ID is entered, the provider menu will be shown.
 
 ```-----------------------------------------
 Provider Menu
@@ -77,20 +75,16 @@ Provider Menu
 Please select an option: 
 
 ```
-4.1) Create Service Record
-Providers need to put valid member IDs in the member database.
+#### 4.1) Create Service Record
+Providers will be prompted to enter the member ID of their client.
 
 `Please enter member ID: `
 
-If the providers enter invalid IDs, the program prompts the error massages to guide them.
-
-`Please enter 9 digits. Member ID's begin with '6': `
-
-Since member ID is verified, providers need to enter the valid service record date.
+After the member ID is verified, providers need to enter the service date.
 
 `Please enter a date (MM-DD-YYYY):`
 
-After the valid date is put, the list of the available service information will show up. Here is an example.
+After a valid date has been entered, an alphabetical list of provider services will be displayed.
 
 ```--------------------------------------------
 Service name: Addiction Consultation
@@ -127,48 +121,35 @@ Service fee: $55.00
 -----------------------------------------
 ```
 
-Provider need to provide the valid service code.
+Providers will need to enter a service code from the list.
 
 `Please enter the service code: `
 
-Invalid service codes cause an error massage to guide providers.
-
-`Please enter 6 digits. Service ID's begin with '5': `
-
-To make sure that service records are created correctly, the program prompts a confirming massage.
+The name of the service will be displayed and the provider will be asked to verify it's the correct service.
 
 `Is this the correct service? (Y/N):`
 
-The providers can enter yes, y , n, or no. The inputs are not case sensitive.
-
-If the providers confirm right information, the providers are asked to put some optional comments.
+Providers will be able to enter optional comments.
 
 `Please enter any comments (optional):`
 
-After entering the comments, the program brings provider back to the provider menu.
+A service record will then be generated in `src/main/java/chocan/db/services.txt`
 
-In case that the providers input wrong information about the service records, they have to repeat the process until they enter the right information.
+#### 4.2) View Provider Directory
 
-4.2) View Provider Directory
+This function shows all the available provider services.
 
-This function shows all the available service information.
+#### 4.3) Logout (Return to Main Menu)
 
-4.3) Logout (Return to Main Menu)
-
-This function ends the program session.
-
+The provider will be logged out and returned to the main menu.
 
 ### 5. Manager Menu
 
-First at all, the manager menu asks manager to use the manager ID to verify their identification.
+The manager menu will ask users to enter a manager ID to verify their identification.
 
 `Please enter a manager ID: `
 
-If users input the invalid ID, the program prints out the following error massage until users input the valid IDs.
-
-`Please enter 9 digit. Provider ID's begin with '8': `
-
-After the valid ID is input, the manager will be pop up.
+If a valid ID has been entered, the manager menu will be shown.
 
 ``` -----------------------------------------
 Manager Menu
@@ -189,11 +170,11 @@ Manager Menu
 
 ```
 
-5.1) Add Member
+#### 5.1) Add Member
 
 This function adds new members to the member database.
 
-The member information needs to enter correctly following the form:
+The member information contains the following fields.
 
 ```
 Name:
@@ -203,14 +184,11 @@ State:
 Zip Code:
 ```
 
-If the information is invalid, the program guides users to enter the valid input.
-
-5.2) Add Provider
+#### 5.2) Add Provider
 
 This function adds new providers to the provider database.
 
-The information needs to enter correctly following the form:
-
+The provider information contains the following fields.
 
 ```
 Name:
@@ -220,13 +198,11 @@ State:
 Zip Code:
 ```
 
-If the information is invalid, the program guides users to enter the valid input.
-
-5.3) Add Manager
+#### 5.3) Add Manager
 
 This function adds new managers to the manager database.
 
-The information needs to enter correctly following the form:
+The manager information contains the following fields.
 
 ```
 Name:
@@ -235,40 +211,34 @@ City:
 State:
 Zip Code:
 ```
-If the information is invalid, the program guides users to enter the valid input.
 
-5.4) Activate/Suspend Status For Members, Providers, Managers.
+#### 5.4) Activate/Suspend Status For Members, Providers, Managers.
 
-Option 4, 5, 6 on the menu behave at the same way to change activation status of members, providers, or managers.
+Option 4, 5, 6 on the menu behave in the same way to change the status of members, providers, or managers.
 
 The users only need to enter the valid ID for members, providers, or managers to change the status.
 
-5.5) Delete Members, Providers, Managers
+#### 5.5) Delete Members, Providers, Managers
 
-Option 7, 8, 9 on the menu behave at the same way to delete members, providers, or managers from its database.
+Option 7, 8, 9 on the menu behave in the same way to delete members, providers, or managers.
 
 The users only need to enter the valid ID for members, providers, or managers.
 
-5.6) Generate Member Reports
+#### 5.6) Generate Member Reports
 
-This function shows member reports.
+This function will generate reports for all members.
 
-5.7) Generate Provider Reports and EFT Records
+#### 5.7) Generate Provider Reports and EFT Records
 
-This function shows provider reports which are same with EFT records.
+This function will generate the EFT records and reports for all providers.
 
-5.8) Generate Manager Report
+#### 5.8) Generate Manager Report
 
-This function shows manager reports.
+This function will generate provider summary reports for the manager.
 
-5.9) Logout (Return to Main Menu)
+#### 5.9) Logout (Return to Main Menu)
 
-This function ends the program session.
-
-
-
-
-
+The manager will be logged out and returned to the main menu.
 
 ### 6. Viewing Service Records
 The service records are located in the following directory: `src/main/java/chocan/db/services.txt`
