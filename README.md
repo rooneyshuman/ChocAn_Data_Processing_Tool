@@ -274,8 +274,8 @@ This function ends the program session.
 The service records are located in the following directory: `src/main/java/chocan/db/services.txt`                           Under file name services.txt
 
 ### 7. Viewing Member Reports
-The member reports can are located in the following directory: `src/main/java/chocan/report`
-Under the file name
+The member reports can are located in the following directory: `src/main/java/chocan/report/manager`
+
 
 ### 8.  Viewing Provider Reports
 The provider reports are located in the following directory: `src/main/java/chocan/report`
