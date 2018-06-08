@@ -280,11 +280,11 @@ The file will be saved as name_date.txt
 
 ### 8.  Viewing Provider Reports
 The provider reports are located in the following directory: `src/main/java/chocan/report/provider`
-Under the file name
+The file will be saved as name_date.txt
 
 ### 9.  Viewing Manager Reports
-The manager reports are located in the follwoing directory: `src/main/java/chocan/report`
-Under the file name
+The manager reports are located in the follwoing directory: `src/main/java/chocan/report/manager`
+The file will be saved as name_date.txt
 
 ### 10.  Viewing EFT Records
 The EFT records are located in the following directory: `src/main/java/chocan/db`
