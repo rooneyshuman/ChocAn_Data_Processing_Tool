@@ -476,7 +476,11 @@ public class ManagerDB {
                 read = new Scanner(f);
                 read.useDelimiter("[|\\n]");
 
-                File report = new File("src/main/java/chocan/report/" + f.getName() + "_" + date);
+                //these two lines are used to format the file name.
+                String mName = f.getName();
+                String aName = new StringBuilder(mName).insert(mName.length()-4, "_"+date).toString();
+
+                File report = new File("src/main/java/chocan/report/" + aName);
                 report.getParentFile().mkdirs();
                 PrintWriter write = null;
 
@@ -567,7 +571,12 @@ public class ManagerDB {
                 read = new Scanner(f);
                 read.useDelimiter("[|\\n]");
 
-                File report = new File("src/main/java/chocan/report/" + f.getName() + "_" + date);
+                //these two lines are used to format the file name.
+                String mName = f.getName();
+                String aName = new StringBuilder(mName).insert(mName.length()-4, "_"+date).toString();
+
+
+                File report = new File("src/main/java/chocan/report/" + aName);
                 report.getParentFile().mkdirs();
                 PrintWriter write = null;
 
@@ -678,7 +687,7 @@ public class ManagerDB {
         Scanner read;
         NumberFormat nf = NumberFormat.getCurrencyInstance();
 
-        File report = new File("src/main/java/chocan/report/" + managerName + ".txt" + "_" + date);
+        File report = new File("src/main/java/chocan/report/" + managerName + "_" + date + ".txt");
         report.getParentFile().mkdirs();
         PrintWriter write = null;
 
