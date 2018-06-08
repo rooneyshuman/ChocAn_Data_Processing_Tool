@@ -274,11 +274,12 @@ This function ends the program session.
 The service records are located in the following directory: `src/main/java/chocan/db/services.txt`                           Under file name services.txt
 
 ### 7. Viewing Member Reports
-The member reports can are located in the following directory: `src/main/java/chocan/report/manager`
+The member reports can are located in the following directory: `src/main/java/chocan/report/member`
+The file will be saved as name_date.txt
 
 
 ### 8.  Viewing Provider Reports
-The provider reports are located in the following directory: `src/main/java/chocan/report`
+The provider reports are located in the following directory: `src/main/java/chocan/report/provider`
 Under the file name
 
 ### 9.  Viewing Manager Reports
@@ -286,7 +287,7 @@ The manager reports are located in the follwoing directory: `src/main/java/choca
 Under the file name
 
 ### 10.  Viewing EFT Records
-The EFT records are located in the following directory: `src/main/java/chocan/db/services.txt`
+The EFT records are located in the following directory: `src/main/java/chocan/db`
 Under the file name EFT.txt
 
 ### 11.  Testing Accounts
