@@ -13,7 +13,7 @@ This is Group 6's term project for CS 300 at Portland State University.
 
 ## Table of Contents
 1. [Installation](https://github.com/Gilmore-PDX-CS/Team6/blob/master/README.md#1-installation)
-2. [How to Use](https://github.com/Gilmore-PDX-CS/Team6#2-how-to-use)
+2. [How to Run](https://github.com/Gilmore-PDX-CS/Team6#2-how-to-use)
 3. [Main Menu](https://github.com/Gilmore-PDX-CS/Team6#3main-menu)
 4. [Provider Menu](https://github.com/Gilmore-PDX-CS/Team6#4-provider-menu)
 5. [Manager Menu](https://github.com/Gilmore-PDX-CS/Team6#5-manager-menu)
@@ -46,7 +46,7 @@ You will need to copy the `/db` and `/reports` folder inside the project to the 
 #### 1.2) Downloading
 Alternatively, you can download a working file [here](https://github.com/Gilmore-PDX-CS/Team6/tree/master/release/chocan1.0.zip) and extract the contents to a folder of your choice.
 
-### 2. How to Use
+### 2. How to Run
 After you have the jar file, open up your OS's command line interface and navigate to the folder that contains the program.
 
 _Type this command to run the program:_
