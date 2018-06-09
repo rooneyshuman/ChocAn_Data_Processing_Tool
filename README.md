@@ -25,20 +25,34 @@ This is Group 6's term project for CS 300 at Portland State University.
 11. [Test Accounts](https://github.com/Gilmore-PDX-CS/Team6#11--testing-accounts)
 
 ### 1. Installation
-In order to run the program, it needs to be compiled. Download IntelliJ here: https://www.jetbrains.com/idea/download/
+You can either compile the program or download the zip file.
 
-This is a Maven project so it will install all the dependencies required for the program.
+#### 1.1) Compiling
+In order to run the program, it needs to be compiled. Download IntelliJ here: https://www.jetbrains.com/idea/download/
 
 _Compile the program with IntelliJ:_
 ```
 - Import the project. (Using the pom.xml file.)
-- Build > Build Project
+- Go to File > Project Structure
+- Click on Artifacts, then +, JAR, From modules with dependencies...
+- Under Main Class, click ..., and select Main (chocan)
+- Click OK until all popups disappear.
+- Click on Build, then Build Artifacts, then Build again.
+- chocan.jar should now be in the 'out/artifacts/chocan_jar' folder.
 ```
 
-### 2. How to Use
-From the menu in IntelliJ, select:
+You will need to copy the `/db` and `/reports` folder inside the project to the same directory as the `chocan.jar` file before running the program.
 
-`Run > Run 'Main'`
+#### 1.2) Downloading
+Alternatively, you can download a working file [here](https://github.com/Gilmore-PDX-CS/Team6/tree/master/release/chocan1.0.zip) and extract the contents to a folder of your choice.
+
+### 2. How to Use
+After you have the jar file, open up your OS's command line interface and navigate to the folder that contains the program.
+
+_Type this command to run the program:_
+`java -jar chocan.jar`
+
+If this command does not work, you will need to download [Java](https://www.java.com/en/download/) and install it.
 
 The program uses a series of text menus. You will be prompted to input a number associated with the menu items. Simply type in a number to make your choice.
 
@@ -133,7 +147,7 @@ Providers will be able to enter optional comments:
 
 `Please enter any comments (optional):`
 
-A service record will then be generated in `src/main/java/chocan/db/services.txt`
+A service record will then be generated in `/db/services.txt`
 
 #### 4.2) View Provider Directory
 
@@ -241,37 +255,37 @@ This function generates provider summary reports for the manager.
 The manager will be logged out and returned to the main menu.
 
 ### 6. Viewing Service Records
-The service records are located in the following directory: `src/main/java/chocan/db/services.txt`
+The service records are located in the following directory: `/db/services.txt`
 
 Under file name **services.txt**
 
 ### 7. Viewing Member Reports
-The member reports can are located in the following directory: `src/main/java/chocan/report/member`
+The member reports can are located in the following directory: `/report/member`
 
 The files will be saved as **name_date.txt**
 
 
 ### 8. Viewing Provider Reports
-The provider reports are located in the following directory: `src/main/java/chocan/report/provider`
+The provider reports are located in the following directory: `/report/provider`
 
 The files will be saved as **name_date.txt**
 
 ### 9. Viewing Manager Reports
-The manager reports are located in the following directory: `src/main/java/chocan/report/manager`
+The manager reports are located in the following directory: `/report/manager`
 
 The files will be saved as **name_date.txt**
 
 ### 10. Viewing EFT Records
-The EFT records are located in the following directory: `src/main/java/chocan/db`
+The EFT records are located in the following directory: `/db`
 
 Under the file name **EFT.txt**
 
 ### 11. Testing Accounts
 All user accounts and service codes can be found in the following directories:
-  * Member accounts: `src/main/java/chocan/db/members.txt`
-  * Manager accounts: `src/main/java/chocan/db/manangers.txt`
-  * Provider accounts: `src/main/java/chocan/db/providers.txt`
-  * Service Data: `src/main/java/chocan/db/provider directory.txt`
+  * Member accounts: `/db/members.txt`
+  * Manager accounts: `/db/manangers.txt`
+  * Provider accounts: `/db/providers.txt`
+  * Service Data: `/db/provider directory.txt`
 
 The following specific ID numbers and codes can also be used for testing:
 
