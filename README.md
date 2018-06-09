@@ -50,6 +50,7 @@ Alternatively, you can download a working file [here](https://github.com/Gilmore
 After you have the jar file, open up your OS's command line interface and navigate to the folder that contains the program.
 
 _Type this command to run the program:_
+
 `java -jar chocan.jar`
 
 If this command does not work, you will need to download [Java](https://www.java.com/en/download/) and install it.
